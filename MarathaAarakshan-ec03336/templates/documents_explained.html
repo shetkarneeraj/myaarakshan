@@ -1,0 +1,208 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}कागदपत्रे स्पष्टीकरण - मराठा आरक्षण मंच{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Header -->
+    <div class="row mb-5">
+        <div class="col-12 text-center">
+            <h1 class="display-5 text-primary mb-3">📋 कागदपत्रे स्पष्टीकरण</h1>
+            <p class="lead">शिंदे समिती अहवाल, गॅझेट आणि महत्वाच्या दस्तऐवजांचे सविस्तर स्पष्टीकरण</p>
+        </div>
+    </div>
+
+    <!-- Document Cards -->
+    <div class="row">
+        
+        <!-- Shinde Committee Report -->
+        <div class="col-lg-6 mb-4">
+            <div class="card h-100 border-0 shadow document-explanation-card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-balance-scale me-2"></i>
+                        शिंदे समिती अहवाल स्पष्टीकरण
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <h6 class="text-primary">महत्वाचे मुद्दे:</h6>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-check text-success me-2"></i> मा. न्यायमूर्ती श्री. संदीप शिंदे यांच्या अध्यक्षतेखाली समिती स्थापन</li>
+                        <li><i class="fas fa-check text-success me-2"></i> निजामकाळातील दस्तऐवज, शाळा दाखले, जमिनीचे दाखले, पोलिस व महसूल अभिलेख तपासले</li>
+                        <li><i class="fas fa-check text-success me-2"></i> मराठा-कुणबी, कुणबी- मराठा प्रमाणपत्रासाठी समान निकष</li>
+                        <li><i class="fas fa-check text-success me-2"></i> पडताळणी मान्य झाल्यास प्रमाणपत्र देण्याचे आदेश</li>
+                        <li><i class="fas fa-check text-success me-2"></i> मोडी/उर्दू दस्तऐवजांचे भाषांतर व डिजिटायझेशन</li>
+                        <li><i class="fas fa-check text-success me-2"></i> सर्व प्रमाणपत्रे Scrutiny Committee द्वारे अंतिम</li>
+                    </ul>
+
+                    <h6 class="text-primary mt-3">तपासणी प्रक्रिया:</h6>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-file-alt text-info me-2"></i> अर्जदार → अर्ज दाखल → ग्राम समिती तपासणी</li>
+                        <li><i class="fas fa-file-alt text-info me-2"></i> दस्तऐवजांची छाननी → तालुका समितीकडे अहवाल</li>
+                        <li><i class="fas fa-file-alt text-info me-2"></i> जिल्हा समिती प्राथमिक निर्णय घेते</li>
+                        <li><i class="fas fa-file-alt text-info me-2"></i> Scrutiny Committee अंतिम निर्णय घेते</li>
+                    </ul>
+
+                    <h6 class="text-primary mt-3">अहवालातील महत्वाचे निष्कर्ष:</h6>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-lightbulb text-warning me-2"></i> ऐतिहासिक अभिलेख वैध पुरावा मानला गेला</li>
+                        <li><i class="fas fa-lightbulb text-warning me-2"></i> शाळा दाखले, जन्म दाखले, जमिनीचे दाखले पूरक पुरावे</li>
+                        <li><i class="fas fa-lightbulb text-warning me-2"></i> गावनिहाय व जिल्हानिहाय नोंदींचे डिजिटायझेशन सुरू</li>
+                    </ul>
+
+                    <h6 class="text-primary mt-3">प्रमाणपत्र देण्याची हमी:</h6>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-stamp text-success me-2"></i> Scrutiny Committee मान्यता दिल्यावरच प्रमाणपत्र वैध</li>
+                        <li><i class="fas fa-stamp text-success me-2"></i> सर्व अर्ज एकसमान निकषावर तपासले जाणार</li>
+                        <li><i class="fas fa-stamp text-success me-2"></i> गैरप्रकार करणाऱ्यांवर कारवाई</li>
+                    </ul>
+
+                    <div class="alert alert-warning mt-3">
+                        ⚠️ लक्षात ठेवा: अपूर्ण/बनावट दस्तऐवज दिल्यास अर्ज फेटाळला जाईल.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hyderabad Gazette -->
+        <div class="col-lg-6 mb-4">
+            <div class="card h-100 border-0 shadow document-explanation-card">
+                <div class="card-header bg-success text-white">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-book me-2"></i>
+                        हैदराबाद गॅझेट स्पष्टीकरण
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <h6 class="text-success">महत्वाचे मुद्दे:</h6>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-history text-info me-2"></i> ऐतिहासिक दस्तऐवज: हैदराबाद रियासतकालीन सरकारी नोंदी (१९००–१९४८)</li>
+                        <li><i class="fas fa-map-marked-alt text-info me-2"></i> भौगोलिक क्षेत्र: मराठवाडा, उत्तर कर्नाटक, तेलंगण</li>
+                        <li><i class="fas fa-users text-info me-2"></i> जातीच्या नोंदी: कुणबी, मराठा, कुणबी-मराठा, Cultivator</li>
+                        <li><i class="fas fa-calendar text-info me-2"></i> महत्वाचा कालावधी: १३ ऑक्टोबर १९६७ पूर्वीची नोंदी</li>
+                        <li><i class="fas fa-database text-info me-2"></i> डिजिटल उपलब्धता: Maharashtra State Archives</li>
+                    </ul>
+
+                    <h6 class="text-success mt-3">शोध पद्धती:</h6>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-search text-warning me-2"></i> नावानुसार शोध</li>
+                        <li><i class="fas fa-home text-warning me-2"></i> गावनिहाय शोध</li>
+                        <li><i class="fas fa-calendar-alt text-warning me-2"></i> वर्षनिहाय शोध</li>
+                    </ul>
+
+                    <h6 class="text-success mt-3">प्रमाणीकरण प्रक्रिया:</h6>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-stamp text-primary me-2"></i> Certified Copy: राज्य अभिलेखागार कडून</li>
+                        <li><i class="fas fa-shield-alt text-primary me-2"></i> सत्यापन: अभिलेखागार शिक्का</li>
+                    </ul>
+
+                    <div class="alert alert-success mt-3">
+                        🎯 सर्वात महत्वाचे: Hyderabad Gazette मधील नोंद हा सर्वात मजबूत पुरावा मानला जातो.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Birth/School Certificates -->
+        <div class="col-lg-6 mb-4">
+            <div class="card h-100 border-0 shadow document-explanation-card">
+                <div class="card-header bg-warning text-dark">
+                    <h5 class="card-title mb-0"><i class="fas fa-certificate me-2"></i> जन्म/शाळा दाखले स्पष्टीकरण</h5>
+                </div>
+                <div class="card-body">
+                    <h6 class="text-warning">स्वीकार्य दाखले:</h6>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-baby text-primary me-2"></i> जन्म दाखला (जात नमूद असलेला)</li>
+                        <li><i class="fas fa-school text-primary me-2"></i> शाळा सोडल्याचा दाखला</li>
+                        <li><i class="fas fa-graduation-cap text-primary me-2"></i> SSC/HSC मार्कशीट</li>
+                        <li><i class="fas fa-id-card text-primary me-2"></i> राशन कार्ड</li>
+                    </ul>
+                    <div class="alert alert-success">महत्वाचे: १९६७ पूर्वीचे दाखले अधिक महत्वाचे मानले जातात.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Land Records -->
+        <div class="col-lg-6 mb-4">
+            <div class="card h-100 border-0 shadow document-explanation-card">
+                <div class="card-header bg-info text-white">
+                    <h5 class="card-title mb-0"><i class="fas fa-map me-2"></i> जमिनीच्या नोंदी स्पष्टीकरण</h5>
+                </div>
+                <div class="card-body">
+                    <h6 class="text-info">आवश्यक नोंदी:</h6>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-file-invoice text-success me-2"></i> ७/१२ उतारा</li>
+                        <li><i class="fas fa-home text-success me-2"></i> कसोशीचा दाखला</li>
+                        <li><i class="fas fa-landmark text-success me-2"></i> वारसाहक्काचा दाखला</li>
+                        <li><i class="fas fa-stamp text-success me-2"></i> रजिस्ट्री दस्तऐवज</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Village Records -->
+        <div class="col-lg-12 mb-4">
+            <div class="card h-100 border-0 shadow document-explanation-card">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="card-title mb-0"><i class="fas fa-building me-2"></i> ग्रामीण नोंदी व स्थानिक पुरावे</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6 class="text-secondary">पारंपारिक पुरावे:</h6>
+                            <ul>
+                                <li><i class="fas fa-users text-warning me-2"></i> ग्रामस्थांचे साक्षी</li>
+                                <li><i class="fas fa-user-tie text-warning me-2"></i> पोलिस पाटील दाखला</li>
+                                <li><i class="fas fa-balance-scale text-warning me-2"></i> तलाठी नोंदी</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="text-secondary">सरकारी पुरावे:</h6>
+                            <ul>
+                                <li><i class="fas fa-building text-primary me-2"></i> ग्रामपंचायत मतदार यादी</li>
+                                <li><i class="fas fa-vote-yea text-primary me-2"></i> १९६७ पूर्वी निवडणूक यादी</li>
+                                <li><i class="fas fa-chart-line text-primary me-2"></i> जनगणना यादी</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Important Guidelines -->
+    <div class="alert alert-danger mt-4">
+        <h5><i class="fas fa-exclamation-triangle me-2"></i> महत्वाच्या सूचना</h5>
+        <ul>
+            <li>सर्व दस्तऐवज मूळ स्वरूपात असावेत</li>
+            <li>बनावट कागदपत्रे दिल्यास कायदेशीर कारवाई</li>
+            <li>सर्व पुरावे एकमेकांशी जुळले पाहिजेत</li>
+        </ul>
+    </div>
+
+    <!-- Download Section -->
+    <div class="text-center mt-4">
+        <h4>⬇️ संबंधित दस्तऐवज डाउनलोड करा</h4>
+        <a href="{% static 'ShindeSamiti.pdf' %}" class="btn btn-primary m-2" target="_blank">
+            <i class="fas fa-download me-2"></i> शिंदे समिती अहवाल
+        </a>
+        <a href="{% static 'docs/Hydrabad_Gazzette.pdf' %}" class="btn btn-warning m-2" target="_blank">
+            <i class="fas fa-file-pdf me-2"></i> हैदराबाद गझेट
+        </a>
+    </div>
+</div>
+
+<style>
+.document-explanation-card {
+    transition: all 0.3s ease;
+}
+.document-explanation-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15) !important;
+}
+.document-explanation-card .card-header {
+    border-radius: 15px 15px 0 0;
+}
+</style>
+{% endblock %}

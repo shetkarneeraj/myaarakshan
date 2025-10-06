@@ -1,0 +1,475 @@
+{% extends "base.html" %}
+
+{% block title %}पेमेंट - मराठा आरक्षण मंच{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col-12 text-center">
+            <h1 class="display-6 text-primary">💳 सुरक्षित पेमेंट</h1>
+            <p class="text-muted">तुमची पेमेंट SSL encryption द्वारे सुरक्षित आहे</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Payment Form -->
+        <div class="col-lg-8">
+            <div class="card border-0 shadow">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">
+                        <i class="fas fa-credit-card me-2"></i>पेमेंट माहिती
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <!-- Payment Method Selection -->
+                    <div class="mb-4">
+                        <h6 class="mb-3">पेमेंट पद्धत निवडा</h6>
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <div class="payment-method" data-method="upi">
+                                    <div class="card text-center payment-card active">
+                                        <div class="card-body">
+                                            <i class="fas fa-mobile-alt fa-2x text-success mb-2"></i>
+                                            <h6>UPI</h6>
+                                            <small>Google Pay, PhonePe, Paytm</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="payment-method" data-method="card">
+                                    <div class="card text-center payment-card">
+                                        <div class="card-body">
+                                            <i class="fas fa-credit-card fa-2x text-primary mb-2"></i>
+                                            <h6>Credit/Debit Card</h6>
+                                            <small>Visa, Mastercard, RuPay</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="payment-method" data-method="netbanking">
+                                    <div class="card text-center payment-card">
+                                        <div class="card-body">
+                                            <i class="fas fa-university fa-2x text-warning mb-2"></i>
+                                            <h6>Net Banking</h6>
+                                            <small>सर्व प्रमुख बँका</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- UPI Payment Form -->
+                    <div id="upi-form" class="payment-form">
+                        <div class="row">
+                            <div class="col-12 mb-3">
+                                <label class="form-label">UPI ID</label>
+                                <input type="text" class="form-control" id="upi-id" placeholder="yourname@upi" pattern="[a-zA-Z0-9.-]+@[a-zA-Z0-9.-]+">
+                                <div class="form-text">उदा: 9876543210@paytm</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Quick UPI Options -->
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <p class="mb-2">किंवा QR Code स्कॅन करा:</p>
+                                <div class="text-center">
+                                    <div id="qr-code" class="border rounded p-3 d-inline-block">
+                                        <div class="qr-placeholder bg-light" style="width: 200px; height: 200px; display: flex; align-items: center; justify-content: center;">
+                                            <div>
+                                                <i class="fas fa-qrcode fa-3x text-muted mb-2"></i>
+                                                <p class="text-muted">QR Code येथे दिसेल</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card Payment Form -->
+                    <div id="card-form" class="payment-form" style="display: none;">
+                        <div class="row">
+                            <div class="col-12 mb-3">
+                                <label class="form-label">कार्ड क्रमांक</label>
+                                <input type="text" class="form-control" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Expiry Date</label>
+                                <input type="text" class="form-control" id="expiry" placeholder="MM/YY" maxlength="5">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">CVV</label>
+                                <input type="text" class="form-control" id="cvv" placeholder="123" maxlength="3">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 mb-3">
+                                <label class="form-label">कार्डधारकाचे नाव</label>
+                                <input type="text" class="form-control" id="card-name" placeholder="नाव कार्डवर लिहिल्याप्रमाणे">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Net Banking Form -->
+                    <div id="netbanking-form" class="payment-form" style="display: none;">
+                        <div class="row">
+                            <div class="col-12 mb-3">
+                                <label class="form-label">बँक निवडा</label>
+                                <select class="form-select" id="bank-select">
+                                    <option value="">बँक निवडा</option>
+                                    <option value="sbi">State Bank of India</option>
+                                    <option value="hdfc">HDFC Bank</option>
+                                    <option value="icici">ICICI Bank</option>
+                                    <option value="axis">Axis Bank</option>
+                                    <option value="pnb">Punjab National Bank</option>
+                                    <option value="boi">Bank of India</option>
+                                    <option value="canara">Canara Bank</option>
+                                    <option value="other">इतर</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Terms and Conditions -->
+                    <div class="mb-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="payment-terms" required>
+                            <label class="form-check-label" for="payment-terms">
+                                मी <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">नियम आणि अटी</a> स्वीकारतो
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Payment Button -->
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-lg" id="pay-now-btn" onclick="processPayment()">
+                            <i class="fas fa-lock me-2"></i>₹{{ price }} पे करा
+                        </button>
+                        <p class="small text-muted mt-2">
+                            <i class="fas fa-shield-alt me-1"></i>तुमची पेमेंट 256-bit SSL encryption द्वारे सुरक्षित आहे
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Order Summary -->
+        <div class="col-lg-4">
+            <div class="card border-0 shadow">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">
+                        <i class="fas fa-receipt me-2"></i>ऑर्डर सारांश
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="order-item">
+                        <h6>{{ service|title }} सेवा</h6>
+                        <p class="text-muted">
+                            {% if service == 'premium' %}
+                            6 महिन्यांचे प्रीमियम सदस्यत्व
+                            {% elif service == 'pro' %}
+                            1 वर्षाचे प्रो सदस्यत्व
+                            {% elif service == 'express' %}
+                            तत्काळ प्रक्रिया सेवा
+                            {% endif %}
+                        </p>
+                    </div>
+                    
+                    <hr>
+                    
+                    <div class="d-flex justify-content-between">
+                        <span>सेवा शुल्क:</span>
+                        <span>₹{{ price }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span>GST (18%):</span>
+                        <span>₹{{ (price * 0.18)|round|int }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span>प्रक्रिया शुल्क:</span>
+                        <span class="text-success">विनामूल्य</span>
+                    </div>
+                    
+                    <hr>
+                    
+                    <div class="d-flex justify-content-between h5">
+                        <strong>एकूण रक्कम:</strong>
+                        <strong class="text-primary">₹{{ (price * 1.18)|round|int }}</strong>
+                    </div>
+
+                    <!-- Benefits -->
+                    <div class="mt-4">
+                        <h6 class="text-success">तुम्हाला मिळणारे फायदे:</h6>
+                        <ul class="list-unstyled">
+                            {% if service == 'premium' %}
+                            <li><i class="fas fa-check text-success me-2"></i>प्राधान्य प्रक्रिया</li>
+                            <li><i class="fas fa-check text-success me-2"></i>SMS अपडेट्स</li>
+                            <li><i class="fas fa-check text-success me-2"></i>24/7 सपोर्ट</li>
+                            {% elif service == 'pro' %}
+                            <li><i class="fas fa-check text-success me-2"></i>जलद प्रक्रिया</li>
+                            <li><i class="fas fa-check text-success me-2"></i>SMS + Email अपडेट्स</li>
+                            <li><i class="fas fa-check text-success me-2"></i>व्यक्तिगत सल्लागार</li>
+                            <li><i class="fas fa-check text-success me-2"></i>डॉक्युमेंट रिव्यू</li>
+                            {% elif service == 'express' %}
+                            <li><i class="fas fa-check text-success me-2"></i>30 दिवसांत प्रक्रिया</li>
+                            <li><i class="fas fa-check text-success me-2"></i>डेडिकेटेड केस मॅनेजर</li>
+                            <li><i class="fas fa-check text-success me-2"></i>प्राधान्य हाताळणी</li>
+                            {% endif %}
+                        </ul>
+                    </div>
+
+                    <!-- Money Back Guarantee -->
+                    <div class="alert alert-info mt-3">
+                        <small>
+                            <i class="fas fa-shield-alt me-1"></i>
+                            <strong>30 दिवसांची पैसे परत हमी</strong><br>
+                            समाधान नसल्यास पूर्ण पैसे परत
+                        </small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Security Info -->
+            <div class="card border-0 mt-3">
+                <div class="card-body bg-light">
+                    <h6 class="text-success">
+                        <i class="fas fa-lock me-2"></i>सुरक्षा हमी
+                    </h6>
+                    <ul class="small mb-0">
+                        <li>256-bit SSL Encryption</li>
+                        <li>PCI DSS Compliant</li>
+                        <li>RBI Approved Payment Gateway</li>
+                        <li>Zero Storage of Card Details</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Terms Modal -->
+<div class="modal fade" id="termsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">पेमेंट नियम आणि अटी</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <h6>पेमेंट धोरण:</h6>
+                <ul>
+                    <li>सर्व payments secure SSL द्वारे encrypted आहेत</li>
+                    <li>Payment successful झाल्यानंतर service तत्काळ सक्रिय होते</li>
+                    <li>Auto-renewal नाही - सदस्यत्व संपल्यानंतर मॅन्युअल renewal</li>
+                </ul>
+                <h6>रिफंड धोरण:</h6>
+                <ul>
+                    <li>30 दिवसांच्या आत 100% रिफंड</li>
+                    <li>Service वापरल्यानंतर pro-rata रिफंड</li>
+                    <li>रिफंड 5-7 working दिवसांत original payment method मध्ये</li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">समजले</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.payment-card {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.payment-card:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+.payment-card.active {
+    border-color: var(--primary-color);
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.payment-form {
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.order-item {
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.order-item:last-child {
+    border-bottom: none;
+}
+</style>
+{% endblock %}
+
+{% block scripts %}
+<script>
+let selectedPaymentMethod = 'upi';
+const serviceDetails = {
+    service: '{{ service }}',
+    price: {{ price }},
+    totalPrice: {{ (price * 1.18)|round|int }}
+};
+
+// Payment method selection
+document.querySelectorAll('.payment-method').forEach(method => {
+    method.addEventListener('click', function() {
+        // Remove active class from all
+        document.querySelectorAll('.payment-card').forEach(card => {
+            card.classList.remove('active');
+        });
+        
+        // Add active class to clicked
+        this.querySelector('.payment-card').classList.add('active');
+        
+        // Hide all forms
+        document.querySelectorAll('.payment-form').forEach(form => {
+            form.style.display = 'none';
+        });
+        
+        // Show selected form
+        const method = this.dataset.method;
+        selectedPaymentMethod = method;
+        document.getElementById(method + '-form').style.display = 'block';
+    });
+});
+
+// Card number formatting
+document.getElementById('card-number')?.addEventListener('input', function() {
+    let value = this.value.replace(/\s/g, '').replace(/[^0-9]/gi, '');
+    let formattedValue = value.match(/.{1,4}/g)?.join(' ') || '';
+    this.value = formattedValue;
+});
+
+// Expiry date formatting
+document.getElementById('expiry')?.addEventListener('input', function() {
+    let value = this.value.replace(/\D/g, '');
+    if (value.length >= 2) {
+        value = value.substring(0, 2) + '/' + value.substring(2, 4);
+    }
+    this.value = value;
+});
+
+// CVV validation
+document.getElementById('cvv')?.addEventListener('input', function() {
+    this.value = this.value.replace(/[^0-9]/g, '');
+});
+
+// UPI ID validation
+document.getElementById('upi-id')?.addEventListener('input', function() {
+    const isValid = /^[a-zA-Z0-9.-]+@[a-zA-Z0-9.-]+$/.test(this.value);
+    this.classList.toggle('is-valid', isValid && this.value.length > 0);
+    this.classList.toggle('is-invalid', !isValid && this.value.length > 0);
+});
+
+// Generate QR Code (mock)
+function generateQRCode() {
+    const qrContainer = document.getElementById('qr-code');
+    const qrPlaceholder = qrContainer.querySelector('.qr-placeholder');
+    
+    // Mock QR code generation
+    setTimeout(() => {
+        qrPlaceholder.innerHTML = `
+            <div style="background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23000"/><rect x="10" y="10" width="10" height="10" fill="%23fff"/><rect x="30" y="10" width="10" height="10" fill="%23fff"/></svg>') center/cover; width: 200px; height: 200px;"></div>
+            <p class="mt-2 small">स्कॅन करा आणि पे करा</p>
+        `;
+    }, 1000);
+}
+
+generateQRCode();
+
+async function processPayment() {
+    const payBtn = document.getElementById('pay-now-btn');
+    const originalText = payBtn.innerHTML;
+    
+    // Validation
+    if (!document.getElementById('payment-terms').checked) {
+        alert('कृपया नियम आणि अटी स्वीकारा');
+        return;
+    }
+    
+    // Validate based on payment method
+    if (selectedPaymentMethod === 'card') {
+        const cardNumber = document.getElementById('card-number').value;
+        const expiry = document.getElementById('expiry').value;
+        const cvv = document.getElementById('cvv').value;
+        const cardName = document.getElementById('card-name').value;
+        
+        if (!cardNumber || !expiry || !cvv || !cardName) {
+            alert('कृपया सर्व कार्ड माहिती भरा');
+            return;
+        }
+    } else if (selectedPaymentMethod === 'upi') {
+        const upiId = document.getElementById('upi-id').value;
+        if (!upiId || !/^[a-zA-Z0-9.-]+@[a-zA-Z0-9.-]+$/.test(upiId)) {
+            alert('कृपया योग्य UPI ID टाका');
+            return;
+        }
+    } else if (selectedPaymentMethod === 'netbanking') {
+        const bank = document.getElementById('bank-select').value;
+        if (!bank) {
+            alert('कृपया बँक निवडा');
+            return;
+        }
+    }
+    
+    // Show loading
+    payBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Payment Processing...';
+    payBtn.disabled = true;
+    
+    try {
+        const response = await fetch('/process-payment', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                service: serviceDetails.service,
+                amount: serviceDetails.totalPrice,
+                payment_method: selectedPaymentMethod
+            })
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            // Show success message
+            alert(`🎉 Payment Successful!\nTransaction ID: ${result.transaction_id}\n\nतुमची सेवा आता सक्रिय आहे!`);
+            
+            // Redirect to dashboard
+            window.location.href = '/dashboard';
+        } else {
+            throw new Error(result.error || 'Payment failed');
+        }
+        
+    } catch (error) {
+        alert('Payment failed: ' + error.message);
+        payBtn.innerHTML = originalText;
+        payBtn.disabled = false;
+    }
+}
+
+// Auto-focus first input
+document.addEventListener('DOMContentLoaded', function() {
+    const firstInput = document.querySelector('#upi-form input');
+    if (firstInput) firstInput.focus();
+});
+</script>
+{% endblock %}

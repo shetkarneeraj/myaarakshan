@@ -1,0 +1,184 @@
+{% extends "base.html" %}
+
+{% block title %}अर्ज ट्रॅक करा - मराठा आरक्षण मंच{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Header -->
+    <div class="row mb-5">
+        <div class="col-12 text-center">
+            <h1 class="display-5 text-primary mb-3">🔍 अर्ज स्थिती तपासा</h1>
+            <p class="lead">तुमच्या अर्जाची वर्तमान स्थिती जाणून घ्या</p>
+        </div>
+    </div>
+
+    <!-- Track Form -->
+    <div class="row">
+        <div class="col-lg-6 mx-auto">
+            <div class="card border-0 shadow-lg">
+                <div class="card-header bg-primary text-white text-center">
+                    <h4><i class="fas fa-search me-2"></i>अर्ज तपासा</h4>
+                </div>
+                <div class="card-body p-4">
+                    <form method="POST" action="{% url 'applications:public_track' %}">
+                        <div class="mb-3">
+                            <label for="application_number" class="form-label">अर्ज क्रमांक <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-hashtag"></i></span>
+                                <input type="text" class="form-control" id="application_number" name="application_number" 
+                                       placeholder="MR2024123456" required>
+                            </div>
+                            <div class="form-text">उदा: MR2024123456</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">नोंदणीकृत मोबाइल नंबर <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                <input type="tel" class="form-control" id="phone" name="phone" 
+                                       placeholder="9876543210" pattern="[0-9]{10}" required>
+                            </div>
+                            <div class="form-text">अर्जात दिलेला मोबाइल नंबर</div>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-search me-2"></i>स्थिती तपासा
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Help Section -->
+    <div class="row mt-5">
+        <div class="col-lg-8 mx-auto">
+            <div class="card bg-light border-0">
+                <div class="card-body">
+                    <h5 class="text-primary mb-3">
+                        <i class="fas fa-question-circle me-2"></i>मदत आणि माहिती
+                    </h5>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>अर्ज क्रमांक कुठे मिळेल?</h6>
+                            <ul class="small">
+                                <li>अर्ज सबमिट केल्यानंतर मिळणाऱ्या SMS मध्ये</li>
+                                <li>अर्ज सबमिट केल्यानंतरच्या पुष्टी पेजवर</li>
+                                <li>संबंधित कार्यालयाकडून मिळणाऱ्या रसीदमध्ये</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <h6>समस्या आल्यास:</h6>
+                            <ul class="small">
+                                <li><strong>हेल्पलाइन:</strong> +91 98765 43210</li>
+                                <li><strong>WhatsApp:</strong> +91 98765 43210</li>
+                                <li><strong>ईमेल:</strong> support@marathaarakshan.com</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-info mt-3">
+                        <strong>टिप:</strong> अर्ज क्रमांक आणि मोबाइल नंबर अचूक असणे आवश्यक आहे. 
+                        अर्ज सबमिट केल्यानंतर 24 तासांनी ट्रॅकिंग सुरू होते.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="row mt-4">
+        <div class="col-12 text-center">
+            <h5 class="mb-3">अन्य उपयुक्त दुवे</h5>
+            <div class="row justify-content-center">
+                <div class="col-md-3 mb-2">
+                    <a href="{% url 'core:eligibility_check' %}" class="btn btn-outline-success w-100">
+                        <i class="fas fa-check-circle me-2"></i>पात्रता तपासा
+                    </a>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <a href="{% url 'core:guide' %}" class="btn btn-outline-info w-100">
+                        <i class="fas fa-book me-2"></i>मार्गदर्शक
+                    </a>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <a href="{% url 'core:documents' %}" class="btn btn-outline-warning w-100">
+                        <i class="fas fa-download me-2"></i>फॉर्म डाउनलोड
+                    </a>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <a href="{% url 'core:contact' %}" class="btn btn-outline-primary w-100">
+                        <i class="fas fa-phone me-2"></i>संपर्क
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Format application number
+document.getElementById('application_number').addEventListener('input', function() {
+    let value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+    this.value = value;
+    
+    // Basic validation pattern
+    const isValid = /^MR\d{10}$/.test(value);
+    this.classList.toggle('is-valid', isValid && value.length > 0);
+    this.classList.toggle('is-invalid', !isValid && value.length > 0);
+});
+
+// Format phone number
+document.getElementById('phone').addEventListener('input', function() {
+    let value = this.value.replace(/\D/g, '');
+    if (value.length > 10) value = value.slice(0, 10);
+    this.value = value;
+    
+    const isValid = value.length === 10;
+    this.classList.toggle('is-valid', isValid);
+    this.classList.toggle('is-invalid', !isValid && value.length > 0);
+});
+
+// Form submission
+document.querySelector('form').addEventListener('submit', function(e) {
+    const appNumber = document.getElementById('application_number').value;
+    const phone = document.getElementById('phone').value;
+    
+    if (!/^MR\d{10}$/.test(appNumber)) {
+        e.preventDefault();
+        alert('कृपया योग्य अर्ज क्रमांक टाका (उदा: MR2024123456)');
+        return;
+    }
+    
+    if (!/^\d{10}$/.test(phone)) {
+        e.preventDefault();
+        alert('कृपया 10 अंकी मोबाइल नंबर टाका');
+        return;
+    }
+    
+    // Show loading state
+    const submitBtn = this.querySelector('button[type="submit"]');
+    submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>तपासत आहे...';
+    submitBtn.disabled = true;
+});
+
+// Auto-format on paste
+document.getElementById('application_number').addEventListener('paste', function(e) {
+    setTimeout(() => {
+        let value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+        this.value = value;
+    }, 10);
+});
+
+// Auto-focus first field
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('application_number').focus();
+});
+</script>
+{% endblock %}

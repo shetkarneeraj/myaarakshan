@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}बातम्या - मराठा आरक्षण मंच{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Page Header -->
+    <div class="row mb-5">
+        <div class="col-12 text-center">
+            <h1 class="display-4 text-primary mb-3">मराठा आरक्षण बातम्या</h1>
+            <p class="lead">ताज्या अपडेट्स आणि सरकारी निर्णय</p>
+        </div>
+    </div>
+
+    <!-- Featured News -->
+    {% if news_items.items %}
+    <div class="row">
+        {% for item in news_items.items %}
+        <div class="col-lg-4 mb-4">
+            <div class="card h-100 shadow-sm hover-card">
+                {% if item.image_url %}
+                <img src="{{ item.image_url }}" class="card-img-top" alt="{{ item.title }}" style="height: 250px; object-fit: cover;">
+                {% else %}
+                <div class="card-img-top bg-primary d-flex align-items-center justify-content-center" style="height: 250px;">
+                    <i class="fas fa-newspaper fa-3x text-white"></i>
+                </div>
+                {% endif %}
+                
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">{{ item.title }}</h5>
+                    <p class="card-text flex-grow-1">{{ item.content|truncatechars:200 }}</p>
+                    
+                    <div class="mt-auto">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-muted">
+                                <i class="fas fa-clock me-1"></i>{{ item.date_posted.strftime('%d/%m/%Y %H:%M' %}
+                            </small>
+                            {% if item.is_featured %}
+                            <span class="badge bg-warning">
+                                <i class="fas fa-star me-1"></i>महत्वाची
+                            </span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    {% if news_items.pages > 1 %}
+    <div class="row">
+        <div class="col-12">
+            <nav aria-label="News pagination">
+                <ul class="pagination justify-content-center">
+                    {% if news_items.has_prev %}
+                    <li class="page-item">
+                        <a class="page-link" href="{% url('news', page=news_items.prev_num %}">
+                            <i class="fas fa-chevron-left"></i> मागील
+                        </a>
+                    </li>
+                    {% endif %}
+
+                    {% for page_num in news_items.iter_pages() %}
+                        {% if page_num %}
+                            {% if page_num != news_items.page %}
+                            <li class="page-item">
+                                <a class="page-link" href="{% url('news', page=page_num %}">{{ page_num }}</a>
+                            </li>
+                            {% else %}
+                            <li class="page-item active">
+                                <span class="page-link">{{ page_num }}</span>
+                            </li>
+                            {% endif %}
+                        {% else %}
+                        <li class="page-item disabled">
+                            <span class="page-link">...</span>
+                        </li>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if news_items.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="{% url('news', page=news_items.next_num %}">
+                            पुढील <i class="fas fa-chevron-right"></i>
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+    {% endif %}
+
+    {% else %}
+    <!-- No News -->
+    <div class="text-center py-5">
+        <i class="fas fa-newspaper fa-3x text-muted mb-3"></i>
+        <h3 class="text-muted">अद्याप कोणत्याही बातम्या उपलब्ध नाहीत</h3>
+        <p class="text-muted">लवकरच नवीन बातम्या येतील</p>
+    </div>
+    {% endif %}
+
+    <!-- Subscribe Section -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card bg-primary text-white">
+                <div class="card-body text-center">
+                    <h4><i class="fas fa-bell me-2"></i>अपडेट्स मिळवा</h4>
+                    <p class="mb-3">मराठा आरक्षणाच्या ताज्या बातम्या आणि अपडेट्स मिळवण्यासाठी आमच्याशी जुडून रहा</p>
+                    <div class="row justify-content-center">
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <input type="email" class="form-control" placeholder="तुमचा ईमेल पत्ता">
+                                <button class="btn btn-light" type="button">
+                                    <i class="fas fa-paper-plane me-1"></i>सबस्क्राइब करा
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Auto-refresh news every 5 minutes
+setInterval(function() {
+    if (document.hidden === false) {
+        // Only refresh if page is visible
+        location.reload();
+    }
+}, 300000); // 5 minutes
+</script>
+{% endblock %}

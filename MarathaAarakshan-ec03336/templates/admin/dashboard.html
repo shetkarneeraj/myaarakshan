@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+
+{% block title %}एडमिन डैशबोर्ड - मराठा आरक्षण मंच{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="display-5 text-primary">एडमिन डैशबोर्ड</h1>
+            <p class="lead">सिस्टम ओवरव्यू और मैनेजमेंट</p>
+        </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="row mb-5">
+        <div class="col-md-3 mb-4">
+            <div class="card bg-primary text-white h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-users fa-3x mb-3"></i>
+                    <h3>{{ total_people }}</h3>
+                    <p>कुल लोग</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card bg-success text-white h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-check fa-3x mb-3"></i>
+                    <h3>{{ verified_people }}</h3>
+                    <p>वेरिफाइड</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card bg-warning text-white h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-clock fa-3x mb-3"></i>
+                    <h3>{{ pending_people }}</h3>
+                    <p>पेंडिंग</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card bg-info text-white h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-newspaper fa-3x mb-3"></i>
+                    <h3>{{ total_news }}</h3>
+                    <p>न्यूज़ आइटम्स</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">क्विक एक्शन्स</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <a href="{{ url_for('admin_people', status='pending') }}" class="btn btn-warning btn-block w-100">
+                                <i class="fas fa-user-check me-2"></i>पेंडिंग वेरिफिकेशन
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a href="{{ url_for('add_news') }}" class="btn btn-info btn-block w-100">
+                                <i class="fas fa-plus me-2"></i>न्यूज़ ऐड करें
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a href="{{ url_for('admin_locations') }}" class="btn btn-success btn-block w-100">
+                                <i class="fas fa-map me-2"></i>लोकेशन मैनेज करें
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a href="{{ url_for('admin_news') }}" class="btn btn-secondary btn-block w-100">
+                                <i class="fas fa-list me-2"></i>सभी न्यूज़
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Submissions -->
+    {% if recent_submissions %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-warning text-dark">
+                    <h5 class="mb-0">हाल की सबमिशन्स (वेरिफिकेशन पेंडिंग)</h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>नाम</th>
+                                    <th>गाव</th>
+                                    <th>आरक्षण नंबर</th>
+                                    <th>सबमिट की तारीख</th>
+                                    <th>एक्शन</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for person in recent_submissions %}
+                                <tr>
+                                    <td>{{ person.name }} {{ person.surname }}</td>
+                                    <td>{{ person.village.name }}, {{ person.village.district.name }}</td>
+                                    <td><span class="badge bg-secondary">{{ person.reservation_number }}</span></td>
+                                    <td>{{ person.date_added.strftime('%d/%m/%Y') }}</td>
+                                    <td>
+                                        <a href="{{ url_for('verify_person', person_id=person.id) }}" class="btn btn-sm btn-success me-2">
+                                            <i class="fas fa-check"></i>
+                                        </a>
+                                        <a href="{{ url_for('delete_person', person_id=person.id) }}" class="btn btn-sm btn-danger" onclick="return confirm('क्या आप वाकई इसे डिलीट करना चाहते हैं?')">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="{{ url_for('admin_people', status='pending') }}" class="btn btn-primary">
+                        सभी पेंडिंग देखें <i class="fas fa-arrow-right ms-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

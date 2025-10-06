@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}शोध - मराठा आरक्षण मंच{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Page Header -->
+    <div class="row mb-5">
+        <div class="col-12 text-center">
+            <h1 class="display-4 text-primary mb-3">आरक्षण शोध</h1>
+            <p class="lead">गाव, नाव किंवा आडनावानुसार आरक्षण धारक शोधा</p>
+        </div>
+    </div>
+
+    <!-- Search Form -->
+    <div class="row mb-5">
+        <div class="col-lg-8 mx-auto">
+            <div class="card shadow">
+                <div class="card-body">
+                    <form method="GET" action="{% url 'core:search' %}">
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label for="q" class="form-label">नाव किंवा आडनाव</label>
+                                <input type="text" class="form-control" id="q" name="q" value="{{ query }}" placeholder="उदा: राहुल, पाटील">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="village" class="form-label">गावाचे नाव</label>
+                                <input type="text" class="form-control" id="village" name="village" value="{{ village_name }}" placeholder="उदा: पुणे, नाशिक">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="surname" class="form-label">आडनाव</label>
+                                <input type="text" class="form-control" id="surname" name="surname" value="{{ surname }}" placeholder="उदा: पाटील, जाधव">
+                            </div>
+                            <div class="col-12 text-center">
+                                <button type="submit" class="btn btn-primary btn-lg me-3">
+                                    <i class="fas fa-search me-2"></i>शोधा
+                                </button>
+                                <a href="{% url 'core:search' %}" class="btn btn-outline-secondary btn-lg">
+                                    <i class="fas fa-times me-2"></i>साफ करा
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search Results -->
+    {% if request.args.get('q') or request.args.get('village') or request.args.get('surname') %}
+    <div class="row">
+        <div class="col-12">
+            <h3 class="mb-4">
+                शोध परिणाम 
+                <span class="badge bg-primary">{{ results|length }}</span>
+            </h3>
+
+            {% if results %}
+            <div class="row">
+                {% for person in results %}
+                <div class="col-lg-6 mb-4">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-auto">
+                                    <i class="fas fa-user-check fa-2x text-success"></i>
+                                </div>
+                                <div class="col">
+                                    <h5 class="card-title mb-1">{{ person.name }} {{ person.surname }}</h5>
+                                    <p class="card-text text-muted mb-2">
+                                        <i class="fas fa-map-marker-alt me-1"></i>
+                                        {{ person.village.name }}, {{ person.village.district.name }}
+                                    </p>
+                                    <div class="d-flex flex-wrap gap-2">
+                                        <span class="badge bg-primary">{{ person.reservation_number }}</span>
+                                        {% if person.birth_year %}
+                                        <span class="badge bg-info">{{ person.birth_year }}</span>
+                                        {% endif %}
+                                        {% if person.contact_number %}
+                                        <a href="tel:{{ person.contact_number }}" class="badge bg-success text-decoration-none">
+                                            <i class="fas fa-phone me-1"></i>{{ person.contact_number }}
+                                        </a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <a href="{% url 'core:view_village' person.village.id %}" class="btn btn-outline-primary btn-sm">
+                                        <i class="fas fa-arrow-right me-1"></i>गाव पहा
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="text-center py-5">
+                <i class="fas fa-search fa-3x text-muted mb-3"></i>
+                <h3 class="text-muted">कोणतेही परिणाम सापडले नाहीत</h3>
+                <p class="text-muted">कृपया वेगळे शब्द वापरून शोधा किंवा फिल्टर बदला</p>
+                <a href="{% url 'core:submit_details' %}" class="btn btn-primary mt-3">
+                    <i class="fas fa-plus me-2"></i>माहिती भरा
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Quick Tips -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card bg-light border-0">
+                <div class="card-body">
+                    <h5><i class="fas fa-lightbulb text-warning me-2"></i>शोध टिप्स</h5>
+                    <ul class="mb-0">
+                        <li>गावाचे नाव अचूक लिहा</li>
+                        <li>आडनाव किंवा नावाचा काही भाग लिहून शोधा</li>
+                        <li>एकापेक्षा जास्त फिल्टर वापरून अधिक अचूक परिणाम मिळवा</li>
+                        <li>जर तुमचे गाव सापडत नसेल तर माहिती भरा</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

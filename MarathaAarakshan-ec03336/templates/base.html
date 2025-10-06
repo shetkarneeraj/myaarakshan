@@ -1,0 +1,144 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}मराठा आरक्षण मंच{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="{% static 'manifest.json' %}">
+    <meta name="theme-color" content="#0d6efd">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="मराठा आरक्षण">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="{% url 'core:home' %}">
+                <i class="fas fa-users me-2"></i>मराठा आरक्षण मंच
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'core:home' %}">मुख्यपृष्ठ</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="infoDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            माहिती
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="infoDropdown">
+                            <li><a class="dropdown-item" href="{% url 'core:guide' %}">मार्गदर्शक</a></li>
+                            <li><a class="dropdown-item" href="{% url 'core:documents' %}">शासन निर्णय</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'core:pre1967_records' %}">पुरावा शोध</a>
+                    </li>
+                    
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            सेवा
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="servicesDropdown">
+                            <li><a class="dropdown-item" href="{% url 'core:pre1967_records' %}">१९६७ पूर्वीचा महसूली पुरावा</a></li>
+                            <li><a class="dropdown-item" href="{% url 'core:documents_explained' %}">कागदपत्रे स्पष्टीकरण</a></li>
+                            <li><a class="dropdown-item" href="{% url 'core:file_preparation' %}">फाईल कशी तयार करावी</a></li>
+                            <li><a class="dropdown-item" href="{% url 'core:district_wise_records' %}">विभागनिहाय नोंदी</a></li>
+                            <li><a class="dropdown-item" href="{% url 'core:nearest_office' %}">जवळील कार्यालय</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{% url 'core:contact' %}">संपर्क</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                
+                <!-- User Menu or Login -->
+                <div class="navbar-nav">
+                    {% if user.is_authenticated %}
+                    <!-- Logged in user menu -->
+                    <div class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user-circle me-1"></i>{{ user.username }}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                            <li><a class="dropdown-item" href="{% url 'accounts:dashboard' %}"><i class="fas fa-tachometer-alt me-2"></i>डैशबोर्ड</a></li>
+                            <li><a class="dropdown-item" href="{% url 'accounts:profile' %}"><i class="fas fa-user me-2"></i>प्रोफाइल</a></li>
+                            <li><a class="dropdown-item" href="{% url 'accounts:notifications' %}"><i class="fas fa-bell me-2"></i>सूचना</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{% url 'accounts:premium_services' %}"><i class="fas fa-crown me-2"></i>प्रीमियम सेवा</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{% url 'accounts:logout' %}"><i class="fas fa-sign-out-alt me-2"></i>लॉग आउट</a></li>
+                        </ul>
+                    </div>
+                    {% else %}
+                    <!-- Guest user menu -->
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'core:contact' %}">
+                                <i class="fas fa-envelope me-1"></i>संपर्क
+                            </a>
+                        </li>
+                    </ul>
+                    {% endif %}
+                </div>
+                
+                
+                
+
+            </div>
+        </div>
+    </nav>
+
+    <!-- Flash Messages -->
+    {% if messages %}
+        <div class="container mt-3">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>मराठा आरक्षण मंच</h5>
+                    <p>तुमच्या हक्काच्या आरक्षणासाठी – एकत्र, मजबूत, निर्धाराने</p>
+                </div>
+                <div class="col-md-6">
+                    <h5>संपर्क</h5>
+                    <p><i class="fas fa-envelope me-2"></i>myarakshan@gmail.com</p>
+                    <p><i class="fab fa-instagram me-2"></i>@marathaarakshanmanch</p>
+                </div>
+            </div>
+            <hr>
+            <div class="text-center">
+                <p>&copy; 2024 मराठा आरक्षण मंच. सर्व हक्क राखीव.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

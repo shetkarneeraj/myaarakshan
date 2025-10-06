@@ -1,0 +1,178 @@
+{% extends "base.html" %}
+
+{% block title %}लोग मैनेज करें - एडमिन{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <h1 class="display-6 text-primary">लोग मैनेज करें</h1>
+        </div>
+        <div class="col-md-6 text-end">
+            <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline-primary">
+                <i class="fas fa-arrow-left me-2"></i>डैशबोर्ड पर वापस
+            </a>
+        </div>
+    </div>
+
+    <!-- Filter Tabs -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link {{ 'active' if status == 'all' else '' }}" href="{{ url_for('admin_people', status='all') }}">
+                        सभी ({{ people.total }})
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ 'active' if status == 'verified' else '' }}" href="{{ url_for('admin_people', status='verified') }}">
+                        वेरिफाइड
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ 'active' if status == 'pending' else '' }}" href="{{ url_for('admin_people', status='pending') }}">
+                        पेंडिंग
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- People List -->
+    {% if people.items %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        लोगों की सूची 
+                        <span class="badge bg-primary">{{ people.total }}</span>
+                    </h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>नाम</th>
+                                    <th>गाव</th>
+                                    <th>आरक्षण नंबर</th>
+                                    <th>संपर्क</th>
+                                    <th>स्टेटस</th>
+                                    <th>तारीख</th>
+                                    <th>एक्शन</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for person in people.items %}
+                                <tr>
+                                    <td>
+                                        <strong>{{ person.name }} {{ person.surname }}</strong>
+                                        {% if person.birth_year %}
+                                        <br><small class="text-muted">{{ person.birth_year }}</small>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {{ person.village.name }}
+                                        <br><small class="text-muted">{{ person.village.district.name }}, {{ person.village.district.division.name }}</small>
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-secondary">{{ person.reservation_number }}</span>
+                                    </td>
+                                    <td>
+                                        {% if person.contact_number %}
+                                        <a href="tel:{{ person.contact_number }}" class="text-decoration-none">
+                                            {{ person.contact_number }}
+                                        </a>
+                                        {% else %}
+                                        <span class="text-muted">N/A</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if person.is_verified %}
+                                        <span class="badge bg-success">वेरिफाइड</span>
+                                        {% else %}
+                                        <span class="badge bg-warning">पेंडिंग</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <small>{{ person.date_added.strftime('%d/%m/%Y') }}</small>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group-vertical btn-group-sm">
+                                            {% if not person.is_verified %}
+                                            <a href="{{ url_for('verify_person', person_id=person.id) }}" class="btn btn-success btn-sm" title="वेरिफाई करें">
+                                                <i class="fas fa-check"></i>
+                                            </a>
+                                            {% endif %}
+                                            <a href="{{ url_for('delete_person', person_id=person.id) }}" class="btn btn-danger btn-sm" 
+                                               onclick="return confirm('क्या आप वाकई इसे डिलीट करना चाहते हैं?')" title="डिलीट करें">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pagination -->
+    {% if people.pages > 1 %}
+    <div class="row mt-4">
+        <div class="col-12">
+            <nav aria-label="People pagination">
+                <ul class="pagination justify-content-center">
+                    {% if people.has_prev %}
+                    <li class="page-item">
+                        <a class="page-link" href="{{ url_for('admin_people', page=people.prev_num, status=status) }}">
+                            <i class="fas fa-chevron-left"></i> पिछला
+                        </a>
+                    </li>
+                    {% endif %}
+
+                    {% for page_num in people.iter_pages() %}
+                        {% if page_num %}
+                            {% if page_num != people.page %}
+                            <li class="page-item">
+                                <a class="page-link" href="{{ url_for('admin_people', page=page_num, status=status) }}">{{ page_num }}</a>
+                            </li>
+                            {% else %}
+                            <li class="page-item active">
+                                <span class="page-link">{{ page_num }}</span>
+                            </li>
+                            {% endif %}
+                        {% else %}
+                        <li class="page-item disabled">
+                            <span class="page-link">...</span>
+                        </li>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if people.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="{{ url_for('admin_people', page=people.next_num, status=status) }}">
+                            अगला <i class="fas fa-chevron-right"></i>
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+    {% endif %}
+
+    {% else %}
+    <div class="text-center py-5">
+        <i class="fas fa-users fa-3x text-muted mb-3"></i>
+        <h3 class="text-muted">कोई लोग नहीं मिले</h3>
+        <p class="text-muted">चुने गए फ़िल्टर के अनुसार कोई परिणाम नहीं मिला</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

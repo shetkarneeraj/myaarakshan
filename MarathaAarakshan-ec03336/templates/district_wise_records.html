@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+
+{% block title %}विभागनिहाय कुणबी नोंदी - मराठा आरक्षण मंच{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Header -->
+    <div class="row mb-5">
+        <div class="col-12 text-center">
+            <h1 class="display-5 text-primary mb-3">🗺️ विभागनिहाय कुणबी नोंदी</h1>
+            <p class="lead">महाराष्ट्रातील ३६ जिल्ह्यांमधील कुणबी जातीच्या नोंदी</p>
+        </div>
+    </div>
+
+    <!-- All Districts Grid -->
+    <div class="row">
+        <!-- Districts provided via view context -->
+        {% for district in districts %}
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+            <div class="card district-card h-100 border-0 shadow hover-card">
+                <div class="card-body text-center">
+                    <i class="fas fa-city fa-2x text-primary mb-3"></i>
+                    <h5 class="card-title">{{ district.name }}</h5>
+                    <a href="{{ district.url }}" target="_blank" class="btn btn-primary btn-sm">
+                        <i class="fas fa-external-link-alt me-2"></i>नोंदी पहा
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Records Modal -->
+    <div class="modal fade" id="recordsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">जिल्ह्यातील नोंदी</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="modalBody">
+                    <!-- Records will be loaded here -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">बंद करा</button>
+                    <button type="button" class="btn btn-primary" id="downloadRecords">
+                        <i class="fas fa-download me-2"></i>PDF डाउनलोड
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<style>
+.district-card {
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.district-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1) !important;
+}
+
+.district-card:hover .card-body i {
+    transform: scale(1.2);
+    transition: transform 0.3s ease;
+}
+
+@media (max-width: 768px) {
+    .display-5 {
+        font-size: 1.8rem;
+    }
+    
+    .district-card .card-title {
+        font-size: 1rem;
+    }
+    
+    .district-card .card-text {
+        font-size: 0.9rem;
+    }
+    
+    .btn-sm {
+        font-size: 0.8rem;
+        padding: 5px 12px;
+    }
+}
+</style>
+
+<script>
+// Handle "Load More Districts" button
+document.getElementById('loadMoreDistricts').addEventListener('click', function() {
+    const moreDistricts = document.getElementById('moreDistricts');
+    const button = this;
+    
+    if (moreDistricts.style.display === 'none') {
+        moreDistricts.style.display = 'block';
+        button.innerHTML = '<i class="fas fa-minus-circle me-2"></i>कमी जिल्हे दाखवा';
+        
+        // Smooth scroll to the new districts
+        setTimeout(() => {
+            moreDistricts.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
+    } else {
+        moreDistricts.style.display = 'none';
+        button.innerHTML = '<i class="fas fa-plus-circle me-2"></i>बाकी २४ जिल्हे पहा';
+        
+        // Scroll back to the button
+        button.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+});
+
+// Handle search
+if (document.getElementById('searchForm')) {
+    document.getElementById('searchForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        alert('शोध कार्यक्षमता लवकरच उपलब्ध होईल');
+    });
+}
+
+// Add hover effect for external links
+document.querySelectorAll('a[target="_blank"]').forEach(link => {
+    link.addEventListener('click', function(e) {
+        // Add a small delay and visual feedback
+        this.classList.add('loading');
+        setTimeout(() => {
+            this.classList.remove('loading');
+        }, 1000);
+    });
+});
+
+// Animate cards on page load
+document.addEventListener('DOMContentLoaded', function() {
+    const cards = document.querySelectorAll('.district-card');
+    cards.forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        
+        setTimeout(() => {
+            card.style.transition = 'all 0.5s ease';
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+        }, index * 50); // Stagger animation
+    });
+});
+</script>
+{% endblock %}

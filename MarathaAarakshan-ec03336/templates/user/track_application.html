@@ -1,0 +1,407 @@
+{% extends "base.html" %}
+
+{% block title %}अर्ज ट्रॅकिंग - {{ application.application_number }}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h1 class="display-6 text-primary">📊 अर्ज स्थिती ट्रॅकर</h1>
+            <p class="text-muted">अर्ज क्रमांक: <strong>{{ application.application_number }}</strong></p>
+        </div>
+        <div class="col-md-4 text-end">
+            <div class="btn-group">
+                <button class="btn btn-outline-primary" onclick="window.print()">
+                    <i class="fas fa-print me-2"></i>प्रिंट करा
+                </button>
+                <button class="btn btn-outline-success" onclick="shareApplication()">
+                    <i class="fas fa-share me-2"></i>शेअर करा
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Info -->
+    <div class="row mb-5">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">
+                        <i class="fas fa-file-alt me-2"></i>अर्जाची माहिती
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>अर्जदाराचे नाव:</strong> {{ application.applicant_name }} {{ application.applicant_surname }}</p>
+                            <p><strong>गाव:</strong> {{ application.village.name }}, {{ application.village.district.name }}</p>
+                            <p><strong>संपर्क:</strong> {{ application.contact_number or 'उपलब्ध नाही' }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>सबमिट दिनांक:</strong> {{ application.date_submitted.strftime('%d/%m/%Y') }}</p>
+                            <p><strong>अपेक्षित पूर्णता:</strong> {{ application.estimated_completion.strftime('%d/%m/%Y') if application.estimated_completion else 'निश्चित नाही' }}</p>
+                            <p><strong>प्राधान्य:</strong> 
+                                {% if application.priority == 'premium' %}
+                                <span class="badge bg-warning">प्रीमियम</span>
+                                {% else %}
+                                <span class="badge bg-secondary">सामान्य</span>
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card border-0 shadow">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">
+                        <i class="fas fa-chart-pie me-2"></i>एकूण प्रगती
+                    </h5>
+                </div>
+                <div class="card-body text-center">
+                    <div class="progress-circle mb-3" data-progress="{{ application.progress_percentage }}">
+                        <div class="progress-circle-inner">
+                            <span class="progress-percentage">{{ application.progress_percentage }}%</span>
+                        </div>
+                    </div>
+                    <h6>सध्याचा टप्पा: {{ application.current_stage|title }}</h6>
+                    <p class="text-muted">
+                        {% if application.status == 'submitted' %}
+                        अर्ज सबमिट केला गेला आहे
+                        {% elif application.status == 'under_review' %}
+                        अर्जाची तपासणी सुरू आहे
+                        {% elif application.status == 'approved' %}
+                        अर्ज मंजूर झाला आहे
+                        {% elif application.status == 'rejected' %}
+                        अर्ज नाकारला गेला आहे
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Progress Timeline -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card border-0 shadow">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">
+                        <i class="fas fa-route me-2"></i>प्रक्रिया टाइमलाइन
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="timeline-container">
+                        {% for update in status_updates %}
+                        <div class="timeline-item {{ 'completed' if loop.index <= application.progress_percentage / 20 else 'upcoming' }}">
+                            <div class="timeline-marker">
+                                {% if update.status == 'approved' or update.status == 'completed' %}
+                                <i class="fas fa-check"></i>
+                                {% elif update.status == 'in_progress' %}
+                                <i class="fas fa-cog fa-spin"></i>
+                                {% elif update.status == 'rejected' %}
+                                <i class="fas fa-times"></i>
+                                {% else %}
+                                <i class="fas fa-clock"></i>
+                                {% endif %}
+                            </div>
+                            <div class="timeline-content">
+                                <div class="timeline-header">
+                                    <h6>{{ update.stage|title }}</h6>
+                                    <span class="badge bg-{{ 'success' if update.status == 'approved' else 'warning' if update.status == 'in_progress' else 'danger' if update.status == 'rejected' else 'secondary' }}">
+                                        {{ update.status|title }}
+                                    </span>
+                                </div>
+                                <p class="timeline-message">{{ update.message }}</p>
+                                <div class="timeline-meta">
+                                    <small class="text-muted">
+                                        <i class="fas fa-calendar me-1"></i>{{ update.date_updated.strftime('%d/%m/%Y %H:%M') }}
+                                        {% if update.updated_by %}
+                                        | <i class="fas fa-user me-1"></i>{{ update.updated_by }}
+                                        {% endif %}
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Expected Timeline -->
+    <div class="row mb-5">
+        <div class="col-lg-6">
+            <div class="card border-0 shadow">
+                <div class="card-header bg-warning text-dark">
+                    <h5 class="mb-0">
+                        <i class="fas fa-clock me-2"></i>अपेक्षित वेळापत्रक
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="timeline-expected">
+                        <div class="timeline-step">
+                            <strong>ग्राम समिती (15-30 दिवस)</strong>
+                            <p>स्थानिक तपासणी आणि सत्यापन</p>
+                        </div>
+                        <div class="timeline-step">
+                            <strong>तालुका समिती (15-30 दिवस)</strong>
+                            <p>कागदपत्रांची तपासणी</p>
+                        </div>
+                        <div class="timeline-step">
+                            <strong>जिल्हा समिती (30-45 दिवस)</strong>
+                            <p>अंतिम सत्यापन आणि निर्णय</p>
+                        </div>
+                        <div class="timeline-step">
+                            <strong>प्रमाणपत्र जारी (5-10 दिवस)</strong>
+                            <p>मंजुरीनंतर प्रमाणपत्र तयार करणे</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card border-0 shadow">
+                <div class="card-header bg-danger text-white">
+                    <h5 class="mb-0">
+                        <i class="fas fa-exclamation-triangle me-2"></i>महत्वाच्या सूचना
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-info">
+                        <h6>प्रक्रिया वेगवान करण्यासाठी:</h6>
+                        <ul class="mb-0">
+                            <li>सर्व कागदपत्रे योग्य आणि स्पष्ट असावीत</li>
+                            <li>संबंधित कार्यालयाशी नियमित संपर्क ठेवा</li>
+                            <li>अतिरिक्त कागदपत्र मागितल्यास लगेच पुरवा</li>
+                        </ul>
+                    </div>
+
+                    <div class="alert alert-warning">
+                        <h6>विलंब होऊ शकतो जर:</h6>
+                        <ul class="mb-0">
+                            <li>कागदपत्रे अपूर्ण किंवा चुकीची असतील</li>
+                            <li>अतिरिक्त सत्यापन आवश्यक असेल</li>
+                            <li>सुट्टीचे दिवस किंवा सरकारी कामकाज</li>
+                        </ul>
+                    </div>
+
+                    {% if application.priority == 'normal' %}
+                    <div class="text-center">
+                        <a href="{% url 'accounts:premium_services' %}" class="btn btn-warning">
+                            <i class="fas fa-rocket me-2"></i>प्रक्रिया जलद करा
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact and Support -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card border-0 shadow">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="mb-0">
+                        <i class="fas fa-headset me-2"></i>मदत आणि सपोर्ट
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 text-center">
+                            <i class="fas fa-phone fa-2x text-primary mb-3"></i>
+                            <h6>हेल्पलाइन</h6>
+                            <p>+91 98765 43210</p>
+                            <a href="tel:+919876543210" class="btn btn-outline-primary btn-sm">कॉल करा</a>
+                        </div>
+                        <div class="col-md-4 text-center">
+                            <i class="fab fa-whatsapp fa-2x text-success mb-3"></i>
+                            <h6>WhatsApp सपोर्ट</h6>
+                            <p>त्वरित मदत मिळवा</p>
+                            <a href="https://wa.me/919876543210?text=अर्ज क्रमांक: {{ application.application_number }}" class="btn btn-outline-success btn-sm" target="_blank">मेसेज पाठवा</a>
+                        </div>
+                        <div class="col-md-4 text-center">
+                            <i class="fas fa-envelope fa-2x text-info mb-3"></i>
+                            <h6>ईमेल सपोर्ट</h6>
+                            <p>support@marathaarakshan.com</p>
+                            <a href="mailto:support@marathaarakshan.com?subject=अर्ज क्रमांक: {{ application.application_number }}" class="btn btn-outline-info btn-sm">ईमेल करा</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+/* Progress Circle */
+.progress-circle {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: conic-gradient(var(--primary-color) calc(var(--progress) * 1%), #e9ecef 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    position: relative;
+}
+
+.progress-circle-inner {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: var(--primary-color);
+}
+
+/* Timeline Styles */
+.timeline-container {
+    position: relative;
+    padding-left: 40px;
+}
+
+.timeline-container::before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: #dee2e6;
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 30px;
+    padding-left: 50px;
+}
+
+.timeline-marker {
+    position: absolute;
+    left: -35px;
+    top: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+    border: 3px solid white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.timeline-item.completed .timeline-marker {
+    background: #28a745;
+}
+
+.timeline-item.upcoming .timeline-marker {
+    background: #6c757d;
+}
+
+.timeline-header {
+    display: flex;
+    justify-content: between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.timeline-header h6 {
+    margin: 0;
+    flex-grow: 1;
+}
+
+.timeline-message {
+    margin-bottom: 10px;
+    color: #666;
+}
+
+.timeline-meta {
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+}
+
+/* Expected Timeline */
+.timeline-expected .timeline-step {
+    padding: 15px;
+    border-left: 4px solid var(--primary-color);
+    margin-bottom: 15px;
+    background: #f8f9fa;
+}
+
+.timeline-expected .timeline-step:last-child {
+    margin-bottom: 0;
+}
+
+/* Print Styles */
+@media print {
+    .btn-group, .card-header, .alert {
+        display: none !important;
+    }
+    
+    .card {
+        border: 1px solid #ddd !important;
+        box-shadow: none !important;
+    }
+}
+</style>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Set progress circle
+document.addEventListener('DOMContentLoaded', function() {
+    const progressCircle = document.querySelector('.progress-circle');
+    const progress = {{ application.progress_percentage }};
+    progressCircle.style.setProperty('--progress', progress);
+});
+
+function shareApplication() {
+    if (navigator.share) {
+        navigator.share({
+            title: 'अर्ज स्थिती - {{ application.application_number }}',
+            text: 'माझ्या कुणबी प्रमाणपत्राच्या अर्जाची स्थिती पहा',
+            url: window.location.href
+        });
+    } else {
+        // Fallback
+        navigator.clipboard.writeText(window.location.href).then(() => {
+            alert('लिंक कॉपी केली गेली!');
+        });
+    }
+}
+
+// Auto-refresh every 5 minutes
+setInterval(function() {
+    if (!document.hidden) {
+        location.reload();
+    }
+}, 300000);
+
+// Show estimated completion notification
+{% if application.estimated_completion %}
+const estimatedDate = new Date('{{ application.estimated_completion.isoformat() }}');
+const today = new Date();
+const daysLeft = Math.ceil((estimatedDate - today) / (1000 * 60 * 60 * 24));
+
+if (daysLeft > 0 && daysLeft <= 7) {
+    setTimeout(() => {
+        alert(`🕒 तुमचा अर्ज ${daysLeft} दिवसांत पूर्ण होण्याची अपेक्षा आहे!`);
+    }, 2000);
+}
+{% endif %}
+</script>
+{% endblock %}

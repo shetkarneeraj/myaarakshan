@@ -1,0 +1,285 @@
+{% extends "base.html" %}
+
+{% block title %}नोंदणी - मराठा आरक्षण मंच{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Header -->
+    <div class="row mb-5">
+        <div class="col-12 text-center">
+            <h1 class="display-5 text-primary mb-3">👤 नवे खाते तयार करा</h1>
+            <p class="lead">व्यक्तिगत डैशबोर्ड आणि अधिक सुविधांसाठी नोंदणी करा</p>
+        </div>
+    </div>
+
+    <!-- Registration Form -->
+    <div class="row">
+        <div class="col-lg-6 mx-auto">
+            <div class="card border-0 shadow-lg">
+                <div class="card-header bg-primary text-white text-center">
+                    <h4><i class="fas fa-user-plus me-2"></i>नोंदणी फॉर्म</h4>
+                </div>
+                <div class="card-body p-4">
+                    <form method="POST" action="{% url 'accounts:register' %}" id="registerForm">
+                        <!-- Personal Information -->
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="full_name" class="form-label">पूर्ण नाव <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="full_name" name="full_name" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="username" class="form-label">वापरकर्ता नाव <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="username" name="username" required>
+                                <div class="form-text">हे तुमचे लॉगिन नाव असेल</div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="email" class="form-label">ईमेल पत्ता <span class="text-danger">*</span></label>
+                                <input type="email" class="form-control" id="email" name="email" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="phone" class="form-label">मोबाइल नंबर</label>
+                                <input type="tel" class="form-control" id="phone" name="phone" pattern="[0-9]{10}">
+                            </div>
+                        </div>
+
+                        <!-- Password -->
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="password" class="form-label">पासवर्ड <span class="text-danger">*</span></label>
+                                <input type="password" class="form-control" id="password" name="password" required minlength="6">
+                                <div class="form-text">किमान 6 अक्षरे असावेत</div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="confirm_password" class="form-label">पासवर्ड पुष्टी <span class="text-danger">*</span></label>
+                                <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+                            </div>
+                        </div>
+
+                        <!-- Location Information -->
+                        <div class="mb-3">
+                            <h6 class="text-primary">स्थान माहिती</h6>
+                            <hr>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label for="division_id" class="form-label">विभाग</label>
+                                <select class="form-select" id="division_id" name="division_id">
+                                    <option value="">विभाग निवडा</option>
+                                    {% for division in divisions %}
+                                    <option value="{{ division.id }}">{{ division.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="district_id" class="form-label">जिल्हा</label>
+                                <select class="form-select" id="district_id" name="district_id" disabled>
+                                    <option value="">पहिले विभाग निवडा</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="village_id" class="form-label">गाव</label>
+                                <select class="form-select" id="village_id" name="village_id" disabled>
+                                    <option value="">पहिले जिल्हा निवडा</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Terms and Conditions -->
+                        <div class="mb-4">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="terms" name="terms" required>
+                                <label class="form-check-label" for="terms">
+                                    मी <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">नियम आणि अटी</a> स्वीकारतो <span class="text-danger">*</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-user-plus me-2"></i>खाते तयार करा
+                            </button>
+                        </div>
+
+                        <!-- Login Link -->
+                        <div class="text-center mt-3">
+                            <p>आधीच खाते आहे? <a href="{% url 'accounts:login' %}" class="text-primary">लॉगिन करा</a></p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Benefits Section -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <h3 class="text-center mb-4">खात्याचे फायदे</h3>
+            <div class="row">
+                <div class="col-md-3 mb-3">
+                    <div class="text-center">
+                        <div class="feature-icon bg-primary text-white rounded-circle mx-auto mb-3" style="width: 60px; height: 60px; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-tachometer-alt fa-2x"></i>
+                        </div>
+                        <h5>व्यक्तिगत डैशबोर्ड</h5>
+                        <p class="text-muted">तुमच्या सर्व अर्जांची माहिती एका ठिकाणी</p>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="text-center">
+                        <div class="feature-icon bg-success text-white rounded-circle mx-auto mb-3" style="width: 60px; height: 60px; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-bell fa-2x"></i>
+                        </div>
+                        <h5>तत्काळ सूचना</h5>
+                        <p class="text-muted">अर्जाच्या स्थितीची अपडेट्स</p>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="text-center">
+                        <div class="feature-icon bg-warning text-white rounded-circle mx-auto mb-3" style="width: 60px; height: 60px; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-chart-line fa-2x"></i>
+                        </div>
+                        <h5>प्रगती ट्रॅकिंग</h5>
+                        <p class="text-muted">अर्जाची टप्प्याटप्प्याने माहिती</p>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="text-center">
+                        <div class="feature-icon bg-info text-white rounded-circle mx-auto mb-3" style="width: 60px; height: 60px; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-crown fa-2x"></i>
+                        </div>
+                        <h5>प्रीमियम सेवा</h5>
+                        <p class="text-muted">जलद प्रक्रिया आणि विशेष सपोर्ट</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Terms Modal -->
+<div class="modal fade" id="termsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">नियम आणि अटी</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <h6>वापरकर्ता नियम:</h6>
+                <ul>
+                    <li>तुम्ही खरी आणि अचूक माहिती देण्यास सहमत आहात</li>
+                    <li>बनावट कागदपत्रे वापरणे कायदेशीर गुन्हा आहे</li>
+                    <li>आमच्या सेवांचा दुरुपयोग करू नका</li>
+                    <li>तुमच्या खात्याची माहिती गुप्त ठेवा</li>
+                </ul>
+                <h6>गोपनीयता:</h6>
+                <ul>
+                    <li>तुमची व्यक्तिगत माहिती सुरक्षित ठेवली जाईल</li>
+                    <li>तुमची परवानगी शिवाय माहिती शेअर केली जाणार नाही</li>
+                    <li>आम्ही फक्त आवश्यक माहिती गोळा करतो</li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">समजले</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Location cascade
+document.getElementById('division_id').addEventListener('change', function() {
+    const divisionId = this.value;
+    const districtSelect = document.getElementById('district_id');
+    const villageSelect = document.getElementById('village_id');
+    
+    districtSelect.innerHTML = '<option value="">लोड हो रहा है...</option>';
+    districtSelect.disabled = true;
+    villageSelect.innerHTML = '<option value="">पहिले जिल्हा निवडा</option>';
+    villageSelect.disabled = true;
+
+    if (divisionId) {
+        fetch(`/api/districts/${divisionId}`)
+            .then(response => response.json())
+            .then(districts => {
+                districtSelect.innerHTML = '<option value="">जिल्हा निवडा</option>';
+                districts.forEach(district => {
+                    districtSelect.innerHTML += `<option value="${district.id}">${district.name}</option>`;
+                });
+                districtSelect.disabled = false;
+            });
+    } else {
+        districtSelect.innerHTML = '<option value="">पहिले विभाग निवडा</option>';
+    }
+});
+
+document.getElementById('district_id').addEventListener('change', function() {
+    const districtId = this.value;
+    const villageSelect = document.getElementById('village_id');
+    
+    villageSelect.innerHTML = '<option value="">लोड हो रहा है...</option>';
+    villageSelect.disabled = true;
+
+    if (districtId) {
+        fetch(`/api/villages/${districtId}`)
+            .then(response => response.json())
+            .then(villages => {
+                villageSelect.innerHTML = '<option value="">गाव निवडा</option>';
+                villages.forEach(village => {
+                    villageSelect.innerHTML += `<option value="${village.id}">${village.name}</option>`;
+                });
+                villageSelect.disabled = false;
+            });
+    } else {
+        villageSelect.innerHTML = '<option value="">पहिले जिल्हा निवडा</option>';
+    }
+});
+
+// Password confirmation
+document.getElementById('confirm_password').addEventListener('input', function() {
+    const password = document.getElementById('password').value;
+    const confirm = this.value;
+    
+    if (confirm && password !== confirm) {
+        this.setCustomValidity('पासवर्ड मेळ खात नाही');
+        this.classList.add('is-invalid');
+    } else {
+        this.setCustomValidity('');
+        this.classList.remove('is-invalid');
+        if (confirm) this.classList.add('is-valid');
+    }
+});
+
+// Phone number formatting
+document.getElementById('phone').addEventListener('input', function() {
+    let value = this.value.replace(/\D/g, '');
+    if (value.length > 10) value = value.slice(0, 10);
+    this.value = value;
+});
+
+// Form validation
+document.getElementById('registerForm').addEventListener('submit', function(e) {
+    const password = document.getElementById('password').value;
+    const confirm = document.getElementById('confirm_password').value;
+    
+    if (password !== confirm) {
+        e.preventDefault();
+        alert('पासवर्ड मेळ खात नाही');
+        return;
+    }
+    
+    if (!document.getElementById('terms').checked) {
+        e.preventDefault();
+        alert('कृपया नियम आणि अटी स्वीकारा');
+        return;
+    }
+});
+</script>
+{% endblock %}

@@ -1,0 +1,272 @@
+{% extends "base.html" %}
+
+{% block title %}डैशबोर्ड - {{ user.full_name }}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Welcome Header -->
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h1 class="display-6 text-primary">नमस्कार, {{ user.full_name }}! 👋</h1>
+            <p class="text-muted">तुमच्या खात्याची संपूर्ण माहिती इथे पहा</p>
+        </div>
+        <div class="col-md-4 text-end">
+            <div class="d-flex align-items-center justify-content-end">
+                <span class="badge bg-{{ 'warning' if user.subscription_type == 'free' else 'success' }} me-2">
+                    {{ 'फ्री' if user.subscription_type == 'free' else 'प्रीमियम' }} सदस्य
+                </span>
+                {% if user.subscription_type == 'free' %}
+                <a href="{% url 'accounts:premium_services' %}" class="btn btn-outline-warning btn-sm">
+                    <i class="fas fa-crown me-1"></i>अपग्रेड करा
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="row mb-5">
+        <div class="col-md-3 mb-3">
+            <div class="card border-0 shadow-sm bg-primary text-white">
+                <div class="card-body text-center">
+                    <i class="fas fa-file-alt fa-2x mb-2"></i>
+                    <h3>{{ applications|length }}</h3>
+                    <p class="mb-0">एकूण अर्ज</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card border-0 shadow-sm bg-success text-white">
+                <div class="card-body text-center">
+                    <i class="fas fa-check-circle fa-2x mb-2"></i>
+                    <h3>{{ applications|selectattr("status", "equalto", "approved")|list|length }}</h3>
+                    <p class="mb-0">मंजूर</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card border-0 shadow-sm bg-warning text-white">
+                <div class="card-body text-center">
+                    <i class="fas fa-clock fa-2x mb-2"></i>
+                    <h3>{{ applications|selectattr("status", "equalto", "under_review")|list|length }}</h3>
+                    <p class="mb-0">प्रलंबित</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card border-0 shadow-sm bg-info text-white">
+                <div class="card-body text-center">
+                    <i class="fas fa-bell fa-2x mb-2"></i>
+                    <h3>{{ notifications|length }}</h3>
+                    <p class="mb-0">नवीन सूचना</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Applications -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card border-0 shadow">
+                <div class="card-header bg-white">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">
+                            <i class="fas fa-file-alt text-primary me-2"></i>माझे अर्ज
+                        </h5>
+                        <a href="{% url 'applications:submit_application' %}" class="btn btn-primary btn-sm">
+                            <i class="fas fa-plus me-2"></i>नवा अर्ज
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    {% if applications %}
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>अर्ज क्रमांक</th>
+                                    <th>अर्जदाराचे नाव</th>
+                                    <th>स्थिती</th>
+                                    <th>प्रगती</th>
+                                    <th>सबमिट दिनांक</th>
+                                    <th>कृती</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for app in applications|slice:":5" %}
+                                <tr>
+                                    <td>
+                                        <strong class="text-primary">{{ app.application_number }}</strong>
+                                        {% if app.priority == 'premium' %}
+                                        <span class="badge bg-warning">प्राधान्य</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ app.applicant_name }} {{ app.applicant_surname }}</td>
+                                    <td>
+                                        {% if app.status == 'submitted' %}
+                                        <span class="badge bg-info">सबमिट केले</span>
+                                        {% elif app.status == 'under_review' %}
+                                        <span class="badge bg-warning">तपासणी</span>
+                                        {% elif app.status == 'approved' %}
+                                        <span class="badge bg-success">मंजूर</span>
+                                        {% elif app.status == 'rejected' %}
+                                        <span class="badge bg-danger">नाकारले</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <div class="progress" style="height: 6px;">
+                                            <div class="progress-bar" style="width: {{ app.progress_percentage }}%"></div>
+                                        </div>
+                                        <small>{{ app.progress_percentage }}%</small>
+                                    </td>
+                                    <td>{{ app.date_submitted.strftime('%d/%m/%Y') }}</td>
+                                    <td>
+                                        <a href="{% url 'applications:track_application' app.application_number %}" class="btn btn-outline-primary btn-sm">
+                                            <i class="fas fa-eye"></i> पहा
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    {% if applications|length > 5 %}
+                    <div class="text-center">
+                        <a href="#" class="btn btn-outline-primary">सर्व अर्ज पहा ({{ applications|length }})</a>
+                    </div>
+                    {% endif %}
+
+                    {% else %}
+                    <div class="text-center py-4">
+                        <i class="fas fa-file-alt fa-3x text-muted mb-3"></i>
+                        <h5 class="text-muted">अद्याप कोणताही अर्ज नाही</h5>
+                        <p class="text-muted">तुमचा पहिला अर्ज सबमिट करा</p>
+                        <a href="{% url 'applications:submit_application' %}" class="btn btn-primary">
+                            <i class="fas fa-plus me-2"></i>अर्ज सबमिट करा
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notifications -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card border-0 shadow">
+                <div class="card-header bg-white">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">
+                            <i class="fas fa-bell text-warning me-2"></i>अलीकडील सूचना
+                        </h5>
+                        <a href="{% url 'accounts:notifications' %}" class="btn btn-outline-warning btn-sm">
+                            सर्व पहा
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    {% if notifications %}
+                    {% for notification in notifications %}
+                    <div class="d-flex align-items-start mb-3 p-3 bg-light rounded">
+                        <div class="flex-shrink-0">
+                            {% if notification.notification_type == 'success' %}
+                            <i class="fas fa-check-circle text-success fa-2x"></i>
+                            {% elif notification.notification_type == 'warning' %}
+                            <i class="fas fa-exclamation-triangle text-warning fa-2x"></i>
+                            {% elif notification.notification_type == 'error' %}
+                            <i class="fas fa-times-circle text-danger fa-2x"></i>
+                            {% else %}
+                            <i class="fas fa-info-circle text-info fa-2x"></i>
+                            {% endif %}
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <h6 class="mb-1">{{ notification.title }}</h6>
+                            <p class="mb-1">{{ notification.message }}</p>
+                            <small class="text-muted">{{ notification.date_created.strftime('%d/%m/%Y %H:%M') }}</small>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <div class="text-center py-3">
+                        <i class="fas fa-bell-slash fa-3x text-muted mb-3"></i>
+                        <p class="text-muted">कोणत्याही सूचना नाहीत</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card border-0 shadow">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">
+                        <i class="fas fa-bolt me-2"></i>त्वरित कृती
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <a href="{% url 'applications:submit_application' %}" class="btn btn-outline-primary w-100 h-100 d-flex flex-column align-items-center justify-content-center p-3">
+                                <i class="fas fa-plus fa-2x mb-2"></i>
+                                <span>नवा अर्ज</span>
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a href="{% url 'applications:public_track' %}" class="btn btn-outline-success w-100 h-100 d-flex flex-column align-items-center justify-content-center p-3">
+                                <i class="fas fa-search fa-2x mb-2"></i>
+                                <span>स्थिती तपासा</span>
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a href="{% url 'accounts:profile' %}" class="btn btn-outline-info w-100 h-100 d-flex flex-column align-items-center justify-content-center p-3">
+                                <i class="fas fa-user fa-2x mb-2"></i>
+                                <span>प्रोफाइल</span>
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a href="{% url 'accounts:premium_services' %}" class="btn btn-outline-warning w-100 h-100 d-flex flex-column align-items-center justify-content-center p-3">
+                                <i class="fas fa-crown fa-2x mb-2"></i>
+                                <span>प्रीमियम सेवा</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Auto-refresh notifications every 30 seconds
+setInterval(function() {
+    fetch('/api/v1/notifications/{{ user.id }}')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const unreadCount = data.notifications.filter(n => !n.is_read).length;
+                if (unreadCount > 0) {
+                    document.title = `(${unreadCount}) डैशबोर्ड - {{ user.full_name }}`;
+                }
+            }
+        })
+        .catch(error => console.log('Notification check failed'));
+}, 30000);
+
+// Show welcome message for new users
+{% if user.date_created.date() == datetime.utcnow().date() %}
+setTimeout(function() {
+    if (!localStorage.getItem('welcomeShown_{{ user.id }}')) {
+        alert('🎉 स्वागत आहे! तुमचे खाते यशस्वीरित्या तयार झाले आहे. आता तुम्ही तुमचा अर्ज सबमिट करू शकता.');
+        localStorage.setItem('welcomeShown_{{ user.id }}', 'true');
+    }
+}, 1000);
+{% endif %}
+</script>
+{% endblock %}

@@ -1,0 +1,236 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}संपर्क - मराठा आरक्षण मंच{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Header -->
+    <div class="row mb-5">
+        <div class="col-12 text-center">
+            <h1 class="display-5 text-primary mb-3">📞 आमच्याशी संपर्क साधा</h1>
+            <p class="lead">मदतीसाठी आम्ही नेहमी तुमच्यासाठी उपलब्ध आहोत</p>
+        </div>
+    </div>
+
+    <!-- Contact Methods -->
+    <div class="row mb-5">
+        <div class="col-md-4 mb-4">
+            <div class="contact-card">
+                <div class="contact-icon">
+                    <i class="fab fa-whatsapp"></i>
+                </div>
+                <h4>WhatsApp Channel</h4>
+                <p class="text-muted">आमच्या WhatsApp चॅनेलला जॉइन करा</p>
+                <h5 class="text-primary">Maratha Arakshan Manch</h5>
+                <a href="https://wa.me/919876543210" class="btn btn-success" target="_blank">
+                    <i class="fab fa-whatsapp me-2"></i>चॅनेल जॉइन करा
+                </a>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="contact-card">
+                <div class="contact-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <h4>ईमेल पाठवा</h4>
+                <p class="text-muted">24 तासांत उत्तर मिळेल</p>
+                <h5 class="text-primary">myarakshan@gmail.com</h5>
+                <a href="mailto:myarakshan@gmail.com" class="btn btn-primary">
+                    <i class="fas fa-envelope me-2"></i>ईमेल करा
+                </a>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="contact-card">
+                <div class="contact-icon">
+                    <i class="fab fa-instagram"></i>
+                </div>
+                <h4>Instagram</h4>
+                <p class="text-muted">सोशल मीडिया वर फॉलो करा</p>
+                <h5 class="text-primary">@marathaarakshanmanch</h5>
+                <a href="https://instagram.com/marathaarakshanmanch" class="btn btn-primary" target="_blank">
+                    <i class="fab fa-instagram me-2"></i>फॉलो करा
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Form -->
+    <div class="row mb-5">
+        <div class="col-lg-8 mx-auto">
+            <div class="card border-0 shadow-lg">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0"><i class="fas fa-paper-plane me-2"></i>मेसेज पाठवा</h4>
+                </div>
+                <div class="card-body">
+                    <form id="contactForm">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="name" class="form-label">नाव <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="name" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="phone" class="form-label">फोन नंबर <span class="text-danger">*</span></label>
+                                <input type="tel" class="form-control" id="phone" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="email" class="form-label">ईमेल</label>
+                                <input type="email" class="form-control" id="email">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="subject" class="form-label">विषय <span class="text-danger">*</span></label>
+                                <select class="form-control" id="subject" required>
+                                    <option value="">विषय निवडा</option>
+                                    <option value="eligibility">पात्रता संबंधी प्रश्न</option>
+                                    <option value="documents">कागदपत्रे संबंधी मदत</option>
+                                    <option value="process">प्रक्रिया संबंधी माहिती</option>
+                                    <option value="technical">तांत्रिक समस्या</option>
+                                    <option value="other">इतर</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="message" class="form-label">संदेश <span class="text-danger">*</span></label>
+                            <textarea class="form-control" id="message" rows="5" placeholder="तुमचा प्रश्न किंवा समस्या इथे लिहा..." required></textarea>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-paper-plane me-2"></i>मेसेज पाठवा
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Removed कार्यालयीन पत्ते section as requested -->
+
+    <!-- FAQ Section -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <h3 class="text-center mb-4">वारंवार विचारले जाणारे प्रश्न</h3>
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="accordion" id="contactFAQ">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="faq1">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1">
+                                    कुणबी प्रमाणपत्रासाठी कोणती कागदपत्रे आवश्यक आहेत?
+                                </button>
+                            </h2>
+                            <div id="collapse1" class="accordion-collapse collapse show" data-bs-parent="#contactFAQ">
+                                <div class="accordion-body">
+                                    आवश्यक कागदपत्रांची यादी आणि स्पष्टीकरण <a href="{% url 'core:documents_explained' %}">या पृष्ठावर</a> दिली आहे.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="faq2">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2">
+                                    कुणबी प्रमाणपत्रासाठी अर्ज करण्याची प्रक्रिया काय आहे?
+                                </button>
+                            </h2>
+                            <div id="collapse2" class="accordion-collapse collapse" data-bs-parent="#contactFAQ">
+                                <div class="accordion-body">
+                                    संपूर्ण प्रक्रिया आणि मार्गदर्शक <a href="{% url 'core:guide' %}">या पृष्ठावर</a> तपशीलवार दिला आहे.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="faq3">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3">
+                                    माझ्या जिल्ह्यातील/तालुक्यातील कार्यालयाचा पत्ता किंवा संपर्क कुठे मिळेल?
+                                </button>
+                            </h2>
+                            <div id="collapse3" class="accordion-collapse collapse" data-bs-parent="#contactFAQ">
+                                <div class="accordion-body">
+                                    <a href="{% url 'core:district_wise_records' %}">जिल्हानिहाय कार्यालयांची यादी</a> येथे उपलब्ध आहे.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="faq4">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4">
+                                    अर्जासाठी फाईल कशी तयार करावी?
+                                </button>
+                            </h2>
+                            <div id="collapse4" class="accordion-collapse collapse" data-bs-parent="#contactFAQ">
+                                <div class="accordion-body">
+                                    फाईल तयार करण्याचे टप्पे <a href="{% url 'core:file_preparation' %}">या पृष्ठावर</a> दिले आहेत.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="faq5">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5">
+                                    अधिक मदतीसाठी संपर्क कसा साधावा?
+                                </button>
+                            </h2>
+                            <div id="collapse5" class="accordion-collapse collapse" data-bs-parent="#contactFAQ">
+                                <div class="accordion-body">
+                                    WhatsApp, ईमेल किंवा या पृष्ठावरील फॉर्मद्वारे आमच्याशी संपर्क साधू शकता. त्वरित मदतीसाठी WhatsApp वापरा.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Emergency Contact -->
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Collect form data
+    const formData = {
+        name: document.getElementById('name').value,
+        phone: document.getElementById('phone').value,
+        email: document.getElementById('email').value,
+        subject: document.getElementById('subject').value,
+        message: document.getElementById('message').value
+    };
+    
+    // Validate required fields
+    if (!formData.name || !formData.phone || !formData.subject || !formData.message) {
+        alert('कृपया सर्व आवश्यक फील्ड भरा');
+        return;
+    }
+    
+    // Show loading state
+    const submitBtn = this.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>पाठवत आहे...';
+    submitBtn.disabled = true;
+    
+    // Simulate sending (in real implementation, send to server)
+    setTimeout(() => {
+        alert('तुमचा संदेश यशस्वीरित्या पाठवला गेला! लवकरच तुम्हाला उत्तर मिळेल.');
+        this.reset();
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+    }, 2000);
+});
+
+// Phone number formatting
+document.getElementById('phone').addEventListener('input', function() {
+    let value = this.value.replace(/\D/g, '');
+    if (value.length > 10) {
+        value = value.slice(0, 10);
+    }
+    this.value = value;
+});
+</script>
+{% endblock %}

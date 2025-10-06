@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+
+{% block title %}शासन निर्णय आणि दस्तऐवज - मराठा आरक्षण मंच{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Header -->
+    <div class="row mb-5">
+        <div class="col-12 text-center">
+            <h1 class="display-5 text-primary mb-3">📚 शासन निर्णय आणि दस्तऐवज</h1>
+            <p class="lead">सर्व आवश्यक कागदपत्रे आणि सरकारी निर्णय एका ठिकाणी</p>
+        </div>
+    </div>
+
+    <!-- Document Categories -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <ul class="nav nav-pills justify-content-center mb-4" id="documentTabs">
+                <li class="nav-item">
+                    <button class="nav-link active" id="gr-tab" data-bs-toggle="pill" data-bs-target="#gr-content">
+                        शासन निर्णय (GR)
+                    </button>
+                </li>
+            </ul>
+
+            <div class="tab-content" id="documentTabContent">
+                <!-- Government Resolutions Only -->
+                <div class="tab-pane fade show active" id="gr-content">
+                    <div class="row">
+                        <!-- GR 1 -->
+                        <div class="col-md-6 mb-4">
+                            <div class="document-card">
+                                <div class="document-icon"><i class="fas fa-file-pdf"></i></div>
+                                <h5>पात्रता निकष GR</h5>
+                                <p class="text-muted">कुणबी प्रमाणपत्रासाठी पात्रता व अटी</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="badge bg-primary">PDF</span>
+                                    <div>
+                                        <a href="/static/docs/gr1.pdf" target="_blank" class="btn btn-outline-primary btn-sm me-2">
+                                            <i class="fas fa-eye"></i> पहा
+                                        </a>
+                                        <a href="/static/docs/gr1.pdf" download class="btn btn-primary btn-sm">
+                                            <i class="fas fa-download"></i> डाउनलोड
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- GR 2 -->
+                        <div class="col-md-6 mb-4">
+                            <div class="document-card">
+                                <div class="document-icon"><i class="fas fa-file-pdf"></i></div>
+                                <h5>SEBC आरक्षण व बिंदुनामावली GR</h5>
+                                <p class="text-muted">१०% SEBC आरक्षण व बिंदुनामावली संदर्भात</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="badge bg-primary">PDF</span>
+                                    <div>
+                                        <a href="/static/docs/gr2.pdf" target="_blank" class="btn btn-outline-primary btn-sm me-2">
+                                            <i class="fas fa-eye"></i> पहा
+                                        </a>
+                                        <a href="/static/docs/gr2.pdf" download class="btn btn-primary btn-sm">
+                                            <i class="fas fa-download"></i> डाउनलोड
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- GR 3 -->
+                        <div class="col-md-6 mb-4">
+                            <div class="document-card">
+                                <div class="document-icon"><i class="fas fa-file-pdf"></i></div>
+                                <h5>शिंदे समिती अहवाल GR</h5>
+                                <p class="text-muted">मराठा-कुणबी प्रमाणपत्राबाबत समिती अहवाल</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="badge bg-primary">PDF</span>
+                                    <div>
+                                        <a href="/static/docs/ShindeSamiti.pdf" target="_blank" class="btn btn-outline-primary btn-sm me-2">
+                                            <i class="fas fa-eye"></i> पहा
+                                        </a>
+                                        <a href="/static/docs/Sinde_Samiti.pdf" download class="btn btn-primary btn-sm">
+                                            <i class="fas fa-download"></i> डाउनलोड
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="document-card">
+                                <div class="document-icon"><i class="fas fa-file-pdf"></i></div>
+                                <h5>हैद्राबाद गॅझेट</h5>
+                                <p class="text-muted">स्पष्टीकरण व पुरवणी आदेश</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="badge bg-warning">PDF</span>
+                                    <div>
+                                        <a href="/static/docs/Hydrabad_Gazzette.pdf" target="_blank" class="btn btn-outline-warning btn-sm me-2">
+                                            <i class="fas fa-eye"></i> पहा
+                                        </a>
+                                        <a href="/static/docs/Hydrabad_Gazzette.pdf" download class="btn btn-warning btn-sm">
+                                            <i class="fas fa-download"></i> डाउनलोड
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- GR 4 -->
+                        <div class="col-md-6 mb-4">
+                            <div class="document-card">
+                                <div class="document-icon"><i class="fas fa-file-pdf"></i></div>
+                                <h5>अतिरिक्त शासन निर्णय</h5>
+                                <p class="text-muted">स्पष्टीकरण व पुरवणी आदेश</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="badge bg-warning">PDF</span>
+                                    <div>
+                                        <a href="/static/docs/Another.pdf" target="_blank" class="btn btn-outline-warning btn-sm me-2">
+                                            <i class="fas fa-eye"></i> पहा
+                                        </a>
+                                        <a href="/static/docs/Another.pdf" download class="btn btn-warning btn-sm">
+                                            <i class="fas fa-download"></i> डाउनलोड
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Help Section -->
+    <div class="row">
+        <div class="col-12">
+            <div class="alert alert-info border-0 shadow">
+                <h5><i class="fas fa-info-circle me-2"></i> मदत आणि संपर्क</h5>
+                <p class="mb-0">अधिक माहितीसाठी संपर्क: <strong>info@marathaarakshan.com</strong></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.checklist-item { padding: 15px; border-bottom: 1px solid #eee; display: flex; align-items: center; }
+.checklist-item:last-child { border-bottom: none; }
+.checklist-item input[type="checkbox"] { margin-right: 15px; transform: scale(1.2); }
+.checklist-item label { margin: 0; cursor: pointer; flex: 1; }
+</style>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function viewDocument(filename) { alert('दस्तऐवज उघडला जात आहे: ' + filename); }
+function downloadDocument(filename) { alert('डाउनलोड सुरू होत आहे: ' + filename); }
+function downloadChecklist() { alert('चेकलिस्ट डाउनलोड होत आहे...'); }
+function printChecklist() { window.print(); }
+</script>
+{% endblock %}

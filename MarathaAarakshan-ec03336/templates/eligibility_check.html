@@ -1,0 +1,257 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}पात्रता तपासणी - मराठा आरक्षण मंच{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Header -->
+    <div class="row mb-5">
+        <div class="col-12 text-center">
+            <h1 class="display-5 text-primary mb-3">🔍 पात्रता तपासणी</h1>
+            <p class="lead">तुम्ही कुणबी प्रमाणपत्रासाठी पात्र आहात का ते तपासा</p>
+            <div class="alert alert-warning">
+                <strong>⚠️ महत्वाचे:</strong> ही केवळ प्राथमिक तपासणी आहे. अंतिम निर्णय Scrutiny Committee घेईल.
+            </div>
+        </div>
+    </div>
+
+    <!-- Eligibility Form -->
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="eligibility-form">
+                <form id="eligibilityForm" method="post" action="{% url 'core:eligibility_check' %}">
+                    {% csrf_token %}
+                    
+                    <!-- Question 1: Residence Proof -->
+                    <div class="eligibility-question">
+                        <h5><i class="fas fa-home me-2 text-primary"></i>१. निवास पुरावा</h5>
+                        <p>तुमच्याकडे किंवा तुमच्या पूर्वजांकडे १३ ऑक्टोबर १९६७ पूर्वीचा वास्तव्य दाखला आहे का?</p>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="residence_proof" id="residence_yes" value="yes" {% if form_values.residence_proof == 'yes' %}checked{% endif %}>
+                            <label class="form-check-label" for="residence_yes">
+                                <strong>होय</strong> - माझ्याकडे १९६७ पूर्वीचा दाखला आहे
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="residence_proof" id="residence_no" value="no" {% if form_values.residence_proof == 'no' %}checked{% endif %}>
+                            <label class="form-check-label" for="residence_no">
+                                <strong>नाही</strong> - माझ्याकडे १९६७ नंतरचा दाखला आहे किंवा कोणताही दाखला नाही
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Question 2: Kunbi Relatives -->
+                    <div class="eligibility-question">
+                        <h5><i class="fas fa-users me-2 text-primary"></i>२. नातेवाईकांचे प्रमाणपत्र</h5>
+                        <p>तुमच्या कुटुंबातील कोणत्याही नातेवाईकाकडे आधीपासून कुणबी प्रमाणपत्र आहे का?</p>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="kunbi_relatives" id="relatives_yes" value="yes" {% if form_values.kunbi_relatives == 'yes' %}checked{% endif %}>
+                            <label class="form-check-label" for="relatives_yes">
+                                <strong>होय</strong> - माझ्या नातेवाईकाकडे कुणबी प्रमाणपत्र आहे
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="kunbi_relatives" id="relatives_no" value="no" {% if form_values.kunbi_relatives == 'no' %}checked{% endif %}>
+                            <label class="form-check-label" for="relatives_no">
+                                <strong>नाही</strong> - कोणत्याही नातेवाईकाकडे प्रमाणपत्र नाही
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Question 3: Land Records -->
+                    <div class="eligibility-question">
+                        <h5><i class="fas fa-seedling me-2 text-primary"></i>३. जमीन कागदपत्रे</h5>
+                        <p>तुमच्याकडे शेतीजमिनीची मालकी किंवा कसोशीचा दाखला (७/१२ उतारा) आहे का?</p>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="land_records" id="land_yes" value="yes" {% if form_values.land_records == 'yes' %}checked{% endif %}>
+                            <label class="form-check-label" for="land_yes">
+                                <strong>होय</strong> - माझ्याकडे जमिनीचे कागदपत्र आहेत
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="land_records" id="land_no" value="no" {% if form_values.land_records == 'no' %}checked{% endif %}>
+                            <label class="form-check-label" for="land_no">
+                                <strong>नाही</strong> - माझ्याकडे जमिनीचे कागदपत्र नाहीत
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Question 4: School Records -->
+                    <div class="eligibility-question">
+                        <h5><i class="fas fa-graduation-cap me-2 text-primary"></i>४. शैक्षणिक दाखले</h5>
+                        <p>तुमच्याकडे शाळा दाखले किंवा जन्म दाखले आहेत ज्यामध्ये जात नमूद आहे का?</p>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="school_records" id="school_yes" value="yes" {% if form_values.school_records == 'yes' %}checked{% endif %}>
+                            <label class="form-check-label" for="school_yes">
+                                <strong>होय</strong> - माझ्याकडे जात नमूद असलेले दाखले आहेत
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="school_records" id="school_no" value="no" {% if form_values.school_records == 'no' %}checked{% endif %}>
+                            <label class="form-check-label" for="school_no">
+                                <strong>नाही</strong> - माझ्याकडे असे दाखले नाहीत
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Question 5: Caste in Records -->
+                    <div class="eligibility-question">
+                        <h5><i class="fas fa-id-card me-2 text-primary"></i>५. कागदपत्रांमध्ये जात</h5>
+                        <p>तुमच्या कागदपत्रांमध्ये कोणती जात नमूद आहे?</p>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="caste_records" id="caste_kunbi" value="kunbi" {% if form_values.caste_records == 'kunbi' %}checked{% endif %}>
+                            <label class="form-check-label" for="caste_kunbi">
+                                <strong>कुणबी</strong> किंवा <strong>मराठा-कुणबी</strong> किंवा <strong>कुणबी-मराठा</strong>
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="caste_records" id="caste_maratha" value="maratha" {% if form_values.caste_records == 'maratha' %}checked{% endif %}>
+                            <label class="form-check-label" for="caste_maratha">
+                                फक्त <strong>मराठा</strong>
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="caste_records" id="caste_other" value="other" {% if form_values.caste_records == 'other' %}checked{% endif %}>
+                            <label class="form-check-label" for="caste_other">
+                                इतर जात किंवा कोणतीही जात नमूद नाही
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Question 6: Hyderabad Gazette -->
+                    <div class="eligibility-question">
+                        <h5><i class="fas fa-newspaper me-2 text-primary"></i>६. Hyderabad Gazette नोंद</h5>
+                        <p>तुमच्याकडे Hyderabad Gazette (Pre-1967) मधील नोंदीचा Certified Copy आहे का?</p>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gazette_record" id="gazette_yes" value="yes" {% if form_values.gazette_record == 'yes' %}checked{% endif %}>
+                            <label class="form-check-label" for="gazette_yes">
+                                <strong>होय</strong> - माझ्याकडे Gazette मधील Certified Copy आहे
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gazette_record" id="gazette_no" value="no" {% if form_values.gazette_record == 'no' %}checked{% endif %}>
+                            <label class="form-check-label" for="gazette_no">
+                                <strong>नाही</strong> - माझ्याकडे Gazette मधील नोंद नाही
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gazette_record" id="gazette_unknown" value="unknown" {% if form_values.gazette_record == 'unknown' %}checked{% endif %}>
+                            <label class="form-check-label" for="gazette_unknown">
+                                <strong>माहित नाही</strong> - मला माहिती नाही कि Gazette मध्ये नोंद आहे का
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="fas fa-check-circle me-2"></i>पात्रता तपासा
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Result Section -->
+                {% if error %}
+                <div class="alert alert-danger mt-4">{{ error }}</div>
+                {% endif %}
+
+                {% if result %}
+                <div id="eligibilityResult" class="eligibility-result mt-4">
+                    {% if result.eligible %}
+                    <div class="alert alert-success text-center">
+                        <h3><i class="fas fa-check-circle fa-3x text-success mb-3"></i>तुम्ही पात्र आहात! ✅</h3>
+                        <p class="lead">प्राथमिक तपासणीनुसार तुम्ही कुणबी प्रमाणपत्रासाठी पात्र आहात.</p>
+                        {% if result.reasons %}
+                        <div class="mt-3">
+                            <strong>सूचना:</strong>
+                            <ul class="list-unstyled mt-2">
+                                {% for reason in result.reasons %}
+                                <li>• {{ reason }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% endif %}
+                        <div class="mt-4">
+                            <h5>पुढील पायऱ्या:</h5>
+                            <ol class="text-start">
+                                <li>सर्व आवश्यक कागदपत्रे गोळा करा</li>
+                                <li>ग्रामस्तर समितीकडे अर्ज दाखल करा</li>
+                                <li>तपासणी प्रक्रियेची वाट पहा</li>
+                            </ol>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="alert alert-danger text-center">
+                        <h3><i class="fas fa-times-circle fa-3x text-danger mb-3"></i>सध्या तुम्ही पात्र नाही ❌</h3>
+                        <p class="lead">पुढील कारणांमुळे तुम्ही पात्र नाही:</p>
+                        <ul class="text-start mt-3">
+                            {% for reason in result.reasons %}
+                            <li class="mb-2">{{ reason }}</li>
+                            {% endfor %}
+                        </ul>
+                        <div class="alert alert-info mt-4">
+                            <h5><i class="fas fa-lightbulb me-2"></i>आशेचे किरण - मिळवण्याचा प्रयत्न करा:</h5>
+                            <ul class="text-start">
+                                <li>🔍 <strong>Hyderabad Gazette शोधा:</strong> Maharashtra State Archives मध्ये तुमच्या कुटुंबाची नोंद शोधा</li>
+                                <li>📄 <strong>जुने दाखले शोधा:</strong> १९६७ पूर्वीचे कोणतेही सरकारी दाखले मिळतील का तपासा</li>
+                                <li>👨‍👩‍👧‍👦 <strong>विस्तृत कुटुंब:</strong> दूरच्या नातेवाईकांकडे कुणबी प्रमाणपत्र आहे का तपासा</li>
+                                <li>🏠 <strong>जुने ग्राम दाखले:</strong> ग्रामपंचायत/पोलिस पाटील यांच्याकडून जुने दाखले मागा</li>
+                                <li>📚 <strong>शिक्षण दाखले:</strong> जुने शाळा रेकॉर्ड, TC Book तपासा</li>
+                            </ul>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Important Information -->
+    <div class="row mt-5">
+        <div class="col-lg-8 mx-auto">
+            <div class="card border-warning">
+                <div class="card-header bg-warning text-dark">
+                    <h5 class="mb-0"><i class="fas fa-exclamation-triangle me-2"></i>महत्वाचे सूचना</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="mb-0">
+                        <li>ही फक्त प्राथमिक मार्गदर्शक तपासणी आहे</li>
+                        <li>अंतिम निर्णय Scrutiny Committee घेईल</li>
+                        <li>सर्व कागदपत्रे मूळ आणि प्रमाणित असणे आवश्यक</li>
+                        <li>बनावट कागदपत्रे दिल्यास कायदेशीर कारवाई होईल</li>
+                        <li>अधिक माहितीसाठी संबंधित कार्यालयात भेट द्या</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Next Steps -->
+    <div class="row mt-4">
+        <div class="col-lg-8 mx-auto">
+            <h4 class="text-center mb-4">पुढील पायऱ्या</h4>
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <a href="{% url 'core:guide' %}" class="btn btn-outline-primary btn-lg w-100">
+                        <i class="fas fa-book me-2"></i>संपूर्ण मार्गदर्शक वाचा
+                    </a>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <a href="{% url 'core:documents' %}" class="btn btn-outline-info btn-lg w-100">
+                        <i class="fas fa-download me-2"></i>फॉर्म डाउनलोड करा
+                    </a>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <a href="{% url 'core:nearest_office' %}" class="btn btn-outline-success btn-lg w-100">
+                        <i class="fas fa-map-marker-alt me-2"></i>जवळील कार्यालय शोधा
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}{% endblock %}
