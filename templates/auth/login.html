@@ -1,0 +1,237 @@
+{% extends "base.html" %}
+
+{% block title %}लॉगिन - मराठा आरक्षण मंच{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Header -->
+    <div class="row mb-5">
+        <div class="col-12 text-center">
+            <h1 class="display-5 text-primary mb-3">🔐 लॉगिन</h1>
+            <p class="lead">तुमच्या खात्यात प्रवेश करा</p>
+        </div>
+    </div>
+
+    <!-- Login Form -->
+    <div class="row">
+        <div class="col-lg-4 mx-auto">
+            <div class="card border-0 shadow-lg">
+                <div class="card-header bg-primary text-white text-center">
+                    <h4><i class="fas fa-sign-in-alt me-2"></i>लॉगिन करा</h4>
+                </div>
+                <div class="card-body p-4">
+                    <form method="POST" action="{% url 'accounts:login' %}">
+                        <div class="mb-3">
+                            <label for="email" class="form-label">ईमेल पत्ता <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                <input type="email" class="form-control" id="email" name="email" required autofocus>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="password" class="form-label">पासवर्ड <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                <input type="password" class="form-control" id="password" name="password" required>
+                                <button class="btn btn-outline-secondary" type="button" onclick="togglePassword()">
+                                    <i class="fas fa-eye" id="toggleIcon"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 d-flex justify-content-between align-items-center">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="remember_me" name="remember_me">
+                                <label class="form-check-label" for="remember_me">
+                                    मला लक्षात ठेवा
+                                </label>
+                            </div>
+                            <a href="#" class="text-primary" data-bs-toggle="modal" data-bs-target="#forgotModal">पासवर्ड विसरलात?</a>
+                        </div>
+
+                        <div class="d-grid mb-3">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-sign-in-alt me-2"></i>लॉगिन करा
+                            </button>
+                        </div>
+
+                        <!-- Social Login -->
+                        <div class="text-center mb-3">
+                            <small class="text-muted">किंवा</small>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="button" class="btn btn-outline-danger" onclick="googleLogin()">
+                                <i class="fab fa-google me-2"></i>Google ने लॉगिन करा
+                            </button>
+                            <button type="button" class="btn btn-outline-primary" onclick="facebookLogin()">
+                                <i class="fab fa-facebook me-2"></i>Facebook ने लॉगिन करा
+                            </button>
+                        </div>
+
+                        <!-- Register Link -->
+                        <div class="text-center mt-4">
+                            <p>नवे खाते हवे? <a href="{% url 'accounts:register' %}" class="text-primary">नोंदणी करा</a></p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Access -->
+        <div class="col-lg-4 offset-lg-1">
+            <div class="card border-0 shadow">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0"><i class="fas fa-zap me-2"></i>जलद प्रवेश</h5>
+                </div>
+                <div class="card-body">
+                    <h6>खाते नसल्यास:</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <a href="{% url 'applications:public_track' %}" class="text-decoration-none">
+                                <i class="fas fa-search me-2 text-primary"></i>अर्ज स्थिती तपासा
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="{% url 'core:eligibility_check' %}" class="text-decoration-none">
+                                <i class="fas fa-check-circle me-2 text-success"></i>पात्रता तपासा
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="{% url 'core:guide' %}" class="text-decoration-none">
+                                <i class="fas fa-book me-2 text-warning"></i>मार्गदर्शक वाचा
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="{% url 'core:search' %}" class="text-decoration-none">
+                                <i class="fas fa-users me-2 text-info"></i>लाभार्थी शोधा
+                            </a>
+                        </li>
+                    </ul>
+
+                    <hr>
+
+                    <h6>डेमो खाते:</h6>
+                    <div class="alert alert-warning">
+                        <small>
+                            <strong>ईमेल:</strong> demo@marathaarakshan.com<br>
+                            <strong>पासवर्ड:</strong> demo123
+                        </small>
+                    </div>
+                    <button class="btn btn-outline-warning btn-sm w-100" onclick="demoLogin()">
+                        <i class="fas fa-play me-2"></i>डेमो करून पहा
+                    </button>
+                </div>
+            </div>
+
+            <!-- Security Notice -->
+            <div class="card border-0 mt-3">
+                <div class="card-body bg-light">
+                    <h6 class="text-danger">
+                        <i class="fas fa-shield-alt me-2"></i>सुरक्षा सूचना
+                    </h6>
+                    <ul class="small mb-0">
+                        <li>तुमचा पासवर्ड कोणाशी शेअर करू नका</li>
+                        <li>सार्वजनिक संगणकावर logout करणे विसरू नका</li>
+                        <li>संशयास्पद गतिविधी आढळल्यास संपर्क साधा</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Forgot Password Modal -->
+<div class="modal fade" id="forgotModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">पासवर्ड रीसेट</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="forgotForm">
+                    <div class="mb-3">
+                        <label for="reset_email" class="form-label">नोंदणीकृत ईमेल पत्ता</label>
+                        <input type="email" class="form-control" id="reset_email" required>
+                    </div>
+                    <div class="alert alert-info">
+                        <small>तुमच्या ईमेलवर पासवर्ड रीसेट लिंक पाठवली जाईल</small>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">रद्द करा</button>
+                <button type="button" class="btn btn-primary" onclick="sendResetLink()">रीसेट लिंक पाठवा</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function togglePassword() {
+    const passwordField = document.getElementById('password');
+    const toggleIcon = document.getElementById('toggleIcon');
+    
+    if (passwordField.type === 'password') {
+        passwordField.type = 'text';
+        toggleIcon.classList.remove('fa-eye');
+        toggleIcon.classList.add('fa-eye-slash');
+    } else {
+        passwordField.type = 'password';
+        toggleIcon.classList.remove('fa-eye-slash');
+        toggleIcon.classList.add('fa-eye');
+    }
+}
+
+function demoLogin() {
+    document.getElementById('email').value = 'demo@marathaarakshan.com';
+    document.getElementById('password').value = 'demo123';
+    document.querySelector('form').submit();
+}
+
+function googleLogin() {
+    alert('Google लॉगिन लवकरच उपलब्ध होईल');
+}
+
+function facebookLogin() {
+    alert('Facebook लॉगिन लवकरच उपलब्ध होईल');
+}
+
+function sendResetLink() {
+    const email = document.getElementById('reset_email').value;
+    
+    if (!email) {
+        alert('कृपया ईमेल पत्ता टाका');
+        return;
+    }
+    
+    // Mock API call
+    alert('पासवर्ड रीसेट लिंक ' + email + ' वर पाठवली गेली');
+    bootstrap.Modal.getInstance(document.getElementById('forgotModal')).hide();
+}
+
+// Auto-focus email field
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('email').focus();
+});
+
+// Form submission with loading state
+document.querySelector('form').addEventListener('submit', function() {
+    const submitBtn = this.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerHTML;
+    
+    submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>लॉगिन करत आहे...';
+    submitBtn.disabled = true;
+    
+    // Reset after 3 seconds if no redirect
+    setTimeout(() => {
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+    }, 3000);
+});
+</script>
+{% endblock %}

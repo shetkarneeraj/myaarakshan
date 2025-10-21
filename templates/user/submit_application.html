@@ -1,0 +1,294 @@
+{% extends "base.html" %}
+
+{% block title %}नवा अर्ज - मराठा आरक्षण मंच{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col-12 text-center">
+            <h1 class="display-6 text-primary">📝 नवा अर्ज सबमिट करा</h1>
+            <p class="text-muted">कुणबी प्रमाणपत्रासाठी अर्ज भरा</p>
+        </div>
+    </div>
+
+    <!-- Application Form -->
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card border-0 shadow">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">
+                        <i class="fas fa-file-alt me-2"></i>अर्ज फॉर्म
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{% url 'applications:submit_application' %}">
+                        <!-- Personal Information -->
+                        <div class="mb-4">
+                            <h6 class="text-primary">वैयक्तिक माहिती</h6>
+                            <hr>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="applicant_name" class="form-label">अर्जदाराचे नाव <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="applicant_name" name="applicant_name" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="applicant_surname" class="form-label">आडनाव <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="applicant_surname" name="applicant_surname" required>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="birth_year" class="form-label">जन्म वर्ष</label>
+                                <input type="number" class="form-control" id="birth_year" name="birth_year" min="1920" max="2020">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="contact_number" class="form-label">संपर्क क्रमांक <span class="text-danger">*</span></label>
+                                <input type="tel" class="form-control" id="contact_number" name="contact_number" pattern="[0-9]{10}" required>
+                            </div>
+                        </div>
+
+                        <!-- Location Information -->
+                        <div class="mb-4">
+                            <h6 class="text-primary">स्थान माहिती</h6>
+                            <hr>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label for="division_id" class="form-label">विभाग <span class="text-danger">*</span></label>
+                                <select class="form-select" id="division_id" name="division_id" required>
+                                    <option value="">विभाग निवडा</option>
+                                    {% for division in divisions %}
+                                    <option value="{{ division.id }}">{{ division.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="district_id" class="form-label">जिल्हा <span class="text-danger">*</span></label>
+                                <select class="form-select" id="district_id" name="district_id" disabled required>
+                                    <option value="">पहिले विभाग निवडा</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="village_id" class="form-label">गाव <span class="text-danger">*</span></label>
+                                <select class="form-select" id="village_id" name="village_id" disabled required>
+                                    <option value="">पहिले जिल्हा निवडा</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Application Type -->
+                        <div class="mb-4">
+                            <h6 class="text-primary">अर्जाचा प्रकार</h6>
+                            <hr>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12 mb-3">
+                                <div class="card bg-light">
+                                    <div class="card-body">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="application_type" id="fresh_application" value="fresh" checked>
+                                            <label class="form-check-label" for="fresh_application">
+                                                <strong>नवीन अर्ज</strong> - पहिल्यांदा अर्ज करत आहात
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="application_type" id="reapplication" value="reapplication">
+                                            <label class="form-check-label" for="reapplication">
+                                                <strong>पुनर्अर्ज</strong> - पूर्वीचा अर्ज नाकारला गेला होता
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Documents Checklist -->
+                        <div class="mb-4">
+                            <h6 class="text-primary">आवश्यक कागदपत्रे</h6>
+                            <hr>
+                            <div class="alert alert-info">
+                                <strong>सूचना:</strong> खालील कागदपत्रे तुमच्याकडे तयार असावीत
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12 mb-3">
+                                <div class="checklist">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="doc1" required>
+                                        <label class="form-check-label" for="doc1">
+                                            जन्म प्रमाणपत्र (जात नमूद असलेले)
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="doc2" required>
+                                        <label class="form-check-label" for="doc2">
+                                            ७/१२ उतारा (शेतजमिनीचा दाखला)
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="doc3" required>
+                                        <label class="form-check-label" for="doc3">
+                                            निवासी दाखला (१३ ऑक्टोबर १९६७ पूर्वीचा)
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="doc4">
+                                        <label class="form-check-label" for="doc4">
+                                            नातेवाईकांचे कुणबी प्रमाणपत्र (असल्यास)
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="doc5">
+                                        <label class="form-check-label" for="doc5">
+                                            शाळा दाखले (जात नमूद असलेले)
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Declaration -->
+                        <div class="mb-4">
+                            <h6 class="text-primary">घोषणापत्र</h6>
+                            <hr>
+                        </div>
+
+                        <div class="alert alert-warning">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="declaration" required>
+                                <label class="form-check-label" for="declaration">
+                                    मी घोषणा करतो/करते की वरील सर्व माहिती खरी आहे. बनावट कागदपत्रे देणे हा गुन्हा आहे आणि त्यासाठी कायदेशीर कारवाई होऊ शकते.
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-success btn-lg">
+                                <i class="fas fa-paper-plane me-2"></i>अर्ज सबमिट करा
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Help Section -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card bg-light border-0">
+                <div class="card-body">
+                    <h5 class="text-primary">मदतीची गरज?</h5>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <p><i class="fas fa-book text-info me-2"></i><a href="{% url 'core:guide' %}">संपूर्ण मार्गदर्शक वाचा</a></p>
+                        </div>
+                        <div class="col-md-4">
+                            <p><i class="fas fa-phone text-success me-2"></i><a href="tel:+919876543210">हेल्पलाइन: +91 98765 43210</a></p>
+                        </div>
+                        <div class="col-md-4">
+                            <p><i class="fas fa-question-circle text-warning me-2"></i><a href="{% url 'core:faq' %}">वारंवार विचारले जाणारे प्रश्न</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Location cascade
+document.getElementById('division_id').addEventListener('change', function() {
+    const divisionId = this.value;
+    const districtSelect = document.getElementById('district_id');
+    const villageSelect = document.getElementById('village_id');
+    
+    districtSelect.innerHTML = '<option value="">लोड हो रहा है...</option>';
+    districtSelect.disabled = true;
+    villageSelect.innerHTML = '<option value="">पहिले जिल्हा निवडा</option>';
+    villageSelect.disabled = true;
+
+    if (divisionId) {
+        fetch(`/api/districts/${divisionId}`)
+            .then(response => response.json())
+            .then(districts => {
+                districtSelect.innerHTML = '<option value="">जिल्हा निवडा</option>';
+                districts.forEach(district => {
+                    districtSelect.innerHTML += `<option value="${district.id}">${district.name}</option>`;
+                });
+                districtSelect.disabled = false;
+            });
+    } else {
+        districtSelect.innerHTML = '<option value="">पहिले विभाग निवडा</option>';
+    }
+});
+
+document.getElementById('district_id').addEventListener('change', function() {
+    const districtId = this.value;
+    const villageSelect = document.getElementById('village_id');
+    
+    villageSelect.innerHTML = '<option value="">लोड हो रहा है...</option>';
+    villageSelect.disabled = true;
+
+    if (districtId) {
+        fetch(`/api/villages/${districtId}`)
+            .then(response => response.json())
+            .then(villages => {
+                villageSelect.innerHTML = '<option value="">गाव निवडा</option>';
+                villages.forEach(village => {
+                    villageSelect.innerHTML += `<option value="${village.id}">${village.name}</option>`;
+                });
+                villageSelect.disabled = false;
+            });
+    } else {
+        villageSelect.innerHTML = '<option value="">पहिले जिल्हा निवडा</option>';
+    }
+});
+
+// Phone number formatting
+document.getElementById('contact_number').addEventListener('input', function() {
+    let value = this.value.replace(/\D/g, '');
+    if (value.length > 10) value = value.slice(0, 10);
+    this.value = value;
+});
+
+// Form validation
+document.querySelector('form').addEventListener('submit', function(e) {
+    const requiredDocs = document.querySelectorAll('input[type="checkbox"][required]');
+    const uncheckedRequired = Array.from(requiredDocs).filter(checkbox => !checkbox.checked);
+    
+    if (uncheckedRequired.length > 0) {
+        e.preventDefault();
+        alert('कृपया सर्व आवश्यक कागदपत्रे तयार असल्याची पुष्टी करा');
+        return;
+    }
+    
+    if (!document.getElementById('declaration').checked) {
+        e.preventDefault();
+        alert('कृपया घोषणापत्र स्वीकारा');
+        return;
+    }
+    
+    // Show confirmation
+    if (!confirm('तुम्ही खात्री आहात की सर्व माहिती योग्य आहे आणि अर्ज सबमिट करायचा आहे?')) {
+        e.preventDefault();
+        return;
+    }
+    
+    // Show loading state
+    const submitBtn = this.querySelector('button[type="submit"]');
+    submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>सबमिट करत आहे...';
+    submitBtn.disabled = true;
+});
+</script>
+{% endblock %}

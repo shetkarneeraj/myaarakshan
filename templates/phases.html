@@ -1,0 +1,458 @@
+{% extends "base.html" %}
+
+{% block title %}प्रकल्प टप्पे - मराठा आरक्षण मंच{% endblock %}
+
+{% block content %}
+<!-- Language Switcher -->
+<div class="language-switcher">
+    <button class="language-btn active" onclick="switchLanguage('mr')">मराठी</button>
+    <button class="language-btn" onclick="switchLanguage('en')">English</button>
+</div>
+
+<div class="container py-5">
+    <!-- Header -->
+    <div class="row mb-5">
+        <div class="col-12 text-center">
+            <h1 class="display-5 text-primary mb-3">🚀 प्रकल्प विकास टप्पे</h1>
+            <p class="lead">आमच्या वेबसाइटचा विकास टप्प्याटप्प्याने</p>
+        </div>
+    </div>
+
+    <!-- Phase 1 - Completed -->
+    <div class="phase-section">
+        <h2 class="phase-title">टप्पा 1 - मूलभूत सुविधा ✅</h2>
+        <div class="phase-grid">
+            <div class="phase-card">
+                <div class="phase-card-icon">
+                    <i class="fas fa-book"></i>
+                </div>
+                <h5>मार्गदर्शक</h5>
+                <p>संपूर्ण प्रक्रिया आणि पात्रता माहिती</p>
+                <span class="badge bg-success">पूर्ण</span>
+            </div>
+
+            <div class="phase-card">
+                <div class="phase-card-icon">
+                    <i class="fas fa-sitemap"></i>
+                </div>
+                <h5>फ्लोचार्ट</h5>
+                <p>step-by-step प्रक्रिया दृश्य स्वरूपात</p>
+                <span class="badge bg-success">पूर्ण</span>
+            </div>
+
+            <div class="phase-card">
+                <div class="phase-card-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h5>पात्रता तपासणी</h5>
+                <p>तुम्ही पात्र आहात का ते तपासा</p>
+                <span class="badge bg-success">पूर्ण</span>
+            </div>
+
+            <div class="phase-card">
+                <div class="phase-card-icon">
+                    <i class="fas fa-file-pdf"></i>
+                </div>
+                <h5>शासन निर्णय</h5>
+                <p>सर्व GR आणि कागदपत्रे एका ठिकाणी</p>
+                <span class="badge bg-success">पूर्ण</span>
+            </div>
+
+            <div class="phase-card">
+                <div class="phase-card-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h5>लाभार्थी यादी</h5>
+                <p>गावनिहाय आरक्षण धारक</p>
+                <span class="badge bg-success">पूर्ण</span>
+            </div>
+
+            <div class="phase-card">
+                <div class="phase-card-icon">
+                    <i class="fas fa-newspaper"></i>
+                </div>
+                <h5>बातम्या</h5>
+                <p>ताज्या अपडेट्स आणि सरकारी निर्णय</p>
+                <span class="badge bg-success">पूर्ण</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Phase 2 - In Progress -->
+    <div class="phase-section">
+        <h2 class="phase-title">टप्पा 2 - प्रगत सुविधा 🔄</h2>
+        <div class="phase-grid">
+            <div class="phase-card">
+                <div class="phase-card-icon">
+                    <i class="fas fa-list-check"></i>
+                </div>
+                <h5>चेकलिस्ट PDF</h5>
+                <p>डाउनलोड करण्यायोग्य चेकलिस्ट</p>
+                <span class="badge bg-success">पूर्ण</span>
+            </div>
+
+            <div class="phase-card">
+                <div class="phase-card-icon">
+                    <i class="fas fa-question-circle"></i>
+                </div>
+                <h5>FAQ</h5>
+                <p>वारंवार विचारले जाणारे प्रश्न</p>
+                <span class="badge bg-success">पूर्ण</span>
+            </div>
+
+            <div class="phase-card">
+                <div class="phase-card-icon">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <h5>जवळील कार्यालय</h5>
+                <p>तुमच्या जिल्ह्यातील कार्यालये</p>
+                <span class="badge bg-success">पूर्ण</span>
+            </div>
+
+            <div class="phase-card">
+                <div class="phase-card-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <h5>यशोगाथा</h5>
+                <p>वापरकर्त्यांचे अनुभव आणि टिप्स</p>
+                <span class="badge bg-success">पूर्ण</span>
+            </div>
+
+            <div class="phase-card">
+                <div class="phase-card-icon">
+                    <i class="fas fa-language"></i>
+                </div>
+                <h5>भाषा बदल</h5>
+                <p>मराठी आणि इंग्रजी भाषा</p>
+                <span class="badge bg-warning">चालू</span>
+            </div>
+
+            <div class="phase-card coming-soon">
+                <div class="phase-card-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <h5>मोबाइल अॅप</h5>
+                <p>स्मार्टफोनसाठी विशेष अॅप</p>
+                <span class="badge bg-secondary">लवकरच</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Phase 3 - Coming Soon -->
+    <div class="phase-section">
+        <h2 class="phase-title">टप्पा 3 - व्यावसायिक सुविधा 🔮</h2>
+        <div class="phase-grid">
+            <div class="phase-card coming-soon">
+                <div class="phase-card-icon">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <h5>वापरकर्ता खाते</h5>
+                <p>वैयक्तिक प्रोफाइल आणि डैशबोर्ड</p>
+                <span class="badge bg-secondary">लवकरच</span>
+            </div>
+
+            <div class="phase-card coming-soon">
+                <div class="phase-card-icon">
+                    <i class="fas fa-tasks"></i>
+                </div>
+                <h5>स्टेटस ट्रॅकर</h5>
+                <p>अर्जाची स्थिती रिअल टाइम ट्रॅक करा</p>
+                <span class="badge bg-secondary">लवकरच</span>
+            </div>
+
+            <div class="phase-card coming-soon">
+                <div class="phase-card-icon">
+                    <i class="fas fa-bell"></i>
+                </div>
+                <h5>सूचना सेवा</h5>
+                <p>SMS/Email द्वारे अपडेट्स</p>
+                <span class="badge bg-secondary">लवकरच</span>
+            </div>
+
+            <div class="phase-card coming-soon">
+                <div class="phase-card-icon">
+                    <i class="fas fa-video"></i>
+                </div>
+                <h5>व्हिडिओ मार्गदर्शन</h5>
+                <p>प्रक्रियेचे व्हिडिओ ट्यूटोरियल</p>
+                <span class="badge bg-secondary">लवकरच</span>
+            </div>
+
+            <div class="phase-card coming-soon">
+                <div class="phase-card-icon">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <h5>लाइव्ह चॅट</h5>
+                <p>तत्काळ मदत आणि सपोर्ट</p>
+                <span class="badge bg-secondary">लवकरच</span>
+            </div>
+
+            <div class="phase-card coming-soon">
+                <div class="phase-card-icon">
+                    <i class="fas fa-rupee-sign"></i>
+                </div>
+                <h5>प्रीमियम सेवा</h5>
+                <p>जलद प्रक्रिया आणि प्राधान्य सपोर्ट</p>
+                <span class="badge bg-secondary">लवकरच</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Roadmap Timeline -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <h3 class="text-center mb-4">विकास वेळापत्रक</h3>
+            <div class="timeline-container">
+                <div class="timeline-item completed">
+                    <div class="timeline-marker">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <h5>सप्टेंबर 2024</h5>
+                        <p>टप्पा 1 पूर्ण - मूलभूत सुविधा</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item active">
+                    <div class="timeline-marker">
+                        <i class="fas fa-cog fa-spin"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <h5>ऑक्टोबर 2024</h5>
+                        <p>टप्पा 2 - प्रगत सुविधा आणि मोबाइल अॅप</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item upcoming">
+                    <div class="timeline-marker">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <h5>नोव्हेंबर 2024</h5>
+                        <p>टप्पा 3 - व्यावसायिक सुविधा आणि AI इंटिग्रेशन</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item upcoming">
+                    <div class="timeline-marker">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <h5>डिसेंबर 2024</h5>
+                        <p>संपूर्ण लॉन्च आणि सार्वजनिक प्रचार</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Feature Requests -->
+    <div class="row mt-5">
+        <div class="col-lg-8 mx-auto">
+            <div class="card border-0 shadow-lg">
+                <div class="card-header bg-primary text-white text-center">
+                    <h4><i class="fas fa-lightbulb me-2"></i>नवीन सुविधेची सूचना</h4>
+                </div>
+                <div class="card-body">
+                    <p class="text-center">तुम्हाला कोणती नवीन सुविधा हवी आहे? आम्हाला सांगा!</p>
+                    
+                    <form id="featureRequestForm">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="feature_name" class="form-label">नाव</label>
+                                <input type="text" class="form-control" id="feature_name" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="feature_email" class="form-label">ईमेल</label>
+                                <input type="email" class="form-control" id="feature_email">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="feature_suggestion" class="form-label">सुविधेची सूचना</label>
+                            <textarea class="form-control" id="feature_suggestion" rows="4" placeholder="तुम्हाला कोणती नवीन सुविधा हवी आहे त्याचे वर्णन करा..." required></textarea>
+                        </div>
+                        
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-paper-plane me-2"></i>सूचना पाठवा
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Newsletter Signup -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card bg-gradient-primary text-white border-0">
+                <div class="card-body text-center py-5">
+                    <h3>अपडेट्स मिळवा</h3>
+                    <p class="lead">नवीन सुविधा आणि अपडेट्सची माहिती मिळवण्यासाठी सबस्क्राइब करा</p>
+                    <div class="row justify-content-center">
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <input type="email" class="form-control" placeholder="तुमचा ईमेल पत्ता" id="newsletterEmail">
+                                <button class="btn btn-light" type="button" onclick="subscribeNewsletter()">
+                                    <i class="fas fa-paper-plane me-1"></i>सबस्क्राइब
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+/* Timeline Styles */
+.timeline-container {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.timeline-container::before {
+    content: '';
+    position: absolute;
+    left: 30px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: #dee2e6;
+}
+
+.timeline-item {
+    position: relative;
+    padding-left: 80px;
+    margin-bottom: 30px;
+}
+
+.timeline-marker {
+    position: absolute;
+    left: 20px;
+    top: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+}
+
+.timeline-item.completed .timeline-marker {
+    background: #28a745;
+}
+
+.timeline-item.active .timeline-marker {
+    background: #007bff;
+}
+
+.timeline-item.upcoming .timeline-marker {
+    background: #6c757d;
+}
+
+.timeline-content h5 {
+    color: var(--primary-color);
+    margin-bottom: 5px;
+}
+
+@media (max-width: 768px) {
+    .timeline-container::before {
+        left: 20px;
+    }
+    
+    .timeline-marker {
+        left: 10px;
+        width: 30px;
+        height: 30px;
+        font-size: 1rem;
+    }
+    
+    .timeline-item {
+        padding-left: 60px;
+    }
+}
+</style>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Language switcher
+function switchLanguage(lang) {
+    document.querySelectorAll('.language-btn').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+    
+    if (lang === 'en') {
+        alert('English version coming soon! / इंग्रजी आवृत्ती लवकरच येणार!');
+    }
+}
+
+// Feature request form
+document.getElementById('featureRequestForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const formData = {
+        name: document.getElementById('feature_name').value,
+        email: document.getElementById('feature_email').value,
+        suggestion: document.getElementById('feature_suggestion').value
+    };
+    
+    // Show loading state
+    const submitBtn = this.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>पाठवत आहे...';
+    submitBtn.disabled = true;
+    
+    // Simulate sending
+    setTimeout(() => {
+        alert('धन्यवाद! तुमची सूचना आम्हाला मिळाली. आम्ही तिचा विचार करू.');
+        this.reset();
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+    }, 2000);
+});
+
+// Newsletter subscription
+function subscribeNewsletter() {
+    const email = document.getElementById('newsletterEmail').value;
+    
+    if (!email) {
+        alert('कृपया ईमेल पत्ता टाका');
+        return;
+    }
+    
+    if (!email.includes('@')) {
+        alert('कृपया योग्य ईमेल पत्ता टाका');
+        return;
+    }
+    
+    alert('धन्यवाद! तुम्ही यशस्वीरित्या सबस्क्राइब झाला आहात.');
+    document.getElementById('newsletterEmail').value = '';
+}
+
+// Animate counters when in view
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('animate');
+        }
+    });
+}, observerOptions);
+
+// Observe all phase cards
+document.querySelectorAll('.phase-card').forEach(card => {
+    observer.observe(card);
+});
+</script>
+{% endblock %}

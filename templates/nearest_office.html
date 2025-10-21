@@ -1,0 +1,405 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}जवळील कार्यालय - मराठा आरक्षण मंच{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Header -->
+    <div class="row mb-5">
+        <div class="col-12 text-center">
+            <h1 class="display-5 text-primary mb-3">🏢 जवळील कार्यालय शोधा</h1>
+            <p class="lead">तुमच्या जिल्ह्यातील संबंधित कार्यालयांची माहिती</p>
+        </div>
+    </div>
+
+    <!-- Location Selector -->
+    <div class="row mb-5">
+        <div class="col-lg-6 mx-auto">
+            <div class="card border-0 shadow">
+                <div class="card-body">
+                    <h5 class="card-title text-center">तुमचा जिल्हा निवडा</h5>
+                    <select class="form-select form-select-lg" id="districtSelect">
+                        <option value="">जिल्हा निवडा...</option>
+                        <option value="aurangabad">छत्रपती संभाजीनगर</option>
+                        <option value="jalna">जालना</option>
+                        <option value="hingoli">हिंगोली</option>
+                        <option value="parbhani">परभणी</option>
+                        <option value="nanded">नांदेड</option>
+                        <option value="latur">लातूर</option>
+                        <option value="osmanabad">उस्मानाबाद</option>
+                        <option value="beed">बीड</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Office Listings -->
+    <div id="officeListings">
+        
+        <!-- Default view -->
+        <div id="defaultView" class="text-center py-5">
+            <i class="fas fa-map-marker-alt fa-3x text-muted mb-3"></i>
+            <h3 class="text-muted">जिल्हा निवडा</h3>
+            <p class="text-muted">तुमच्या जिल्ह्यातील कार्यालयांची माहिती पाहण्यासाठी वरून जिल्हा निवडा</p>
+        </div>
+
+        <!-- Aurangabad Offices -->
+        <div id="aurangabad-offices" class="office-group" style="display: none;">
+            <h3 class="mb-4">छत्रपती संभाजीनगर जिल्हा - कार्यालये</h3>
+            
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="card border-0 shadow hover-card">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-auto">
+                                    <div class="office-icon bg-primary">
+                                        <i class="fas fa-building text-white"></i>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <h5 class="card-title mb-1">जिल्हा कलेक्टर कार्यालय</h5>
+                                    <p class="text-muted mb-2">मुख्य कार्यालय - छत्रपती संभाजीनगर</p>
+                                    <p class="mb-1"><i class="fas fa-map-marker-alt text-primary me-2"></i>जिल्हा कलेक्टर कार्यालय, छत्रपती संभाजीनगर - 431001</p>
+                                    <p class="mb-1"><i class="fas fa-phone text-success me-2"></i>0240-2123456, 2123457</p>
+                                    <p class="mb-1"><i class="fas fa-envelope text-info me-2"></i>collector.aurangabad@maharashtra.gov.in</p>
+                                    <p class="mb-2"><i class="fas fa-clock text-warning me-2"></i>सकाळी 10:00 ते संध्याकाळी 5:00</p>
+                                    <div class="d-flex gap-2">
+                                        <a href="https://maps.google.com" target="_blank" class="btn btn-outline-primary btn-sm">
+                                            <i class="fas fa-map me-1"></i>Map
+                                        </a>
+                                        <a href="tel:02402123456" class="btn btn-outline-success btn-sm">
+                                            <i class="fas fa-phone me-1"></i>Call
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <div class="card border-0 shadow hover-card">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-auto">
+                                    <div class="office-icon bg-success">
+                                        <i class="fas fa-user-tie text-white"></i>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <h5 class="card-title mb-1">तहसील कार्यालय</h5>
+                                    <p class="text-muted mb-2">छत्रपती संभाजीनगर तहसील</p>
+                                    <p class="mb-1"><i class="fas fa-map-marker-alt text-primary me-2"></i>तहसील कार्यालय, छत्रपती संभाजीनगर</p>
+                                    <p class="mb-1"><i class="fas fa-phone text-success me-2"></i>0240-2445566</p>
+                                    <p class="mb-1"><i class="fas fa-envelope text-info me-2"></i>tehsil.aurangabad@gov.in</p>
+                                    <p class="mb-2"><i class="fas fa-clock text-warning me-2"></i>सकाळी 10:30 ते संध्याकाळी 4:30</p>
+                                    <div class="d-flex gap-2">
+                                        <a href="https://maps.google.com" target="_blank" class="btn btn-outline-primary btn-sm">
+                                            <i class="fas fa-map me-1"></i>Map
+                                        </a>
+                                        <a href="tel:02402445566" class="btn btn-outline-success btn-sm">
+                                            <i class="fas fa-phone me-1"></i>Call
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <div class="card border-0 shadow hover-card">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-auto">
+                                    <div class="office-icon bg-info">
+                                        <i class="fas fa-file-alt text-white"></i>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <h5 class="card-title mb-1">महसूल विभाग</h5>
+                                    <p class="text-muted mb-2">कागदपत्रे व प्रमाणपत्रे</p>
+                                    <p class="mb-1"><i class="fas fa-map-marker-alt text-primary me-2"></i>महसूल भवन, छत्रपती संभाजीनगर</p>
+                                    <p class="mb-1"><i class="fas fa-phone text-success me-2"></i>0240-2334455</p>
+                                    <p class="mb-1"><i class="fas fa-envelope text-info me-2"></i>revenue.aurangabad@gov.in</p>
+                                    <p class="mb-2"><i class="fas fa-clock text-warning me-2"></i>सकाळी 11:00 ते संध्याकाळी 4:00</p>
+                                    <div class="d-flex gap-2">
+                                        <a href="https://maps.google.com" target="_blank" class="btn btn-outline-primary btn-sm">
+                                            <i class="fas fa-map me-1"></i>Map
+                                        </a>
+                                        <a href="tel:02402334455" class="btn btn-outline-success btn-sm">
+                                            <i class="fas fa-phone me-1"></i>Call
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <div class="card border-0 shadow hover-card">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-auto">
+                                    <div class="office-icon bg-warning">
+                                        <i class="fas fa-home text-white"></i>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <h5 class="card-title mb-1">ग्रामपंचायत कार्यालय</h5>
+                                    <p class="text-muted mb-2">स्थानिक पुरावे व दाखले</p>
+                                    <p class="mb-1"><i class="fas fa-map-marker-alt text-primary me-2"></i>तुमच्या गावचे ग्रामपंचायत</p>
+                                    <p class="mb-1"><i class="fas fa-phone text-success me-2"></i>संबंधित ग्रामपंचायत</p>
+                                    <p class="mb-1"><i class="fas fa-user text-info me-2"></i>ग्रामपंचायत सचिव</p>
+                                    <p class="mb-2"><i class="fas fa-clock text-warning me-2"></i>सकाळी 10:00 ते संध्याकाळी 5:00</p>
+                                    <div class="d-flex gap-2">
+                                        <button class="btn btn-outline-info btn-sm" onclick="findNearestGramPanchayat()">
+                                            <i class="fas fa-search me-1"></i>Find
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Other districts would have similar structure -->
+        <div id="jalna-offices" class="office-group" style="display: none;">
+            <h3 class="mb-4">जालना जिल्हा - कार्यालये</h3>
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="card border-0 shadow hover-card">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-auto">
+                                    <div class="office-icon bg-primary">
+                                        <i class="fas fa-building text-white"></i>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <h5 class="card-title mb-1">जिल्हा कलेक्टर कार्यालय</h5>
+                                    <p class="text-muted mb-2">मुख्य कार्यालय - जालना</p>
+                                    <p class="mb-1"><i class="fas fa-map-marker-alt text-primary me-2"></i>जिल्हा कलेक्टर कार्यालय, जालना - 431203</p>
+                                    <p class="mb-1"><i class="fas fa-phone text-success me-2"></i>02482-123456</p>
+                                    <p class="mb-1"><i class="fas fa-envelope text-info me-2"></i>collector.jalna@maharashtra.gov.in</p>
+                                    <p class="mb-2"><i class="fas fa-clock text-warning me-2"></i>सकाळी 10:00 ते संध्याकाळी 5:00</p>
+                                    <div class="d-flex gap-2">
+                                        <a href="https://maps.google.com" target="_blank" class="btn btn-outline-primary btn-sm">
+                                            <i class="fas fa-map me-1"></i>Map
+                                        </a>
+                                        <a href="tel:02482123456" class="btn btn-outline-success btn-sm">
+                                            <i class="fas fa-phone me-1"></i>Call
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add more offices for Jalna -->
+            </div>
+        </div>
+
+        <!-- Similar structure for other districts -->
+    </div>
+
+    <!-- Important Information -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="alert alert-info border-0 shadow">
+                <h5><i class="fas fa-info-circle me-2"></i>महत्वाच्या सूचना</h5>
+                <ul class="mb-0">
+                    <li><strong>कार्यवेळ:</strong> सरकारी सुट्टीच्या दिवशी बंद</li>
+                    <li><strong>कागदपत्रे:</strong> भेटीला जाताना सर्व आवश्यक कागदपत्रे घेऊन जा</li>
+                    <li><strong>अपॉइंटमेंट:</strong> महत्वाच्या कामासाठी आधी फोन करून वेळ निश्चित करा</li>
+                    <li><strong>वेळ:</strong> दुपारी 1:00 ते 2:00 दरम्यान लंच ब्रेक असतो</li>
+                    <li><strong>ऑनलाइन सेवा:</strong> <a href="https://www.maharashtra.gov.in/1125/One-District-One-Plan" target="_blank" class="text-decoration-none fw-bold">महाराष्ट्र सरकार अधिकृत वेबसाइट</a> - जवळील कार्यालय शोधण्यासाठी</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Online Services Section -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card border-0 shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0"><i class="fas fa-globe me-2"></i>ऑनलाइन सेवा केंद्रे</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <div class="service-card text-center p-3 border rounded">
+                                <i class="fas fa-building fa-2x text-primary mb-2"></i>
+                                <h6>महाराष्ट्र सरकार</h6>
+                                <p class="small text-muted">अधिकृत वेबसाइट</p>
+                                <a href="https://www.maharashtra.gov.in" target="_blank" class="btn btn-outline-primary btn-sm">
+                                    <i class="fas fa-external-link-alt me-1"></i>भेट द्या
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="service-card text-center p-3 border rounded">
+                                <i class="fas fa-file-alt fa-2x text-success mb-2"></i>
+                                <h6>आपले सरकार</h6>
+                                <p class="small text-muted">सेवा केंद्र शोधा</p>
+                                <a href="https://aaplesarkar.mahaonline.gov.in" target="_blank" class="btn btn-outline-success btn-sm">
+                                    <i class="fas fa-external-link-alt me-1"></i>भेट द्या
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="service-card text-center p-3 border rounded">
+                                <i class="fas fa-map-marker-alt fa-2x text-info mb-2"></i>
+                                <h6>Google Maps</h6>
+                                <p class="small text-muted">जवळील कार्यालय शोधा</p>
+                                <a href="https://maps.google.com" target="_blank" class="btn btn-outline-info btn-sm">
+                                    <i class="fas fa-external-link-alt me-1"></i>भेट द्या
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Help -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card bg-light border-0">
+                <div class="card-body text-center">
+                    <h4>कार्यालयाची माहिती सापडत नाही?</h4>
+                    <p class="text-muted">आमच्याशी संपर्क साधा - आम्ही तुम्हाला योग्य कार्यालयाची माहिती देऊ</p>
+                    <div class="row justify-content-center">
+                        <div class="col-md-3 mb-2">
+                            <a href="{% url 'core:contact' %}" class="btn btn-primary w-100">
+                                <i class="fas fa-envelope me-2"></i>संपर्क करा
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-2">
+                            <a href="tel:+919876543210" class="btn btn-success w-100">
+                                <i class="fas fa-phone me-2"></i>मदत हॉटलाइन
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.office-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.office-group {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.service-card {
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    border-color: var(--primary-color) !important;
+}
+</style>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.getElementById('districtSelect').addEventListener('change', function() {
+    const selectedDistrict = this.value;
+    
+    // Hide all office groups
+    document.querySelectorAll('.office-group').forEach(group => {
+        group.style.display = 'none';
+    });
+    
+    // Hide default view
+    document.getElementById('defaultView').style.display = 'none';
+    
+    if (selectedDistrict) {
+        // Show selected district offices
+        const officeGroup = document.getElementById(selectedDistrict + '-offices');
+        if (officeGroup) {
+            officeGroup.style.display = 'block';
+        } else {
+            // Show coming soon message for districts not yet added
+            showComingSoon(selectedDistrict);
+        }
+    } else {
+        // Show default view
+        document.getElementById('defaultView').style.display = 'block';
+    }
+});
+
+function showComingSoon(district) {
+    const container = document.getElementById('officeListings');
+    const comingSoonDiv = document.createElement('div');
+    comingSoonDiv.className = 'text-center py-5';
+    comingSoonDiv.innerHTML = `
+        <i class="fas fa-clock fa-3x text-warning mb-3"></i>
+        <h3 class="text-warning">${getDistrictName(district)} जिल्ह्याची माहिती लवकरच...</h3>
+        <p class="text-muted">या जिल्ह्यातील कार्यालयांची माहिती लवकरच उपलब्ध होईल</p>
+        <a href="${% url 'core:contact' %}" class="btn btn-primary">
+            <i class="fas fa-envelope me-2"></i>माहितीसाठी संपर्क करा
+        </a>
+    `;
+    
+    // Remove existing coming soon messages
+    const existingComingSoon = container.querySelector('.text-center.py-5:not(#defaultView)');
+    if (existingComingSoon) {
+        existingComingSoon.remove();
+    }
+    
+    container.appendChild(comingSoonDiv);
+}
+
+function getDistrictName(englishName) {
+    const districtNames = {
+        'hingoli': 'हिंगोली',
+        'parbhani': 'परभणी', 
+        'nanded': 'नांदेड',
+        'latur': 'लातूर',
+        'osmanabad': 'उस्मानाबाद',
+        'beed': 'बीड'
+    };
+    return districtNames[englishName] || englishName;
+}
+
+function findNearestGramPanchayat() {
+    alert('तुमचे गावचे नाव आमच्याकडे पाठवा - आम्ही तुम्हाला ग्रामपंचायतची संपूर्ण माहिती देऊ.\n\nWhatsApp: +91 98765 43210');
+}
+
+// Auto-detect user location (if permission granted)
+if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+        // In a real app, you would use this to suggest nearest offices
+        console.log('User location detected:', position.coords.latitude, position.coords.longitude);
+    });
+}
+</script>
+{% endblock %}

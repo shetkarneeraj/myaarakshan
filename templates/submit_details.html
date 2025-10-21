@@ -1,0 +1,187 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}माहिती भरा - मराठा आरक्षण मंच{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Page Header -->
+    <div class="row mb-5">
+        <div class="col-12 text-center">
+            <h1 class="display-4 text-primary mb-3">आपली माहिती भरा</h1>
+            <p class="lead">जर तुम्हाला आरक्षण मिळाले असेल तर कृपया तुमची माहिती भरा</p>
+        </div>
+    </div>
+
+    <!-- Form -->
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card shadow">
+                <div class="card-body">
+                    <form method="POST" action="{% url 'core:submit_person' %}" id="personForm">
+                        <div class="row g-3">
+                            <!-- Personal Information -->
+                            <div class="col-12">
+                                <h5 class="text-primary border-bottom pb-2 mb-3">
+                                    <i class="fas fa-user me-2"></i>वैयक्तिक माहिती
+                                </h5>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="name" class="form-label">नाव <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="name" name="name" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="surname" class="form-label">आडनाव <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="surname" name="surname" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="birth_year" class="form-label">जन्म वर्ष</label>
+                                <input type="number" class="form-control" id="birth_year" name="birth_year" min="1920" max="2010">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="contact_number" class="form-label">संपर्क क्रमांक</label>
+                                <input type="tel" class="form-control" id="contact_number" name="contact_number" pattern="[0-9]{10}">
+                            </div>
+
+                            <!-- Reservation Information -->
+                            <div class="col-12 mt-4">
+                                <h5 class="text-primary border-bottom pb-2 mb-3">
+                                    <i class="fas fa-certificate me-2"></i>आरक्षण माहिती
+                                </h5>
+                            </div>
+
+                            <div class="col-12">
+                                <label for="reservation_number" class="form-label">आरक्षण क्रमांक <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="reservation_number" name="reservation_number" required placeholder="उदा: MR/2024/12345">
+                            </div>
+
+                            <!-- Location Information -->
+                            <div class="col-12 mt-4">
+                                <h5 class="text-primary border-bottom pb-2 mb-3">
+                                    <i class="fas fa-map-marker-alt me-2"></i>स्थान माहिती
+                                </h5>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="division_id" class="form-label">विभाग <span class="text-danger">*</span></label>
+                                <select class="form-select" id="division_id" name="division_id" required>
+                                    <option value="">विभाग निवडा</option>
+                                    {% for division in divisions %}
+                                    <option value="{{ division.id }}">{{ division.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="district_id" class="form-label">जिल्हा <span class="text-danger">*</span></label>
+                                <select class="form-select" id="district_id" name="district_id" required disabled>
+                                    <option value="">पहिले विभाग निवडा</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="village_id" class="form-label">गाव <span class="text-danger">*</span></label>
+                                <select class="form-select" id="village_id" name="village_id" required disabled>
+                                    <option value="">पहिले जिल्हा निवडा</option>
+                                </select>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="col-12 text-center mt-4">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="fas fa-check me-2"></i>माहिती सबमिट करा
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Information Section -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="alert alert-info">
+                <h5><i class="fas fa-info-circle me-2"></i>महत्वाची माहिती</h5>
+                <ul class="mb-0">
+                    <li>तुमची माहिती सबमिट केल्यानंतर ती वेरिफाय केली जाईल</li>
+                    <li>वेरिफिकेशननंतरच ती इतरांना दिसेल</li>
+                    <li>चुकीची माहिती दिल्यास तुमचा अकाउंट ब्लॉक केला जाऊ शकतो</li>
+                    <li>तुमची संपर्क माहिती इतर लोकांना दिसेल</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const divisionSelect = document.getElementById('division_id');
+    const districtSelect = document.getElementById('district_id');
+    const villageSelect = document.getElementById('village_id');
+
+    divisionSelect.addEventListener('change', function() {
+        const divisionId = this.value;
+        
+        // Reset dependent selects
+        districtSelect.innerHTML = '<option value="">लोड हो रहा है...</option>';
+        districtSelect.disabled = true;
+        villageSelect.innerHTML = '<option value="">पहिले जिल्हा निवडा</option>';
+        villageSelect.disabled = true;
+
+        if (divisionId) {
+            fetch(`/api/districts/${divisionId}`)
+                .then(response => response.json())
+                .then(districts => {
+                    districtSelect.innerHTML = '<option value="">जिल्हा निवडा</option>';
+                    districts.forEach(district => {
+                        districtSelect.innerHTML += `<option value="${district.id}">${district.name}</option>`;
+                    });
+                    districtSelect.disabled = false;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    districtSelect.innerHTML = '<option value="">एरर आली</option>';
+                });
+        } else {
+            districtSelect.innerHTML = '<option value="">पहिले विभाग निवडा</option>';
+            districtSelect.disabled = true;
+        }
+    });
+
+    districtSelect.addEventListener('change', function() {
+        const districtId = this.value;
+        
+        // Reset village select
+        villageSelect.innerHTML = '<option value="">लोड हो रहा है...</option>';
+        villageSelect.disabled = true;
+
+        if (districtId) {
+            fetch(`/api/villages/${districtId}`)
+                .then(response => response.json())
+                .then(villages => {
+                    villageSelect.innerHTML = '<option value="">गाव निवडा</option>';
+                    villages.forEach(village => {
+                        villageSelect.innerHTML += `<option value="${village.id}">${village.name}</option>`;
+                    });
+                    villageSelect.disabled = false;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    villageSelect.innerHTML = '<option value="">एरर आली</option>';
+                });
+        } else {
+            villageSelect.innerHTML = '<option value="">पहिले जिल्हा निवडा</option>';
+            villageSelect.disabled = true;
+        }
+    });
+});
+</script>
+{% endblock %}

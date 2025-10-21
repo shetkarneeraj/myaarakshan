@@ -1,0 +1,338 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="hero-section bg-gradient-primary text-white py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <h1 class="display-4 fw-bold mb-4">मराठा आरक्षण मंच</h1>
+                        <p class="lead mb-4">तुमच्या हक्काच्या आरक्षणासाठी – एकत्र, मजबूत, निर्धाराने</p>
+                        <!-- Removed आरक्षण शोधा and माहिती भरा buttons as requested -->
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center">
+                <img src="{% static 'images/maharaj.png' %}" alt="मराठा आरक्षण" class="img-fluid" style="max-height: 250px;">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Main Features Cards - Horizontal Scroll -->
+<div class="container py-5">
+    <div class="row align-items-center mb-4">
+        <div class="col">
+            <h2 class="text-center mb-0">मुख्य सेवा</h2>
+        </div>
+        <div class="col-auto">
+            <div class="scroll-indicators">
+                <button class="btn btn-outline-primary btn-sm me-2" id="scrollLeft" onclick="scrollCards('left')">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="btn btn-outline-primary btn-sm" id="scrollRight" onclick="scrollCards('right')">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="feature-cards-container position-relative">
+        <div class="feature-cards d-flex gap-3 pb-3" id="featureCards" style="overflow-x: auto; scroll-behavior: smooth;">
+
+            <!-- Reservation Information Card -->
+            <div class="feature-card flex-shrink-0" style="min-width: 70vw;">
+                <div class="card h-100 border-0 shadow hover-card">
+                    <div class="card-img-container" style="height: 160px; overflow: hidden;">
+                    <img src="{% static '17.jpg' %}" 
+                        class="card-img-top" alt="Reservation Information" style="object-fit: cover; height: 100%;">
+                    </div>
+                    <div class="card-body text-center">
+                        <i class="fas fa-info-circle fa-2x text-primary mb-3"></i>
+                        <h5 class="card-title">आरक्षण माहिती</h5>
+                        <p class="card-text">पात्रता, कागदपत्रे आणि प्रक्रिया</p>
+                        <a href="{% url 'core:guide' %}" class="btn btn-primary btn-sm">
+                            <i class="fas fa-arrow-right me-2"></i>पहा
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- File Preparation Card -->
+            <div class="feature-card flex-shrink-0" style="min-width: 70vw;">
+                <div class="card h-100 border-0 shadow hover-card">
+                    <div class="card-img-container" style="height: 160px; overflow: hidden;">
+                    <img src="{% static '13.jpg' %}" 
+                        class="card-img-top" alt="File Preparation" style="object-fit: cover; height: 100%;">
+                    </div>
+                    <div class="card-body text-center">
+                        <i class="fas fa-folder-open fa-2x text-success mb-3"></i>
+                        <h5 class="card-title">फाईल कशी तयार करावी?</h5>
+                        <p class="card-text">तहसील कार्यालयासाठी योग्य फाईल तयार करण्याची स्टेप-बाय-स्टेप मार्गदर्शिका</p>
+                        <a href="{% url 'core:file_preparation' %}" class="btn btn-success btn-sm">
+                            <i class="fas fa-arrow-right me-2"></i>पहा
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pre-1967 Records Search (Moved to 2nd position) -->
+            <div class="feature-card flex-shrink-0" style="min-width: 70vw;">
+                <div class="card h-100 border-0 shadow hover-card">
+                    <div class="card-img-container" style="height: 160px; overflow: hidden;">
+                    <img src="{% static '14.jpg' %}" 
+                        class="card-img-top" alt="Pre-1967 Records" style="object-fit: cover; height: 100%;">
+                    </div>
+                    <div class="card-body text-center">
+                        <i class="fas fa-archive fa-2x text-warning mb-3"></i>
+                        <h5 class="card-title">१९६७ पूर्वीचा महसूली पुरावा शोधा</h5>
+                        <p class="card-text"><span style="color: red; font-weight: bold;">१ मिनिटात</span> कुणबी प्रमाणपत्रासाठी आवश्यक जुने महसुली रेकॉर्ड शोधा</p>
+                        <a href="{% url 'core:pre1967_records' %}" class="btn btn-warning btn-sm">
+                            <i class="fas fa-search me-2"></i>शोधा
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Documents Explained Card (Moved to 3rd position) -->
+            <div class="feature-card flex-shrink-0" style="min-width: 70vw;">
+                <div class="card h-100 border-0 shadow hover-card">
+                    <div class="card-img-container" style="height: 160px; overflow: hidden;">
+                        <img src="{% static 'images/explaination.jpeg' %}" 
+                             class="card-img-top" alt="Documents Explained" style="object-fit: cover; height: 100%;">
+                    </div>
+                    <div class="card-body text-center">
+                        <i class="fas fa-file-alt fa-2x text-warning mb-3"></i>
+                        <h5 class="card-title">कागदपत्रे स्पष्टीकरण</h5>
+                        <p class="card-text">GR, गॅझेट आणि इतर दस्तऐवजांचे स्पष्टीकरण</p>
+                        <a href="{% url 'core:documents_explained' %}" class="btn btn-warning btn-sm">
+                            <i class="fas fa-book-open me-2"></i>वाचा
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- District Wise Records -->
+            <div class="feature-card flex-shrink-0" style="min-width: 70vw;">
+                <div class="card h-100 border-0 shadow hover-card">
+                    <div class="card-img-container" style="height: 160px; overflow: hidden;">
+                        <img src="{% static 'images/doc_check.jpeg' %}" 
+                             class="card-img-top" alt="District Records" style="object-fit: cover; height: 100%;">
+                    </div>
+                    <div class="card-body text-center">
+                        <i class="fas fa-map-marked-alt fa-2x text-success mb-3"></i>
+                        <h5 class="card-title">विभागनिहाय कुणबी नोंदी</h5>
+                        <p class="card-text">महाराष्ट्रातील ३६ जिल्ह्यांमधील नोंदी</p>
+                        <a href="{% url 'core:district_wise_records' %}" class="btn btn-success btn-sm">
+                            <i class="fas fa-search me-2"></i>शोधा
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Flowchart Card removed as requested -->
+
+            <!-- Eligibility Checker Card - Now Active -->
+            <div class="feature-card flex-shrink-0" style="min-width: 70vw;">
+                <div class="card h-100 border-0 shadow hover-card">
+                    <div class="card-img-container" style="height: 160px; overflow: hidden;">
+                        <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=400&h=200&fit=crop" 
+                             class="card-img-top" alt="Eligibility Check" style="object-fit: cover; height: 100%;">
+                    </div>
+                    <div class="card-body text-center">
+                        <i class="fas fa-check-circle fa-2x text-success mb-3"></i>
+                        <h5 class="card-title">पात्रता तपासणी</h5>
+                        <p class="card-text text-muted">ही सेवा लवकरच उपलब्ध होईल</p>
+                        <button class="btn btn-secondary btn-sm" disabled>
+                            <i class="fas fa-clock me-2"></i>Coming Soon
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Fresh News Section -->
+<div class="container py-5">
+    <div class="row align-items-center mb-4">
+        <div class="col">
+            <h2><i class="fas fa-newspaper me-2 text-primary"></i>ताज्या बातम्या</h2>
+        </div>
+        <div class="col-auto">
+            <a href="{% url 'news:list' %}" class="btn btn-outline-primary">सर्व बातम्या पहा</a>
+        </div>
+    </div>
+    <div class="row">
+        <!-- First News Card - Manoj Jarange Patil Demand -->
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100 shadow-sm news-card position-relative" data-news-id="1">
+                <img src="{% static 'images/news_headline.jpeg' %}" 
+                     class="card-img-top" alt="Manoj Jarange Patil Demand" style="height: 180px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">👉 “शेतीला नोकरीचा दर्जा आणि शेतकऱ्यांना १० हजार पगार द्या” – मनोज जरांगे पाटील</h5>
+                    <p class="card-text">दसरा मेळाव्यात जरांगे पाटील यांनी सरकारकडे मागणी – शेतीला नोकरीचा दर्जा देऊन लहान शेतकऱ्यांना पगार द्यावा.</p>
+                    <button class="btn btn-primary btn-sm read-more" data-news-id="1">
+                        <i class="fas fa-book-open me-2"></i>वाचा
+                    </button>
+                </div>
+                <!-- Removed time below news card -->
+            </div>
+        </div>
+
+        <!-- Second News Card - Shahu Maharaj Order Legal Battle -->
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100 shadow-sm news-card position-relative" data-news-id="2">
+                <img src="{% static '12.jpg' %}" 
+                     class="card-img-top" alt="Shahu Maharaj Order Legal Battle" style="height: 180px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">👉 मराठा आरक्षणाचा लढा कायदेशीर मार्गावर – शाहू महाराजांचा १९०२ चा आदेश आधार</h5>
+                    <p class="card-text">मराठा आरक्षणाचा लढा कायदेशीर पातळीवर; संविधान व शाहू महाराजांचा १९०२ चा आदेश पुढे करून कृती समितीचा निर्णय.</p>
+                    <button class="btn btn-primary btn-sm read-more" data-news-id="2">
+                        <i class="fas fa-book-open me-2"></i>वाचा
+                    </button>
+                </div>
+                <!-- Removed time below news card -->
+            </div>
+        </div>
+
+        <!-- Third News Card - Pravin Pingale Family Help -->
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100 shadow-sm news-card position-relative" data-news-id="3">
+                <img src="{% static '11.jpg' %}" 
+                     class="card-img-top" alt="Pravin Pingale Family Help" style="height: 180px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">👉 आरक्षणासाठी बलिदान दिलेल्या तरुणाच्या कुटुंबाला १० लाखांची मदत</h5>
+                    <p class="card-text">शिरूर येथील प्रवीण गोरख पिंगळे यांच्या कुटुंबाला मुख्यमंत्री सहायता निधीतून मदत.</p>
+                    <button class="btn btn-primary btn-sm read-more" data-news-id="3">
+                        <i class="fas fa-book-open me-2"></i>वाचा
+                    </button>
+                </div>
+                <!-- Removed time below news card -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- News Modal -->
+<div class="modal fade" id="newsModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="newsModalTitle">बातमी</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="newsModalBody">
+                <!-- News content will be loaded here -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">बंद करा</button>
+                <button type="button" class="btn btn-primary" id="shareNews">
+                    <i class="fas fa-share me-2"></i>शेअर करा
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+// Scroll functionality for feature cards
+function scrollCards(direction) {
+    const container = document.getElementById('featureCards');
+    const scrollAmount = 300; // Adjust scroll amount as needed
+    
+    if (direction === 'left') {
+        container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    } else {
+        container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+}
+
+// News modal functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const newsData = {
+        1: {
+            title: '👉 “शेतीला नोकरीचा दर्जा आणि शेतकऱ्यांना १० हजार पगार द्या” – मनोज जरांगे पाटील',
+            content: `
+                <div class="mb-3">
+                    <small class="text-muted">आज, ११:३० AM</small>
+                </div>
+                <ul>
+                    <li>🌾 १० एकरपेक्षा कमी जमीन असलेल्या शेतकऱ्यांना दरमहा ₹१०,००० पगार द्यावा.</li>
+                    <li>👨‍� त्यामुळे बेरोजगार युवक शेतात कामाला लागतील आणि शेती जपली जाईल.</li>
+                    <li>🚜 शेतकऱ्यांनी शेती विकू नये, असेही आवाहन.</li>
+                    <li>⚡ सरकारने दिवाळीपर्यंत मागण्या मान्य न केल्यास आगामी निवडणुकांमध्ये शासनाला धडा शिकवू, असा इशारा.</li>
+                </ul>
+            `
+        },
+        2: {
+            title: '👉 मराठा आरक्षणाचा लढा कायदेशीर मार्गावर – शाहू महाराजांचा १९०२ चा आदेश आधार',
+            content: `
+                <div class="mb-3">
+                    <small class="text-muted">२ तास आधी</small>
+                </div>
+                <ul>
+                    <li>⚖️ शासनाशी झालेल्या चर्चेत ठोस निर्णय न झाल्याने कायदेशीर मार्ग स्वीकारला.</li>
+                    <li>� छत्रपती शाहू महाराजांचा १९०२ चा ऐतिहासिक आरक्षण आदेश आधार.</li>
+                    <li>� मराठा समाजासह धनगर आरक्षणासाठीही मागण्या.</li>
+                    <li>� शासनाने लोकांचा विश्वास जिंकून निर्णय घ्यावा, अशी मागणी.</li>
+                </ul>
+            `
+        },
+        3: {
+            title: '👉 आरक्षणासाठी बलिदान दिलेल्या तरुणाच्या कुटुंबाला १० लाखांची मदत',
+            content: `
+                <div class="mb-3">
+                    <small class="text-muted">५ तास आधी</small>
+                </div>
+                <ul>
+                    <li>🕯️ आरक्षणाच्या मागणीसाठी प्रवीण पिंगळे (वय १९) यांनी आत्मबलिदान दिले होते.</li>
+                    <li>💰 मुख्यमंत्री सहायता निधीतून १० लाखांचा धनादेश सुपूर्द.</li>
+                    <li>👪 आई नंदा पिंगळे यांना तहसीलदारांच्या हस्ते धनादेश दिला.</li>
+                    <li>🤝 शासनाने अशा कुटुंबांना वेळेवर मदत करावी, अशी मागणी समाजात.</li>
+                </ul>
+            `
+        }
+    };
+
+    // Handle read more button clicks
+    document.querySelectorAll('.read-more').forEach(button => {
+        button.addEventListener('click', function() {
+            const newsId = this.getAttribute('data-news-id');
+            const news = newsData[newsId];
+            
+            if (news) {
+                document.getElementById('newsModalTitle').textContent = news.title;
+                document.getElementById('newsModalBody').innerHTML = news.content;
+                
+                const modal = new bootstrap.Modal(document.getElementById('newsModal'));
+                modal.show();
+            }
+        });
+    });
+
+    // Handle share button
+    document.getElementById('shareNews').addEventListener('click', function() {
+        const title = document.getElementById('newsModalTitle').textContent;
+        const url = window.location.href;
+        
+        if (navigator.share) {
+            navigator.share({
+                title: title,
+                text: 'मराठा आरक्षण मंच - ' + title,
+                url: url
+            });
+        } else {
+            // Fallback - copy to clipboard
+            navigator.clipboard.writeText(`${title} - ${url}`).then(() => {
+                alert('शेअर लिंक कॉपी केली!');
+            });
+        }
+    });
+});
+</script>
+{% endblock %}

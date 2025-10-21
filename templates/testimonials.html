@@ -1,0 +1,404 @@
+{% extends "base.html" %}
+
+{% block title %}यशोगाथा - मराठा आरक्षण मंच{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Header -->
+    <div class="row mb-5">
+        <div class="col-12 text-center">
+            <h1 class="display-5 text-primary mb-3">🌟 यशोगाथा आणि अनुभव</h1>
+            <p class="lead">ज्यांना यश मिळाले त्यांचे अनुभव आणि मार्गदर्शन</p>
+        </div>
+    </div>
+
+    <!-- Success Stories -->
+    <div class="row mb-5">
+        {% for testimonial in testimonials %}
+        <div class="col-lg-4 mb-4">
+            <div class="card border-0 shadow-lg h-100 testimonial-card">
+                <div class="card-header bg-success text-white text-center">
+                    <div class="testimonial-avatar">
+                        <i class="fas fa-user-circle fa-3x"></i>
+                    </div>
+                    <h5 class="mt-2 mb-0">{{ testimonial.name }}</h5>
+                    <small>{{ testimonial.village }}</small>
+                </div>
+                <div class="card-body">
+                    <div class="text-center mb-3">
+                        {% for i in range(testimonial.rating) %}
+                        <i class="fas fa-star text-warning"></i>
+                        {% endfor %}
+                    </div>
+                    <p class="card-text">"{{ testimonial.message }}"</p>
+                </div>
+                <div class="card-footer bg-transparent text-center">
+                    <span class="badge bg-success">
+                        <i class="fas fa-info-circle me-1"></i>माहिती मिळाली
+                    </span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+        <!-- More Success Stories -->
+        <div class="col-lg-4 mb-4">
+            <div class="card border-0 shadow-lg h-100 testimonial-card">
+                <div class="card-header bg-primary text-white text-center">
+                    <div class="testimonial-avatar">
+                        <i class="fas fa-user-circle fa-3x"></i>
+                    </div>
+                    <h5 class="mt-2 mb-0">अनिल काळे</h5>
+                    <small>वैजापूर, छत्रपती संभाजीनगर</small>
+                </div>
+                <div class="card-body">
+                    <div class="text-center mb-3">
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                    </div>
+                    <p class="card-text">"माझ्याकडे जुनी कागदपत्रे नव्हती, पण या वेबसाइटच्या मार्गदर्शकामुळे मला पर्यायी पुरावे कसे मिळवायचे ते समजले. माहिती मिळाल्यामुळे प्रक्रिया समजायला मदत झाली."</p>
+                </div>
+                <div class="card-footer bg-transparent text-center">
+                    <span class="badge bg-primary">
+                        <i class="fas fa-clock me-1"></i>3 महिने
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 mb-4">
+            <div class="card border-0 shadow-lg h-100 testimonial-card">
+                <div class="card-header bg-info text-white text-center">
+                    <div class="testimonial-avatar">
+                        <i class="fas fa-user-circle fa-3x"></i>
+                    </div>
+                    <h5 class="mt-2 mb-0">मीरा कदम</h5>
+                    <small>जिंतूर, परभणी</small>
+                </div>
+                <div class="card-body">
+                    <div class="text-center mb-3">
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                    </div>
+                    <p class="card-text">"पहिल्यांदा अर्ज नाकारला गेला. पण FAQ वाचून मला समजले काय चूक झाली. दुसऱ्या वेळेस योग्य कागदपत्रे घेऊन गेलो आणि यश मिळाले!"</p>
+                </div>
+                <div class="card-footer bg-transparent text-center">
+                    <span class="badge bg-info">
+                        <i class="fas fa-redo me-1"></i>दुसरा प्रयत्न यशस्वी
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 mb-4">
+            <div class="card border-0 shadow-lg h-100 testimonial-card">
+                <div class="card-header bg-warning text-dark text-center">
+                    <div class="testimonial-avatar">
+                        <i class="fas fa-user-circle fa-3x"></i>
+                    </div>
+                    <h5 class="mt-2 mb-0">विजय शिंदे</h5>
+                    <small>गेवराई, बीड</small>
+                </div>
+                <div class="card-body">
+                    <div class="text-center mb-3">
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                    </div>
+                    <p class="card-text">"माझ्या मामाकडे जुनी कागदपत्रे होती. त्यांचा रेफरल आणि या वेबसाइटवरील माहितीमुळे अर्जाची प्रक्रिया समजली आणि योग्य मार्गदर्शन मिळाले."</p>
+                </div>
+                <div class="card-footer bg-transparent text-center">
+                    <span class="badge bg-warning text-dark">
+                        <i class="fas fa-users me-1"></i>कुटुंबीय रेफरल
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 mb-4">
+            <div class="card border-0 shadow-lg h-100 testimonial-card">
+                <div class="card-header bg-secondary text-white text-center">
+                    <div class="testimonial-avatar">
+                        <i class="fas fa-user-circle fa-3x"></i>
+                    </div>
+                    <h5 class="mt-2 mb-0">रेखा गायकवाड</h5>
+                    <small>कंधार, नांदेड</small>
+                </div>
+                <div class="card-body">
+                    <div class="text-center mb-3">
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                    </div>
+                    <p class="card-text">"शुरुवातीला मला वाटले खूप अवघड आहे. पण चेकलिस्ट डाउनलोड करून step by step केले. सर्व कागदपत्रे योग्य होते म्हणून लवकर मिळाले."</p>
+                </div>
+                <div class="card-footer bg-transparent text-center">
+                    <span class="badge bg-secondary">
+                        <i class="fas fa-list-check me-1"></i>चेकलिस्ट उपयोगी
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 mb-4">
+            <div class="card border-0 shadow-lg h-100 testimonial-card">
+                <div class="card-header bg-danger text-white text-center">
+                    <div class="testimonial-avatar">
+                        <i class="fas fa-user-circle fa-3x"></i>
+                    </div>
+                    <h5 class="mt-2 mb-0">संदीप घोरपडे</h5>
+                    <small>तुळजापूर, उस्मानाबाद</small>
+                </div>
+                <div class="card-body">
+                    <div class="text-center mb-3">
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                    </div>
+                    <p class="card-text">"पात्रता तपासणीत मला कळले की माझ्याकडे सर्व पुरावे आहेत. फ्लोचार्ट पाहून पूर्ण प्रक्रिया समजली. अर्ज करून 4 महिन्यात मिळाले!"</p>
+                </div>
+                <div class="card-footer bg-transparent text-center">
+                    <span class="badge bg-danger">
+                        <i class="fas fa-chart-line me-1"></i>पूर्ण प्रक्रिया
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Tips from Success Stories -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <h3 class="text-center mb-4">यशस्वी अर्जदारांचे टिप्स</h3>
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="card border-start border-success border-5 h-100">
+                        <div class="card-body">
+                            <h5 class="card-title text-success">
+                                <i class="fas fa-lightbulb me-2"></i>कागदपत्रे तयार करा
+                            </h5>
+                            <p class="card-text">"चेकलिस्ट डाउनलोड करा आणि प्रत्येक कागदपत्र तयार ठेवा. एकही कागद चुकू नका." - राहुल पाटील</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <div class="card border-start border-info border-5 h-100">
+                        <div class="card-body">
+                            <h5 class="card-title text-info">
+                                <i class="fas fa-users me-2"></i>नातेवाईक शोधा
+                            </h5>
+                            <p class="card-text">"गावातील नातेवाईक शोधा. कुटुंबात कोणाकडे जुनी कागदपत्रे असतील तर माहिती मिळवायला मदत होते." - अनिल काळे</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <div class="card border-start border-warning border-5 h-100">
+                        <div class="card-body">
+                            <h5 class="card-title text-warning">
+                                <i class="fas fa-clock me-2"></i>धीर धरा
+                            </h5>
+                            <p class="card-text">"प्रक्रियेला वेळ लागतो. घाई करू नका आणि योग्य कागदपत्रे तयार करा." - मीरा कदम</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <div class="card border-start border-danger border-5 h-100">
+                        <div class="card-body">
+                            <h5 class="card-title text-danger">
+                                <i class="fas fa-exclamation-triangle me-2"></i>चुकीची माहिती देऊ नका
+                            </h5>
+                            <p class="card-text">"खरी आणि प्रमाणिक माहिती द्या. बनावट कागदपत्रे कधीही वापरू नका." - विजय शिंदे</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Share Your Story -->
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card border-0 shadow-lg">
+                <div class="card-header bg-success text-white text-center">
+                    <h4><i class="fas fa-share-alt me-2"></i>तुमची यशोगाथा शेअर करा</h4>
+                </div>
+                <div class="card-body">
+                    <p class="text-center">तुम्हाला या वेबसाइटवरील माहिती किंवा मार्गदर्शन उपयुक्त वाटले असेल तर तुमचा अनुभव इतरांसोबत शेअर करा</p>
+                    
+                    <form id="testimonialForm">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="story_name" class="form-label">नाव</label>
+                                <input type="text" class="form-control" id="story_name" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="story_village" class="form-label">गाव, जिल्हा</label>
+                                <input type="text" class="form-control" id="story_village" required>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="story_rating" class="form-label">रेटिंग</label>
+                            <div class="rating-input">
+                                <input type="radio" id="star5" name="rating" value="5">
+                                <label for="star5">⭐</label>
+                                <input type="radio" id="star4" name="rating" value="4">
+                                <label for="star4">⭐</label>
+                                <input type="radio" id="star3" name="rating" value="3">
+                                <label for="star3">⭐</label>
+                                <input type="radio" id="star2" name="rating" value="2">
+                                <label for="star2">⭐</label>
+                                <input type="radio" id="star1" name="rating" value="1">
+                                <label for="star1">⭐</label>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="story_message" class="form-label">तुमचा अनुभव</label>
+                            <textarea class="form-control" id="story_message" rows="4" placeholder="तुमची यशोगाथा इतरांसोबत शेअर करा..." required></textarea>
+                        </div>
+                        
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-success btn-lg">
+                                <i class="fas fa-paper-plane me-2"></i>यशोगाथा पाठवा
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.testimonial-card {
+    transition: all 0.3s ease;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15) !important;
+}
+
+.testimonial-avatar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.rating-input {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+}
+
+.rating-input input[type="radio"] {
+    display: none;
+}
+
+.rating-input label {
+    font-size: 2rem;
+    color: #ddd;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.rating-input input[type="radio"]:checked ~ label,
+.rating-input label:hover,
+.rating-input label:hover ~ label {
+    color: #ffc107;
+}
+</style>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.getElementById('testimonialForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const formData = {
+        name: document.getElementById('story_name').value,
+        village: document.getElementById('story_village').value,
+        rating: document.querySelector('input[name="rating"]:checked')?.value,
+        message: document.getElementById('story_message').value
+    };
+    
+    if (!formData.rating) {
+        alert('कृपया रेटिंग द्या');
+        return;
+    }
+    
+    // Show loading state
+    const submitBtn = this.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>पाठवत आहे...';
+    submitBtn.disabled = true;
+    
+    // Simulate sending
+    setTimeout(() => {
+        alert('धन्यवाद! तुमची यशोगाथा आम्हाला मिळाली. वेरिफिकेशननंतर ती वेबसाइटवर दाखवली जाईल.');
+        this.reset();
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+    }, 2000);
+});
+
+// Counter animation
+function animateCounters() {
+    const counters = document.querySelectorAll('.display-6');
+    
+    counters.forEach(counter => {
+        const target = parseFloat(counter.textContent.replace(/[^\d.]/g, ''));
+        const increment = target / 50;
+        let current = 0;
+        
+        const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+                current = target;
+                clearInterval(timer);
+            }
+            
+            if (counter.textContent.includes('%')) {
+                counter.textContent = Math.round(current) + '%';
+            } else if (counter.textContent.includes('+')) {
+                counter.textContent = Math.round(current).toLocaleString() + '+';
+            } else {
+                counter.textContent = current.toFixed(1);
+            }
+        }, 30);
+    });
+}
+
+// Trigger animation when statistics section comes into view
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            animateCounters();
+            observer.unobserve(entry.target);
+        }
+    });
+});
+
+const statsSection = document.querySelector('.bg-primary .card-body');
+if (statsSection) {
+    observer.observe(statsSection);
+}
+</script>
+{% endblock %}

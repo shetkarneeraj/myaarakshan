@@ -1,0 +1,375 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}वारंवार विचारले जाणारे प्रश्न - मराठा आरक्षण मंच{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Header -->
+    <div class="row mb-5">
+        <div class="col-12 text-center">
+            <h1 class="display-5 text-primary mb-3">❓ वारंवार विचारले जाणारे प्रश्न</h1>
+            <p class="lead">कुणबी प्रमाणपत्र संबंधी सर्व प्रश्नांची उत्तरे</p>
+        </div>
+    </div>
+
+    <!-- Search FAQ -->
+    <div class="row mb-5">
+        <div class="col-lg-6 mx-auto">
+            <div class="input-group">
+                <input type="text" class="form-control" id="faqSearch" placeholder="प्रश्न शोधा...">
+                <button class="btn btn-primary" type="button">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FAQ Categories -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <ul class="nav nav-pills justify-content-center" id="faqTabs">
+                <li class="nav-item">
+                    <button class="nav-link active" data-category="all">सर्व प्रश्न</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-category="eligibility">पात्रता</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-category="documents">कागदपत्रे</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-category="process">प्रक्रिया</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-category="timeline">वेळेची मर्यादा</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- FAQ Items -->
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            <div id="faqContainer">
+                
+                <!-- Eligibility Questions -->
+                <div class="faq-item" data-category="eligibility">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <span>कुणबी प्रमाणपत्रासाठी कोण अर्ज करू शकतो?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>खालील व्यक्ती अर्ज करू शकतात:</strong></p>
+                        <ul>
+                            <li>कुणबी जातीचे लोक</li>
+                            <li>मराठा-कुणबी जातीचे लोक</li>
+                            <li>कुणबी-मराठा जातीचे लोक</li>
+                        </ul>
+                        <p><strong>मुख्य अट:</strong> १३ ऑक्टोबर १९६७ पूर्वीचा वास्तव्य दाखला असणे आवश्यक.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-category="eligibility">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <span>१३ ऑक्टोबर १९६७ ची तारीख का महत्वाची आहे?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>या तारखेला महाराष्ट्र सरकारने कुणबी समुदायाला OBC मध्ये समाविष्ट केले. त्यामुळे या तारखेपूर्वी वास्तव्य सिद्ध करणे आवश्यक आहे.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-category="eligibility">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <span>माझ्या कागदपत्रात फक्त "मराठा" लिहिले आहे. मी अर्ज करू शकतो का?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>नाही.</strong> फक्त "मराठा" लिहिलेले असल्यास तुम्ही पात्र नाही. कागदपत्रात <strong>"कुणबी"</strong>, <strong>"मराठा-कुणबी"</strong> किंवा <strong>"कुणबी-मराठा"</strong> असणे आवश्यक आहे.</p>
+                    </div>
+                </div>
+
+                <!-- Documents Questions -->
+                <div class="faq-item" data-category="documents">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <span>कोणती कागदपत्रे लागतात?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>आवश्यक कागदपत्रे:</strong></p>
+                        <ol>
+                            <li>जन्म प्रमाणपत्र (जात नमूद असलेले)</li>
+                            <li>७/१२ उतारा (शेतजमिनीचा दाखला)</li>
+                            <li>निवासी दाखला (१९६७ पूर्वीचा)</li>
+                            <li>नातेवाईकांचे कुणबी प्रमाणपत्र (असल्यास)</li>
+                            <li>शाळा दाखले (जात नमूद असलेले)</li>
+                            <li>स्थानीय पुरावे (ग्रामपंचायत/पोलिस पाटील)</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-category="documents">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <span>जुनी कागदपत्रे गमावली आहेत. काय करावे?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>पर्यायी पुरावे:</strong></p>
+                        <ul>
+                            <li>नातेवाईकांकडून affidavit</li>
+                            <li>गावचे जुने नोंदी</li>
+                            <li>शाळेचे जुने रेकॉर्ड</li>
+                            <li>धार्मिक स्थळांचे नोंदी</li>
+                            <li>सामुदायिक नेत्यांचे प्रमाणपत्र</li>
+                        </ul>
+                        <p><strong>सूचना:</strong> संबंधित कार्यालयाशी संपर्क साधून पर्यायी पुरावे स्वीकारले जातात का ते तपासा.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-category="documents">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <span>कागदपत्रे फोटोकॉपी असू शकतात का?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>नाही.</strong> सर्व कागदपत्रे <strong>मूळ</strong> किंवा <strong>प्रमाणित प्रती</strong> असणे आवश्यक. फोटोकॉपी स्वीकारल्या जाणार नाहीत.</p>
+                    </div>
+                </div>
+
+                <!-- Process Questions -->
+                <div class="faq-item" data-category="process">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <span>अर्ज कुठे द्यावा?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>प्रक्रिया:</strong></p>
+                        <ol>
+                            <li><strong>ग्रामस्तर समितीकडे</strong> अर्ज दाखल करा</li>
+                            <li>ग्राम महसूल अधिकारी यांच्याकडे संपर्क साधा</li>
+                            <li>ग्रामपंचायत अधिकारी यांना भेटा</li>
+                            <li>सर्व कागदपत्रे घेऊन जा</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-category="process">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <span>अर्जासाठी फी किती आहे?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>फी संरचना:</strong></p>
+                        <ul>
+                            <li>अर्ज फी: ₹50-100 (जिल्ह्यानुसार बदलू शकते)</li>
+                            <li>तपासणी फी: ₹200-500</li>
+                            <li>प्रमाणपत्र फी: ₹100-200</li>
+                        </ul>
+                        <p><strong>सूचना:</strong> अचूक फी संबंधित कार्यालयात तपासा कारण ती वेळोवेळी बदलत राहते.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-category="process">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <span>अर्ज नाकारल्यास काय करावे?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>अपील प्रक्रिया:</strong></p>
+                        <ol>
+                            <li>कारण समजून घ्या</li>
+                            <li>अतिरिक्त कागदपत्रे गोळा करा</li>
+                            <li>उच्च प्राधिकाऱ्याकडे अपील करा</li>
+                            <li>30 दिवसांच्या आत अपील द्या</li>
+                        </ol>
+                        <p><strong>अपील कार्यालय:</strong> जिल्हा कलेक्टर कार्यालय</p>
+                    </div>
+                </div>
+
+                <!-- Timeline Questions -->
+                <div class="faq-item" data-category="timeline">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <span>प्रक्रियेला किती वेळ लागतो?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>सामान्य वेळेची मर्यादा:</strong></p>
+                        <ul>
+                            <li>ग्राम समिती तपासणी: 15-30 दिवस</li>
+                            <li>तालुका समिती: 15-30 दिवस</li>
+                            <li>Scrutiny Committee: 30-45 दिवस</li>
+                            <li><strong>एकूण:</strong> 2-4 महिने</li>
+                        </ul>
+                        <p><strong>टिप:</strong> सर्व कागदपत्रे योग्य असल्यास प्रक्रिया जलद होते.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-category="timeline">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <span>Status कसे तपासावे?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>Status तपासण्याचे मार्ग:</strong></p>
+                        <ol>
+                            <li>अर्ज नंबरसह संबंधित कार्यालयात फोन करा</li>
+                            <li>ऑनलाइन पोर्टल तपासा (जर उपलब्ध असेल)</li>
+                            <li>ग्राम महसूल अधिकाऱ्यांकडे चौकशी करा</li>
+                            <li>आमच्या वेबसाइटवर नियमित बातम्या वाचा</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <!-- Special Cases -->
+                <div class="faq-item" data-category="eligibility">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <span>माझ्या नातेवाईकाकडे कुणबी प्रमाणपत्र आहे. मला लगेच मिळेल का?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>होय, पण...</strong> नातेवाईकाचे प्रमाणपत्र असल्यास प्रक्रिया सुलभ होते, पण तरीही तपासणी होईल.</p>
+                        <p><strong>आवश्यक कागदपत्रे:</strong></p>
+                        <ul>
+                            <li>नातेवाईकाचे कुणबी प्रमाणपत्र</li>
+                            <li>नातेसंबंधाचा पुरावा</li>
+                            <li>तुमचे ओळखीचे कागदपत्र</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-category="process">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <span>बनावट कागदपत्रे दिल्यास काय होईल?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="alert alert-danger">
+                            <p><strong>⚠️ गंभीर परिणाम:</strong></p>
+                            <ul>
+                                <li>अर्ज कायमस्वरूपी फेटाळला जाईल</li>
+                                <li>कायदेशीर कारवाई होईल</li>
+                                <li>भविष्यात कोणताही अर्ज स्वीकारला जाणार नाही</li>
+                                <li>फौजदारी गुन्हा दाखल होऊ शकतो</li>
+                            </ul>
+                            <p><strong>सल्ला:</strong> नेहमी खरी आणि प्रमाणित कागदपत्रे वापरा.</p>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- Still Have Questions -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card bg-light border-0">
+                <div class="card-body text-center">
+                    <h4>अजूनही प्रश्न आहेत?</h4>
+                    <p class="text-muted">आमच्याशी संपर्क साधा - आम्ही मदत करण्यासाठी येथे आहोत!</p>
+                    <div class="row justify-content-center">
+                        <div class="col-md-3 mb-2">
+                            <a href="{% url 'core:contact' %}" class="btn btn-primary w-100">
+                                <i class="fas fa-envelope me-2"></i>संपर्क करा
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-2">
+                            <a href="tel:+919876543210" class="btn btn-success w-100">
+                                <i class="fas fa-phone me-2"></i>फोन करा
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-2">
+                            <a href="https://wa.me/919876543210" class="btn btn-info w-100" target="_blank">
+                                <i class="fab fa-whatsapp me-2"></i>WhatsApp
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Toggle FAQ Answer
+function toggleAnswer(element) {
+    const answer = element.nextElementSibling;
+    const icon = element.querySelector('i');
+    
+    if (answer.classList.contains('show')) {
+        answer.classList.remove('show');
+        icon.classList.remove('fa-chevron-up');
+        icon.classList.add('fa-chevron-down');
+    } else {
+        // Close all other answers
+        document.querySelectorAll('.faq-answer.show').forEach(item => {
+            item.classList.remove('show');
+        });
+        document.querySelectorAll('.faq-question i').forEach(item => {
+            item.classList.remove('fa-chevron-up');
+            item.classList.add('fa-chevron-down');
+        });
+        
+        // Open current answer
+        answer.classList.add('show');
+        icon.classList.remove('fa-chevron-down');
+        icon.classList.add('fa-chevron-up');
+    }
+}
+
+// Category Filter
+document.querySelectorAll('[data-category]').forEach(button => {
+    button.addEventListener('click', function() {
+        const category = this.dataset.category;
+        
+        // Update active tab
+        document.querySelectorAll('.nav-link').forEach(item => item.classList.remove('active'));
+        this.classList.add('active');
+        
+        // Filter FAQ items
+        document.querySelectorAll('.faq-item').forEach(item => {
+            if (category === 'all' || item.dataset.category === category) {
+                item.style.display = 'block';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    });
+});
+
+// Search FAQ
+document.getElementById('faqSearch').addEventListener('input', function() {
+    const searchTerm = this.value.toLowerCase();
+    
+    document.querySelectorAll('.faq-item').forEach(item => {
+        const question = item.querySelector('.faq-question span').textContent.toLowerCase();
+        const answer = item.querySelector('.faq-answer').textContent.toLowerCase();
+        
+        if (question.includes(searchTerm) || answer.includes(searchTerm) || searchTerm === '') {
+            item.style.display = 'block';
+        } else {
+            item.style.display = 'none';
+        }
+    });
+});
+
+// Smooth scroll to FAQ item from URL hash
+document.addEventListener('DOMContentLoaded', function() {
+    if (window.location.hash) {
+        const targetId = window.location.hash.substring(1);
+        const targetElement = document.getElementById(targetId);
+        if (targetElement) {
+            targetElement.scrollIntoView({ behavior: 'smooth' });
+            // Auto-open the FAQ item if it's collapsed
+            const question = targetElement.querySelector('.faq-question');
+            if (question && !targetElement.querySelector('.faq-answer').classList.contains('show')) {
+                toggleAnswer(question);
+            }
+        }
+    }
+});
+</script>
+{% endblock %}

@@ -1,0 +1,459 @@
+{% extends "base.html" %}
+
+{% block title %}प्रीमियम सेवा - मराठा आरक्षण मंच{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Header -->
+    <div class="row mb-5">
+        <div class="col-12 text-center">
+            <h1 class="display-5 text-primary mb-3">👑 प्रीमियम सेवा</h1>
+            <p class="lead">जलद प्रक्रिया आणि विशेष सुविधांसाठी प्रीमियम सदस्यत्व घ्या</p>
+        </div>
+    </div>
+
+    <!-- Current Subscription Status -->
+    {% if user_subscription %}
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="alert alert-{{ 'warning' if user_subscription == 'free' else 'success' }} text-center">
+                <h5>
+                    {% if user_subscription == 'free' %}
+                    <i class="fas fa-user me-2"></i>तुम्ही सध्या फ्री सदस्य आहात
+                    {% elif user_subscription == 'premium' %}
+                    <i class="fas fa-crown me-2"></i>तुम्ही प्रीमियम सदस्य आहात
+                    {% elif user_subscription == 'pro' %}
+                    <i class="fas fa-gem me-2"></i>तुम्ही प्रो सदस्य आहात
+                    {% endif %}
+                </h5>
+                {% if user_subscription == 'free' %}
+                <p>अधिक सुविधांसाठी अपग्रेड करा</p>
+                {% else %}
+                <p>धन्यवाद! तुम्ही प्रीमियम सुविधांचा आनंद घेत आहात</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Pricing Plans -->
+    <div class="row mb-5">
+        {% for service in services %}
+        <div class="col-lg-4 mb-4">
+            <div class="card h-100 border-0 shadow {% if forloop.counter == 2 %}border-warning{% endif %} pricing-card">
+                {% if forloop.counter == 2 %}
+                <div class="ribbon ribbon-top-right">
+                    <span>लोकप्रिय</span>
+                </div>
+                {% endif %}
+                
+                <div class="card-header text-center bg-{% if forloop.counter == 2 %}warning{% elif forloop.counter == 1 %}primary{% else %}success{% endif %} text-white">
+                    <h4 class="mb-0">{{ service.name }}</h4>
+                    <p class="mb-0">{{ service.duration }}</p>
+                </div>
+                
+                <div class="card-body text-center">
+                    <div class="price-section mb-4">
+                        <h2 class="price">₹{{ service.price }}</h2>
+                        <p class="text-muted">{{ service.duration }}</p>
+                    </div>
+                    
+                    <div class="features-list">
+                        {% for feature in service.features %}
+                        <div class="feature-item mb-2">
+                            <i class="fas fa-check text-success me-2"></i>
+                            {{ feature }}
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <div class="card-footer bg-transparent text-center">
+                    {% if user_subscription == 'free' or (user_subscription == 'premium' and forloop.counter == 3) %}
+                        {% if forloop.counter == 1 %}
+                        <a href="{% url 'accounts:purchase_service' 'premium' %}" class="btn btn-primary btn-lg w-100">
+                            <i class="fas fa-shopping-cart me-2"></i>आता खरेदी करा
+                        </a>
+                        {% elif forloop.counter == 2 %}
+                        <a href="{% url 'accounts:purchase_service' 'pro' %}" class="btn btn-warning btn-lg w-100">
+                            <i class="fas fa-shopping-cart me-2"></i>आता खरेदी करा
+                        </a>
+                        {% else %}
+                        <a href="{% url 'accounts:purchase_service' 'express' %}" class="btn btn-success btn-lg w-100">
+                            <i class="fas fa-shopping-cart me-2"></i>आता खरेदी करा
+                        </a>
+                        {% endif %}
+                    {% else %}
+                        <button class="btn btn-secondary btn-lg w-100" disabled>
+                            <i class="fas fa-check me-2"></i>सध्या सक्रिय
+                        </button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Features Comparison -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card border-0 shadow">
+                <div class="card-header bg-info text-white">
+                    <h4 class="mb-0 text-center">
+                        <i class="fas fa-table me-2"></i>सुविधांची तुलना
+                    </h4>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>सुविधा</th>
+                                    <th class="text-center">फ्री</th>
+                                    <th class="text-center">प्रीमियम</th>
+                                    <th class="text-center">प्रो</th>
+                                    <th class="text-center">तत्काळ</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>मूलभूत ट्रॅकिंग</td>
+                                    <td class="text-center"><i class="fas fa-check text-success"></i></td>
+                                    <td class="text-center"><i class="fas fa-check text-success"></i></td>
+                                    <td class="text-center"><i class="fas fa-check text-success"></i></td>
+                                    <td class="text-center"><i class="fas fa-check text-success"></i></td>
+                                </tr>
+                                <tr>
+                                    <td>SMS अपडेट्स</td>
+                                    <td class="text-center"><i class="fas fa-times text-danger"></i></td>
+                                    <td class="text-center"><i class="fas fa-check text-success"></i></td>
+                                    <td class="text-center"><i class="fas fa-check text-success"></i></td>
+                                    <td class="text-center"><i class="fas fa-check text-success"></i></td>
+                                </tr>
+                                <tr>
+                                    <td>Email अपडेट्स</td>
+                                    <td class="text-center"><i class="fas fa-times text-danger"></i></td>
+                                    <td class="text-center"><i class="fas fa-times text-danger"></i></td>
+                                    <td class="text-center"><i class="fas fa-check text-success"></i></td>
+                                    <td class="text-center"><i class="fas fa-check text-success"></i></td>
+                                </tr>
+                                <tr>
+                                    <td>प्राधान्य प्रक्रिया</td>
+                                    <td class="text-center"><i class="fas fa-times text-danger"></i></td>
+                                    <td class="text-center"><i class="fas fa-check text-success"></i></td>
+                                    <td class="text-center"><i class="fas fa-check text-success"></i></td>
+                                    <td class="text-center"><i class="fas fa-check text-success"></i></td>
+                                </tr>
+                                <tr>
+                                    <td>24/7 सपोर्ट</td>
+                                    <td class="text-center"><i class="fas fa-times text-danger"></i></td>
+                                    <td class="text-center"><i class="fas fa-check text-success"></i></td>
+                                    <td class="text-center"><i class="fas fa-check text-success"></i></td>
+                                    <td class="text-center"><i class="fas fa-check text-success"></i></td>
+                                </tr>
+                                <tr>
+                                    <td>व्यक्तिगत सल्लागार</td>
+                                    <td class="text-center"><i class="fas fa-times text-danger"></i></td>
+                                    <td class="text-center"><i class="fas fa-times text-danger"></i></td>
+                                    <td class="text-center"><i class="fas fa-check text-success"></i></td>
+                                    <td class="text-center"><i class="fas fa-check text-success"></i></td>
+                                </tr>
+                                <tr>
+                                    <td>डॉक्युमेंट रिव्यू</td>
+                                    <td class="text-center"><i class="fas fa-times text-danger"></i></td>
+                                    <td class="text-center"><i class="fas fa-times text-danger"></i></td>
+                                    <td class="text-center"><i class="fas fa-check text-success"></i></td>
+                                    <td class="text-center"><i class="fas fa-check text-success"></i></td>
+                                </tr>
+                                <tr>
+                                    <td>अपेक्षित पूर्णता</td>
+                                    <td class="text-center">120 दिवस</td>
+                                    <td class="text-center">60 दिवस</td>
+                                    <td class="text-center">45 दिवस</td>
+                                    <td class="text-center">30 दिवस</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Stories -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <h3 class="text-center mb-4">प्रीमियम सदस्यांच्या यशोगाथा</h3>
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body text-center">
+                            <div class="premium-avatar mb-3">
+                                <i class="fas fa-user-circle fa-3x text-primary"></i>
+                            </div>
+                            <h6>संजय पवार</h6>
+                            <p class="text-muted">पुणे</p>
+                            <p class="small">"प्रीमियम सेवेमुळे माझा अर्ज फक्त 45 दिवसांत पूर्ण झाला!"</p>
+                            <div class="text-warning">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body text-center">
+                            <div class="premium-avatar mb-3">
+                                <i class="fas fa-user-circle fa-3x text-success"></i>
+                            </div>
+                            <h6>प्रिया शिंदे</h6>
+                            <p class="text-muted">नाशिक</p>
+                            <p class="small">"SMS अपडेट्स खूप उपयुक्त होते. प्रत्येक टप्प्याची माहिती मिळत राहिली."</p>
+                            <div class="text-warning">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body text-center">
+                            <div class="premium-avatar mb-3">
+                                <i class="fas fa-user-circle fa-3x text-warning"></i>
+                            </div>
+                            <h6>राजेश कदम</h6>
+                            <p class="text-muted">औरंगाबाद</p>
+                            <p class="small">"व्यक्तिगत सल्लागाराने सर्व प्रश्नांचे उत्तर दिले. खूप मदत झाली!"</p>
+                            <div class="text-warning">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Money Back Guarantee -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card border-success">
+                <div class="card-body text-center">
+                    <i class="fas fa-shield-alt fa-3x text-success mb-3"></i>
+                    <h4 class="text-success">१००% पैसे परत हमी</h4>
+                    <p class="lead">जर तुम्हाला आमच्या सेवेचे समाधान नसेल तर 30 दिवसांच्या आत पूर्ण पैसे परत</p>
+                    <div class="row justify-content-center">
+                        <div class="col-md-8">
+                            <div class="row text-start">
+                                <div class="col-md-6">
+                                    <p><i class="fas fa-check text-success me-2"></i>कोणत्याही प्रश्न नाहीत</p>
+                                    <p><i class="fas fa-check text-success me-2"></i>त्वरित रिफंड</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><i class="fas fa-check text-success me-2"></i>सुरक्षित पेमेंट</p>
+                                    <p><i class="fas fa-check text-success me-2"></i>24/7 सपोर्ट</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="row">
+        <div class="col-12">
+            <h3 class="text-center mb-4">वारंवार विचारले जाणारे प्रश्न</h3>
+            <div class="accordion" id="premiumFAQ">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                            प्रीमियम सेवा कशी काम करते?
+                        </button>
+                    </h2>
+                    <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#premiumFAQ">
+                        <div class="accordion-body">
+                            प्रीमियम सेवा घेतल्यानंतर तुमचे अर्ज प्राधान्य लिस्टमध्ये जातात आणि ते जलद प्रक्रिया केले जातात. तुम्हाला नियमित SMS/Email अपडेट्स मिळतात.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                            पेमेंट सुरक्षित आहे का?
+                        </button>
+                    </h2>
+                    <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#premiumFAQ">
+                        <div class="accordion-body">
+                            होय, आम्ही SSL encryption आणि trusted payment gateways वापरतो. तुमची पेमेंट माहिती पूर्णपणे सुरक्षित आहे.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                            रिफंड कसे मिळेल?
+                        </button>
+                    </h2>
+                    <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#premiumFAQ">
+                        <div class="accordion-body">
+                            जर तुम्हाला सेवेचे समाधान नसेल तर 30 दिवसांच्या आत आमच्याशी संपर्क साधा. आम्ही 5-7 दिवसांत पैसे परत करू.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+/* Pricing Card Styles */
+.pricing-card {
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.pricing-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1) !important;
+}
+
+.price {
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.feature-item {
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.feature-item:last-child {
+    border-bottom: none;
+}
+
+/* Ribbon */
+.ribbon {
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    position: absolute;
+}
+
+.ribbon::before,
+.ribbon::after {
+    position: absolute;
+    z-index: -1;
+    content: '';
+    display: block;
+    border: 5px solid #2980b9;
+}
+
+.ribbon span {
+    position: absolute;
+    display: block;
+    width: 225px;
+    padding: 15px 0;
+    background-color: #ffc107;
+    box-shadow: 0 5px 10px rgba(0,0,0,.1);
+    color: #fff;
+    font: 700 18px/1 'Lato', sans-serif;
+    text-shadow: 0 1px 1px rgba(0,0,0,.2);
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.ribbon-top-right {
+    top: -10px;
+    right: -10px;
+}
+
+.ribbon-top-right::before,
+.ribbon-top-right::after {
+    border-top-color: transparent;
+    border-right-color: transparent;
+}
+
+.ribbon-top-right::before {
+    top: 0;
+    left: 0;
+}
+
+.ribbon-top-right::after {
+    bottom: 0;
+    right: 0;
+}
+
+.ribbon-top-right span {
+    left: -25px;
+    top: 30px;
+    transform: rotate(45deg);
+}
+</style>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Animation for pricing cards
+document.addEventListener('DOMContentLoaded', function() {
+    const pricingCards = document.querySelectorAll('.pricing-card');
+    
+    pricingCards.forEach((card, index) => {
+        card.style.animationDelay = `${index * 0.1}s`;
+        card.classList.add('animate__animated', 'animate__fadeInUp');
+    });
+});
+
+// Price animation
+function animatePrices() {
+    const prices = document.querySelectorAll('.price');
+    
+    prices.forEach(price => {
+        const finalValue = parseInt(price.textContent.replace(/[^\d]/g, ''));
+        let currentValue = 0;
+        const increment = finalValue / 50;
+        
+        const timer = setInterval(() => {
+            currentValue += increment;
+            if (currentValue >= finalValue) {
+                currentValue = finalValue;
+                clearInterval(timer);
+            }
+            price.textContent = `₹${Math.round(currentValue)}`;
+        }, 30);
+    });
+}
+
+// Trigger price animation when section comes into view
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            animatePrices();
+            observer.unobserve(entry.target);
+        }
+    });
+});
+
+const pricingSection = document.querySelector('.row.mb-5');
+if (pricingSection) {
+    observer.observe(pricingSection);
+}
+</script>
+{% endblock %}
