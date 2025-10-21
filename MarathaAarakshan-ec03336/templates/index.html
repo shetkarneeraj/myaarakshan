@@ -24,9 +24,23 @@
 
 <!-- Main Features Cards - Horizontal Scroll -->
 <div class="container py-5">
-    <h2 class="text-center mb-5">मुख्य सेवा</h2>
-    <div class="feature-cards-container">
-        <div class="feature-cards d-flex gap-3 pb-3" style="overflow-x: auto; scroll-behavior: smooth;">
+    <div class="row align-items-center mb-4">
+        <div class="col">
+            <h2 class="text-center mb-0">मुख्य सेवा</h2>
+        </div>
+        <div class="col-auto">
+            <div class="scroll-indicators">
+                <button class="btn btn-outline-primary btn-sm me-2" id="scrollLeft" onclick="scrollCards('left')">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="btn btn-outline-primary btn-sm" id="scrollRight" onclick="scrollCards('right')">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="feature-cards-container position-relative">
+        <div class="feature-cards d-flex gap-3 pb-3" id="featureCards" style="overflow-x: auto; scroll-behavior: smooth;">
 
             <!-- Reservation Information Card -->
             <div class="feature-card flex-shrink-0" style="min-width: 70vw;">
@@ -156,9 +170,6 @@
         <!-- First News Card - Manoj Jarange Patil Demand -->
         <div class="col-lg-4 col-md-6 mb-4">
             <div class="card h-100 shadow-sm news-card position-relative" data-news-id="1">
-                <div class="live-badge">
-                    <span class="badge bg-danger">🔴 LIVE</span>
-                </div>
                 <img src="{% static 'images/news_headline.jpeg' %}" 
                      class="card-img-top" alt="Manoj Jarange Patil Demand" style="height: 180px; object-fit: cover;">
                 <div class="card-body">
@@ -175,9 +186,6 @@
         <!-- Second News Card - Shahu Maharaj Order Legal Battle -->
         <div class="col-lg-4 col-md-6 mb-4">
             <div class="card h-100 shadow-sm news-card position-relative" data-news-id="2">
-                <div class="live-badge">
-                    <span class="badge bg-danger">🔴 LIVE</span>
-                </div>
                 <img src="{% static '12.jpg' %}" 
                      class="card-img-top" alt="Shahu Maharaj Order Legal Battle" style="height: 180px; object-fit: cover;">
                 <div class="card-body">
@@ -194,9 +202,6 @@
         <!-- Third News Card - Pravin Pingale Family Help -->
         <div class="col-lg-4 col-md-6 mb-4">
             <div class="card h-100 shadow-sm news-card position-relative" data-news-id="3">
-                <div class="live-badge">
-                    <span class="badge bg-danger">🔴 LIVE</span>
-                </div>
                 <img src="{% static '11.jpg' %}" 
                      class="card-img-top" alt="Pravin Pingale Family Help" style="height: 180px; object-fit: cover;">
                 <div class="card-body">
@@ -235,6 +240,18 @@
 
 
 <script>
+// Scroll functionality for feature cards
+function scrollCards(direction) {
+    const container = document.getElementById('featureCards');
+    const scrollAmount = 300; // Adjust scroll amount as needed
+    
+    if (direction === 'left') {
+        container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    } else {
+        container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+}
+
 // News modal functionality
 document.addEventListener('DOMContentLoaded', function() {
     const newsData = {
@@ -242,8 +259,7 @@ document.addEventListener('DOMContentLoaded', function() {
             title: '👉 “शेतीला नोकरीचा दर्जा आणि शेतकऱ्यांना १० हजार पगार द्या” – मनोज जरांगे पाटील',
             content: `
                 <div class="mb-3">
-                    <span class="badge bg-danger">🔴 LIVE</span>
-                    <small class="text-muted ms-2">आज, ११:३० AM</small>
+                    <small class="text-muted">आज, ११:३० AM</small>
                 </div>
                 <ul>
                     <li>🌾 १० एकरपेक्षा कमी जमीन असलेल्या शेतकऱ्यांना दरमहा ₹१०,००० पगार द्यावा.</li>
@@ -257,8 +273,7 @@ document.addEventListener('DOMContentLoaded', function() {
             title: '👉 मराठा आरक्षणाचा लढा कायदेशीर मार्गावर – शाहू महाराजांचा १९०२ चा आदेश आधार',
             content: `
                 <div class="mb-3">
-                    <span class="badge bg-danger">🔴 LIVE</span>
-                    <small class="text-muted ms-2">२ तास आधी</small>
+                    <small class="text-muted">२ तास आधी</small>
                 </div>
                 <ul>
                     <li>⚖️ शासनाशी झालेल्या चर्चेत ठोस निर्णय न झाल्याने कायदेशीर मार्ग स्वीकारला.</li>
@@ -272,8 +287,7 @@ document.addEventListener('DOMContentLoaded', function() {
             title: '👉 आरक्षणासाठी बलिदान दिलेल्या तरुणाच्या कुटुंबाला १० लाखांची मदत',
             content: `
                 <div class="mb-3">
-                    <span class="badge bg-danger">🔴 LIVE</span>
-                    <small class="text-muted ms-2">५ तास आधी</small>
+                    <small class="text-muted">५ तास आधी</small>
                 </div>
                 <ul>
                     <li>🕯️ आरक्षणाच्या मागणीसाठी प्रवीण पिंगळे (वय १९) यांनी आत्मबलिदान दिले होते.</li>

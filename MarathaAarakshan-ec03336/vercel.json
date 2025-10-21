@@ -1,11 +1,17 @@
 {
     "version": 2,
+    "builds": [
+        {
+            "src": "api/index.py",
+            "use": "@vercel/python"
+        }
+    ],
     "routes": [
-      { "src": "/static/(.*)", "dest": "/staticfiles/$1" },
-      { "src": "/(.*)", "dest": "/api/index.py" }
+        { "src": "/static/(.*)", "dest": "/staticfiles/$1" },
+        { "src": "/(.*)", "dest": "/api/index.py" }
     ],
     "env": {
-      "DJANGO_SETTINGS_MODULE": "maratha_aarakshan.settings",
-      "DEBUG": "False"
+        "DJANGO_SETTINGS_MODULE": "maratha_aarakshan.settings",
+        "DEBUG": "False"
     }
-  }
+}
